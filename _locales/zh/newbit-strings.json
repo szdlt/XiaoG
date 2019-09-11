@@ -5,8 +5,6 @@
   "newbit_显示类.showLight|block":"显示彩灯",
   "newbit_显示类.clearLight|block":"关闭彩灯",
   "newbit_显示类.setBrightness|block":"设置RGB灯亮度 %brightness",
-  "newbit_显示类.SevenColorLED|block":"APP彩灯设置 %uartData",
-  
   "newbit_传感器类.Voice_Sensor|block": "声音传感器|返回 %value",
   "newbit_传感器类.checkCurrentColor|block": "检测颜色是否是 %color",
   "newbit_传感器类.initColorSensor|block": "颜色传感器初始化",
@@ -16,24 +14,15 @@
   "newbit_传感器类.Smog_Sensor|block": "烟雾传感器|%value|烟雾",
   "newbit_传感器类.Touch_Sensor|block": "触摸传感器|%value|触摸",
   "newbit_传感器类.Humidity_Sensor|block": "湿度传感器检测到土壤湿度|%value",
-  
   "newbit_音乐类.Buzzer|block": "关闭蜂鸣器",
-  "newbit_音乐类.BluetoothMusic|block": "APP音乐播放%uartData",
-  
   "newbit_电机类.Vibrator_Open|block": "开始震动",
   "newbit_电机类.Vibrator_Close|block": "停止震动",
-  
-  
   "newbit_小车类.Ultrasonic_Car|block": "超声波返回（cm）",
-  "newbit_小车类.Music_Car|block": "小车音乐播放|%index",
   "newbit_小车类.Line_Sensor|block": "巡线传感器|位置 %direct|检测到 %value",
   "newbit_小车类.Avoid_Sensor|block": "红外避障传感器|检测到 %value|障碍物",
   "newbit_小车类.Servo_Car|block": "小车舵机|编号 %num|角度 %value|速度 %speed",
   "newbit_小车类.CarCtrl|block": "小车控制|%index",
   "newbit_小车类.CarCtrlSpeed|block": "小车控制|%index|速度 %speed",
-  "newbit_小车类.BluetoothCarControl|block": "APP小车运动控制%uartData",
-  "newbit_小车类.BluetoothModeSelect|block": "APP小车模式选择%uartData返回类型",
-  "newbit_小车类.BluetoothServoControl|block": "APP舵机控制%uartData",
   "newbit_小车类.MotorRun|block": "电机控制|%index0|%index1|速度%speed",
   "newbit_积木类.BuildingBlocks|block": "深联积木%uartData"
 }
