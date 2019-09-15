@@ -1,10 +1,10 @@
 /*  2019.0915.15:09
 modified from duncan
 load dependency
-"newbit": "file:../pxt-newbit"
+"HelloMaker": "file:../pxt-HelloMaker"
 */
 //% color="#C814B8" weight=25 icon="\uf1d4"
-namespace newbit_显示类 {
+namespace HelloMaker_显示类 {
 
     let lhRGBLight: QbitRGBLight.LHQbitRGBLight;
     //% blockId="initRGBLight" block="initRGBLight before use"
@@ -54,7 +54,7 @@ namespace newbit_显示类 {
 }
 
 //% color="#87CEEB" weight=24 icon="\uf1b6"
-namespace newbit_传感器类 {
+namespace HelloMaker_传感器类 {
 
     export enum enVoice {
         //% blockId="Voice" block="有声音"
@@ -336,7 +336,7 @@ namespace newbit_传感器类 {
         return val;
     }
 
-    //% blockId=newbit_initColorSensor block="initColorSensor|value %value"
+    //% blockId=HelloMaker_initColorSensor block="initColorSensor|value %value"
     //% weight=95
     //% blockGap=10
     //% color="#87CEEB"
@@ -350,7 +350,7 @@ namespace newbit_传感器类 {
     /*
  *  Color sensor to obtain color value.
  */
-    //% weight=84 blockId=newbit_checkCurrentColor block="checkCurrentColor|color %color" 
+    //% weight=84 blockId=HelloMaker_checkCurrentColor block="checkCurrentColor|color %color" 
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -409,7 +409,7 @@ namespace newbit_传感器类 {
         return (color == t);
     }
 
-    //% blockId=newbit_Voice_Sensor block="Voice_Sensor|value %value|声音"
+    //% blockId=HelloMaker_Voice_Sensor block="Voice_Sensor|value %value|声音"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -425,7 +425,7 @@ namespace newbit_传感器类 {
         }
 
     }
-    //% blockId=newbit_Incline_Sensor block="Incline_Sensor|%value|倾斜"
+    //% blockId=HelloMaker_Incline_Sensor block="Incline_Sensor|%value|倾斜"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -443,7 +443,7 @@ namespace newbit_传感器类 {
 
     }
 
-    //% blockId=newbit_Smog_Sensor block="Smog_Sensor|%value|烟雾"
+    //% blockId=HelloMaker_Smog_Sensor block="Smog_Sensor|%value|烟雾"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -459,7 +459,7 @@ namespace newbit_传感器类 {
         }
 
     }
-    //% blockId=newbit_Humidity_Sensor block="Humidity_Sensor|土壤湿度|%value"
+    //% blockId=HelloMaker_Humidity_Sensor block="Humidity_Sensor|土壤湿度|%value"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -478,7 +478,7 @@ namespace newbit_传感器类 {
 
 
 
-    //% blockId=newbit_Touch_Sensor block="Touch_Sensor|%value|触摸"
+    //% blockId=HelloMaker_Touch_Sensor block="Touch_Sensor|%value|触摸"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -494,7 +494,7 @@ namespace newbit_传感器类 {
         }
 
     }
-    //% blockId=newbit_Photosensitive_Sensor block="Photosensitive_Sensor|%value|光照"
+    //% blockId=HelloMaker_Photosensitive_Sensor block="Photosensitive_Sensor|%value|光照"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -511,7 +511,7 @@ namespace newbit_传感器类 {
 
     }
 
-    //% blockId=newbit_Flame_Sensor block="Flame_Sensor|%value|火焰"
+    //% blockId=HelloMaker_Flame_Sensor block="Flame_Sensor|%value|火焰"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -536,7 +536,7 @@ namespace newbit_传感器类 {
             control.waitMicros(13);
         }
     }
-    //% blockId=newbit_IR_Sensor block="IR_Sensor|%value|障碍物"
+    //% blockId=HelloMaker_IR_Sensor block="IR_Sensor|%value|障碍物"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -553,7 +553,7 @@ namespace newbit_传感器类 {
         }
     }
 
-    //% blockId=newbit_IR_Send block="IR_Send|pin %pin"
+    //% blockId=HelloMaker_IR_Send block="IR_Send|pin %pin"
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -568,14 +568,14 @@ namespace newbit_传感器类 {
  ****************************************************************************************************************************************/
 
 //% color="#D2691E" weight=22 icon="\uf001"
-namespace newbit_音乐类 {
+namespace HelloMaker_音乐类 {
     export enum enBuzzer {
         //% blockId="NoBeep" block="不响"
         NoBeep = 0,
         //% blockId="Beep" block="响"
         Beep
     }
-    //% blockId=newbit_Buzzer block="Buzzer"
+    //% blockId=HelloMaker_Buzzer block="Buzzer"
     //% weight=100
     //% blockGap=10 
     //% color="#D2691E"
@@ -592,9 +592,9 @@ namespace newbit_音乐类 {
 
 //% color="#0000CD" weight=21 icon="\uf185"
 
-namespace newbit_电机类 {
+namespace HelloMaker_电机类 {
 
-    //% blockId=newbit_Vibrator_Open block="Vibrator_Open"
+    //% blockId=HelloMaker_Vibrator_Open block="Vibrator_Open"
     //% weight=100
     //% blockGap=10
     //% color="#0000CD"
@@ -605,7 +605,7 @@ namespace newbit_电机类 {
         pins.digitalWritePin(DigitalPin.P12, 1);
 
     }
-    //% blockId=newbit_Vibrator_Close block="Vibrator_Close"
+    //% blockId=HelloMaker_Vibrator_Close block="Vibrator_Close"
     //% weight=100
     //% blockGap=10
     //% color="#0000CD"
@@ -617,7 +617,7 @@ namespace newbit_电机类 {
 }
 
 //% color="#006400" weight=20 icon="\uf1b9"
-namespace newbit_小车类 {
+namespace HelloMaker_小车类 {
 
     const PCA9685_ADD = 0x41
     const MODE1 = 0x00
@@ -917,7 +917,7 @@ namespace newbit_小车类 {
             car_speed -= 5;
     }
 
-    //% blockId=newbit_ultrasonic_car block="ultrasonic return distance(cm)"
+    //% blockId=HelloMaker_ultrasonic_car block="ultrasonic return distance(cm)"
     //% color="#006400"
     //% weight=98
     //% blockGap=10
@@ -951,7 +951,7 @@ namespace newbit_小车类 {
         //  return d / 58;
     }
 
-    //% blockId=newbit_Servo_Car block="Servo_Car|num %num|value %value |速度 %speed"
+    //% blockId=HelloMaker_Servo_Car block="Servo_Car|num %num|value %value |速度 %speed"
     //% weight=96
     //% blockGap=10
     //% speed.min=1 speed.max=10
@@ -1008,7 +1008,7 @@ namespace newbit_小车类 {
         else if (num == 5) { value5_past = value; }
         else if (num == 6) { value6_past = value; }
     }
-    //% blockId=newbit_Avoid_Sensor block="Avoid_Sensor|value %value"
+    //% blockId=HelloMaker_Avoid_Sensor block="Avoid_Sensor|value %value"
     //% weight=95
     //% blockGap=10
     //% color="#006400"
@@ -1043,7 +1043,7 @@ namespace newbit_小车类 {
         //    pins.digitalWritePin(DigitalPin.P9, 1);
         return temp;
     }
-    //% blockId=newbit_Line_Sensor block="Line_Sensor|direct %direct|value %value"
+    //% blockId=HelloMaker_Line_Sensor block="Line_Sensor|direct %direct|value %value"
     //% weight=94
     //% blockGap=10
     //% color="#006400"
@@ -1084,7 +1084,7 @@ namespace newbit_小车类 {
         }
         return temp;
     }
-    //% blockId=newbit_CarCtrl block="CarCtrl|%index"
+    //% blockId=HelloMaker_CarCtrl block="CarCtrl|%index"
     //% weight=93
     //% blockGap=10
     //% color="#006400"
@@ -1102,7 +1102,7 @@ namespace newbit_小车类 {
             case CarState.Car_SpeedDown: Car_SpeedDown(); break;
         }
     }
-    //% blockId=newbit_CarCtrlSpeed block="CarCtrlSpeed|%index|speed %speed"
+    //% blockId=HelloMaker_CarCtrlSpeed block="CarCtrlSpeed|%index|speed %speed"
     //% weight=92
     //% blockGap=10
     //% speed.min=0 speed.max=255
@@ -1119,7 +1119,7 @@ namespace newbit_小车类 {
             case CarState.Car_SpinRight: Car_spinright(speed); break;
         }
     }
-    //% blockId=newbit_MotorRun block="MotorRun|%index0|%index1|speed%speed"
+    //% blockId=HelloMaker_MotorRun block="MotorRun|%index0|%index1|speed%speed"
     //% weight=93
     //% blockGap=10
     //% speed.min=0 speed.max=255
@@ -1155,7 +1155,7 @@ namespace newbit_小车类 {
 }
 
 //% color="#212121" weight=24 icon="\uf1b6"
-namespace newbit_积木类 {
+namespace HelloMaker_积木类 {
 
     let StrAt = -1
     let MoveType = -1
@@ -1325,7 +1325,7 @@ namespace newbit_积木类 {
         UartSend2data(type)
     }
 
-    //% blockId=newbit_BuildingBlocksInit block="BuildingBlocksInit"
+    //% blockId=HelloMaker_BuildingBlocksInit block="BuildingBlocksInit"
     //% weight=96
     //% blockGap=10
     //% color="#006400"
@@ -1336,22 +1336,22 @@ namespace newbit_积木类 {
             SerialPin.P12,
             SerialPin.P13,
             BaudRate.BaudRate9600)
-        newbit_传感器类.initColorSensor()
-        newbit_显示类.initRGBLight()
-        newbit_显示类.setPixelRGB(Lights.Light1, QbitRGBColors.Red)
-        newbit_显示类.setPixelRGB(Lights.Light2, QbitRGBColors.Red)
-        newbit_显示类.showLight()
-        newbit_电机类.Vibrator_Close()
-        newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
-        newbit_小车类.Servo_Car(newbit_小车类.enServo.S1, 90, 0)
-        newbit_小车类.Servo_Car(newbit_小车类.enServo.S2, 90, 0)
-        newbit_小车类.Servo_Car(newbit_小车类.enServo.S3, 90, 0)
-        newbit_小车类.Servo_Car(newbit_小车类.enServo.S4, 90, 0)
-        newbit_小车类.Servo_Car(newbit_小车类.enServo.S5, 90, 0)
-        newbit_小车类.Servo_Car(newbit_小车类.enServo.S6, 90, 0)
+        HelloMaker_传感器类.initColorSensor()
+        HelloMaker_显示类.initRGBLight()
+        HelloMaker_显示类.setPixelRGB(Lights.Light1, QbitRGBColors.Red)
+        HelloMaker_显示类.setPixelRGB(Lights.Light2, QbitRGBColors.Red)
+        HelloMaker_显示类.showLight()
+        HelloMaker_电机类.Vibrator_Close()
+        HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
+        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S1, 90, 0)
+        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S2, 90, 0)
+        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S3, 90, 0)
+        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S4, 90, 0)
+        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S5, 90, 0)
+        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S6, 90, 0)
     }
 
-    //% blockId=newbit_BuildingBlocks block="BuildingBlocks|%uartData"
+    //% blockId=HelloMaker_BuildingBlocks block="BuildingBlocks|%uartData"
     //% weight=96
     //% blockGap=10
     //% color="#006400"
@@ -1385,23 +1385,23 @@ namespace newbit_积木类 {
                 StrAt = uartData.indexOf("Sercontrol")  // 
 
                 if (uartData.charAt(StrAt + 11) == 'S') {
-                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Run)
+                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Run)
                     Move_T = 9
                 }
                 else if (uartData.charAt(StrAt + 11) == 'B') {
-                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Back)
+                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Back)
                     Move_T = 10
                 }
                 else if (uartData.charAt(StrAt + 11) == 'L') {
-                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Left)
+                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Left)
                     Move_T = 11
                 }
                 else if (uartData.charAt(StrAt + 11) == 'R') {
-                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Right)
+                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Right)
                     Move_T = 12
                 }
                 else if (uartData.charAt(StrAt + 11) == '0') {
-                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                     Move_T = 17
                 }
                 else {
@@ -1417,17 +1417,17 @@ namespace newbit_积木类 {
                 time = parseInt(uartData.substr(StrAt + 10, 2))
 
                 if (move == 1) {
-                    newbit_小车类.CarCtrlSpeed(newbit_小车类.CarState.Car_Run, speed * 2.5)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, speed * 2.5)
                     basic.pause(time * 1000)
                     if (time != 0) {
-                        newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+                        HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                     }
                 }
                 else if (move == 2) {
-                    newbit_小车类.CarCtrlSpeed(newbit_小车类.CarState.Car_Back, speed * 2.5)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, speed * 2.5)
                     basic.pause(time * 1000)
                     if (time != 0) {
-                        newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+                        HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                     }
                 }
                 cmdType = CMD_TYPE.MST;
@@ -1439,23 +1439,23 @@ namespace newbit_积木类 {
                 speed = parseInt(uartData.substr(StrAt + 6, 3))
                 time = parseInt(uartData.substr(StrAt + 10, 2))
                 if (direction == 1) {  // right
-                    newbit_小车类.CarCtrlSpeed(newbit_小车类.CarState.Car_SpinRight, speed * 2.5) // 
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, speed * 2.5) // 
                     basic.pause(time * 1000)
                     if (time != 0) {
-                        newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+                        HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                     }
                 }
                 else if (direction == 2) {  // left
-                    newbit_小车类.CarCtrlSpeed(newbit_小车类.CarState.Car_SpinLeft, speed * 2.5)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, speed * 2.5)
                     basic.pause(time * 1000)
                     if (time != 0) {
-                        newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+                        HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                     }
                 }
                 cmdType = CMD_TYPE.DST;
             }
             else if (uartData.indexOf("sto") != -1) {
-                newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+                HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                 cmdType = CMD_TYPE.STO;
             }
             else if (uartData.indexOf("lig") != -1) {
@@ -1471,12 +1471,12 @@ namespace newbit_积木类 {
 			} else if (rgb_color == 8) {
 			    rgb_color = 9
 			}
-                    newbit_显示类.setPixelRGB(rgb_id - 1, rgb_color)
-                    newbit_显示类.setBrightness(rgb_bright * 2.5)
-                    newbit_显示类.showLight()
+                    HelloMaker_显示类.setPixelRGB(rgb_id - 1, rgb_color)
+                    HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
+                    HelloMaker_显示类.showLight()
                 }
                 else {
-                    newbit_显示类.clearLight()
+                    HelloMaker_显示类.clearLight()
                 }
                 cmdType = CMD_TYPE.LIG;
 
@@ -1485,7 +1485,7 @@ namespace newbit_积木类 {
                 StrAt = uartData.indexOf("col")
                 color_id = parseInt(uartData.substr(StrAt + 4, 1))
                 if (color_id == 1) {
-                    if (newbit_传感器类.checkCurrentColor(newbit_传感器类.Colors.Red) == true) {
+                    if (HelloMaker_传感器类.checkCurrentColor(HelloMaker_传感器类.Colors.Red) == true) {
 
                         bluetooth.uartWriteString("*@col-1#")
                     }
@@ -1495,7 +1495,7 @@ namespace newbit_积木类 {
                     }
                 }
                 else if (color_id == 2) {
-                    if (newbit_传感器类.checkCurrentColor(newbit_传感器类.Colors.Green) == true) {
+                    if (HelloMaker_传感器类.checkCurrentColor(HelloMaker_传感器类.Colors.Green) == true) {
 
                         bluetooth.uartWriteString("*@col-1#")
                     }
@@ -1505,7 +1505,7 @@ namespace newbit_积木类 {
                     }
                 }
                 else if (color_id == 3) {
-                    if (newbit_传感器类.checkCurrentColor(newbit_传感器类.Colors.Blue) == true) {
+                    if (HelloMaker_传感器类.checkCurrentColor(HelloMaker_传感器类.Colors.Blue) == true) {
 
                         bluetooth.uartWriteString("*@col-1#")
                     }
@@ -1586,16 +1586,16 @@ namespace newbit_积木类 {
 
             else if (uartData.indexOf("sta") != -1) {
 
-                if (newbit_小车类.Line_Sensor(newbit_小车类.enPos.LeftState, newbit_小车类.enLineState.White) && (newbit_小车类.Line_Sensor(newbit_小车类.enPos.RightState, newbit_小车类.enLineState.White))) {
+                if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.White))) {
                     bluetooth.uartWriteString("*@sta-0#")
                 }
-                else if (newbit_小车类.Line_Sensor(newbit_小车类.enPos.LeftState, newbit_小车类.enLineState.White) && (newbit_小车类.Line_Sensor(newbit_小车类.enPos.RightState, newbit_小车类.enLineState.Black))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.Black))) {
                     bluetooth.uartWriteString("*@sta-1#")
                 }
-                else if (newbit_小车类.Line_Sensor(newbit_小车类.enPos.LeftState, newbit_小车类.enLineState.Black) && (newbit_小车类.Line_Sensor(newbit_小车类.enPos.RightState, newbit_小车类.enLineState.White))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.White))) {
                     bluetooth.uartWriteString("*@sta-2#")
                 }
-                else if (newbit_小车类.Line_Sensor(newbit_小车类.enPos.LeftState, newbit_小车类.enLineState.Black) && (newbit_小车类.Line_Sensor(newbit_小车类.enPos.RightState, newbit_小车类.enLineState.Black))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.Black))) {
                     bluetooth.uartWriteString("*@sta-3#")
                 }
                 cmdType = CMD_TYPE.STA;
@@ -1608,7 +1608,7 @@ namespace newbit_积木类 {
                 dlbot_id = parseInt(uartData.substr(StrAt + 9, 1))
                 dlbot_speed = parseInt(uartData.substr(StrAt + 11, 2))
                 dlbot_pos = Math.map(dlbot_pos, 0, 1000, 0, 180)
-                newbit_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
+                HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
                 cmdType = CMD_TYPE.SERVO_MOVE
             }
 
