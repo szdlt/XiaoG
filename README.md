@@ -1,6 +1,6 @@
-# swtPackage
+# HelloMakerPackage
 
-Extension for SiWuTian newbit
+Extension for HelloMaker:bit
 
 ## License
 
