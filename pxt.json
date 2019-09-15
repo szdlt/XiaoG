@@ -11,7 +11,7 @@
         "main.ts",
         "QbitRGBLight.ts",
         "sendbuffer.asm",
-        "HelloMaker-strings.json"
+        "_locales/zh/HelloMaker-strings.json"
     ],
     "testFiles": [
         "test.ts"
