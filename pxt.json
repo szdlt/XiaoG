@@ -11,7 +11,7 @@
         "main.ts",
         "QbitRGBLight.ts",
         "sendbuffer.asm",
-        "_locales/zh/newbit-strings.json"
+        "newbit-strings.json"
     ],
     "testFiles": [
         "test.ts"
