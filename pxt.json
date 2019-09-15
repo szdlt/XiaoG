@@ -1,7 +1,7 @@
 {
-    "name": "newbit",
+    "name": "HelloMaker",
     "version": "1.0.0",
-    "description": "Extension for Siwutian new:bit",
+    "description": "Extension for HelloMaker:bit",
     "license": "MIT",
     "dependencies": {
         "core": "*"
@@ -11,7 +11,7 @@
         "main.ts",
         "QbitRGBLight.ts",
         "sendbuffer.asm",
-        "newbit-strings.json"
+        "HelloMaker-strings.json"
     ],
     "testFiles": [
         "test.ts"
