@@ -24,5 +24,6 @@
   "newbit_小车类.CarCtrl|block": "小车控制|%index",
   "newbit_小车类.CarCtrlSpeed|block": "小车控制|%index|速度 %speed",
   "newbit_小车类.MotorRun|block": "电机控制|%index0|%index1|速度%speed",
-  "newbit_积木类.BuildingBlocks|block": "深联积木%uartData"
+  "newbit_积木类.BuildingBlocks|block": "深联积木%uartData",
+  "newbit_积木类.BuildingBlocksInit|block": "深联积木初始化"
 }
