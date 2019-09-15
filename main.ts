@@ -1,4 +1,4 @@
-/*  2019.0911.11:43
+/*  2019.0915.15:09
 modified from duncan
 load dependency
 "newbit": "file:../pxt-newbit"
@@ -1154,7 +1154,7 @@ namespace newbit_小车类 {
     }
 }
 
-//% color="#87CEEB" weight=24 icon="\uf1b6"
+//% color="#212121" weight=24 icon="\uf1b6"
 namespace newbit_积木类 {
 
     let StrAt = -1
@@ -1185,6 +1185,7 @@ namespace newbit_积木类 {
     let Stm32_POS = -1
     let Stm32_ID = -1
     let Stm32_GROUP = -1
+    let Robot_Mode = -1
     let Move_T = -1
     let stringReceive = ""
     let Tone = [65, 65, 73, 82, 87, 98, 110, 123,
@@ -1197,20 +1198,6 @@ namespace newbit_积木类 {
     let Beat = [16, 16, 8, 4, 2, 1, 32, 64]
     enum CMD_TYPE {
         NO_COMMAND,
-        GO_AHEAD,
-        GO_BACK,
-        TURN_LEFT,
-        TURN_RIGHT,
-        TURN_LEFT_SLOW,
-        TURN_RIGHT_SLOW,
-        GO_AHEAD_SLOW,
-        STOP_COMMAND,
-        HEAD_LIGHT_ON,
-        HEAD_LIGHT_OFF,
-        HONK_HORN,
-        HONK_HORN_LONG,
-        READ_VERSION,
-        SET_RGB_LIGHT,
         MST,
         DST,
         STO,
@@ -1231,7 +1218,9 @@ namespace newbit_积木类 {
         SERVO_MOVE,
         SERVO_ONE,
         SERVO_GROUP,
-        STM32_MOVE
+        STM32_MOVE,
+        ROBOT_MODE_BIZHANG,
+        ROBOT_MODE_XUNJI
 
     }
     let CMD_MULT_SERVO_MOVE = 3
@@ -1242,35 +1231,124 @@ namespace newbit_积木类 {
     let CMD_TANK_RIGHT = 12
     let CMD_TANK_STOP = 17
     let cmdType = -1
+
+    function UartSend4data(num: number) {
+        if (num < 10) {
+            serial.writeNumber(0)
+            serial.writeNumber(0)
+            serial.writeNumber(0)
+            serial.writeNumber(num)
+        }
+        else if (num < 100) {
+            serial.writeNumber(0)
+            serial.writeNumber(0)
+            serial.writeNumber(num)
+        }
+        else if (num < 1000) {
+            serial.writeNumber(0)
+            serial.writeNumber(num)
+        }
+        else {
+            serial.writeNumber(num)
+        }
+    }
+
+    function UartSend3data(num: number) {
+        if (num < 10) {
+            serial.writeNumber(0)
+            serial.writeNumber(0)
+            serial.writeNumber(num)
+        }
+        else if (num < 100) {
+            serial.writeNumber(0)
+            serial.writeNumber(num)
+        }
+        else {
+            serial.writeNumber(num)
+        }
+    }
+
+    function UartSend2data(num: number) {
+        if (num < 10) {
+            serial.writeNumber(0)
+            serial.writeNumber(num)
+        }
+
+        else {
+            serial.writeNumber(num)
+        }
+    }
+
     function SendOneServoToMcu(time: number, id: number, pos: number) {
 
-        serial.writeNumber(0x55);
-        serial.writeNumber(0x55);
-        serial.writeNumber(0x8);
-        serial.writeNumber(CMD_MULT_SERVO_MOVE);
-        serial.writeNumber(1);
-        serial.writeNumber(time & 0xFF);
-        serial.writeNumber(time >> 8);
-        serial.writeNumber(id);
-        serial.writeNumber(pos & 0xFF);
-        serial.writeNumber(pos >> 8);
+        serial.writeNumber(2)
+        serial.writeNumber(2)
+        serial.writeNumber(1)
+        serial.writeNumber(2)
+        serial.writeNumber(0)
+        serial.writeNumber(3)
+        serial.writeNumber(1)
+        serial.writeNumber(0)
+        serial.writeNumber(0)
+        serial.writeNumber(id)
+        UartSend4data(pos)
     }
+
+    function SendRobotModeToMcu(mode: number) {
+
+        serial.writeNumber(2)
+        serial.writeNumber(2)
+        serial.writeNumber(4)
+        serial.writeNumber(0)
+        UartSend2data(mode)
+
+    }
+
+
     function SendServoGroupToMcu(group: number, times: number) {
 
-        serial.writeNumber(0x55);
-        serial.writeNumber(0x55);
-        serial.writeNumber(4);
-        serial.writeNumber(CMD_FULL_ACTION_RUN);
-        serial.writeNumber(group & 0xFF);
-        serial.writeNumber(times & 0xFF);
-        serial.writeNumber(times >> 8);
+        serial.writeNumber(2)
+        serial.writeNumber(2)
+        serial.writeNumber(1)
+        serial.writeNumber(0)
+        serial.writeNumber(0)
+        serial.writeNumber(6)
+        UartSend3data(group)
+        UartSend3data(times)
     }
     function SendMoveTypeToMcu(type: number) {
 
-        serial.writeNumber(0x55);
-        serial.writeNumber(0x55);
-        serial.writeNumber(2);
-        serial.writeNumber(type & 0xFF);
+        serial.writeNumber(2)
+        serial.writeNumber(2)
+        serial.writeNumber(0)
+        serial.writeNumber(4)
+        UartSend2data(type)
+    }
+
+    //% blockId=newbit_BuildingBlocksInit block="BuildingBlocksInit"
+    //% weight=96
+    //% blockGap=10
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=9
+    export function BuildingBlocksInit() {
+
+        serial.redirect(
+            SerialPin.P12,
+            SerialPin.P13,
+            BaudRate.BaudRate9600)
+        newbit_传感器类.initColorSensor()
+        newbit_显示类.initRGBLight()
+        newbit_显示类.setPixelRGB(Lights.Light1, QbitRGBColors.Red)
+        newbit_显示类.setPixelRGB(Lights.Light2, QbitRGBColors.Red)
+        newbit_显示类.showLight()
+        newbit_电机类.Vibrator_Close()
+        newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+        newbit_小车类.Servo_Car(newbit_小车类.enServo.S1, 90, 0)
+        newbit_小车类.Servo_Car(newbit_小车类.enServo.S2, 90, 0)
+        newbit_小车类.Servo_Car(newbit_小车类.enServo.S3, 90, 0)
+        newbit_小车类.Servo_Car(newbit_小车类.enServo.S4, 90, 0)
+        newbit_小车类.Servo_Car(newbit_小车类.enServo.S5, 90, 0)
+        newbit_小车类.Servo_Car(newbit_小车类.enServo.S6, 90, 0)
     }
 
     //% blockId=newbit_BuildingBlocks block="BuildingBlocks|%uartData"
@@ -1280,15 +1358,59 @@ namespace newbit_积木类 {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=9
 
     export function BuildingBlocks(uartData: string): number {
-
-        serial.redirect(
-            SerialPin.P12,
-            SerialPin.P13,
-            BaudRate.BaudRate115200)
-
         if (uartData.indexOf("*@") != -1) {
+            if (uartData.indexOf("Serone") != -1) {
+                StrAt = uartData.indexOf("Serone")
+                Stm32_POS = parseInt(uartData.substr(StrAt + 7, 4))
+                Stm32_ID = parseInt(uartData.substr(StrAt + 12, 1))
+                SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
+                cmdType = CMD_TYPE.SERVO_ONE
+            }
+            else if (uartData.indexOf("Sergroup") != -1) {
+                StrAt = uartData.indexOf("Sergroup")
+                Stm32_GROUP = parseInt(uartData.substr(StrAt + 9, 3))
+                SendServoGroupToMcu(Stm32_GROUP, 1)
+                cmdType = CMD_TYPE.SERVO_GROUP
+            }
+            else if (uartData.indexOf("Sercontrol") != -1) {
 
-            if (uartData.indexOf("mst") != -1) {
+                StrAt = uartData.indexOf("Sercontrol")  // 
+
+                if (uartData.charAt(StrAt + 11) == 'S') {
+                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Run)
+                    Move_T = 9
+                }
+                else if (uartData.charAt(StrAt + 11) == 'B') {
+                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Back)
+                    Move_T = 10
+                }
+                else if (uartData.charAt(StrAt + 11) == 'L') {
+                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Left)
+                    Move_T = 11
+                }
+                else if (uartData.charAt(StrAt + 11) == 'R') {
+                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Right)
+                    Move_T = 12
+                }
+                else if (uartData.charAt(StrAt + 11) == '0') {
+                    newbit_小车类.CarCtrl(newbit_小车类.CarState.Car_Stop)
+                    Move_T = 17
+                }
+                else {
+                    Move_T = 17
+                }
+                SendMoveTypeToMcu(Move_T)
+                cmdType = CMD_TYPE.STM32_MOVE
+            }
+            else if (uartData.indexOf("Sercontrol-Z") != -1) {
+
+                cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
+            }
+            else if (uartData.indexOf("Sercontrol-X") != -1) {
+
+                cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
+            }
+            else if (uartData.indexOf("mst") != -1) {
                 StrAt = uartData.indexOf("mst")
                 move = parseInt(uartData.substr(StrAt + 4, 1))
                 speed = parseInt(uartData.substr(StrAt + 6, 3))
@@ -1392,7 +1514,7 @@ namespace newbit_积木类 {
                 StrAt = uartData.indexOf("ton")
                 tone = parseInt(uartData.substr(StrAt + 4, 2))
                 dlbot_beat = parseInt(uartData.substr(StrAt + 7, 1))
-                music.playTone(Tone[tone], Beat[dlbot_beat])
+                //  music.playTone(Tone[tone], Beat[dlbot_beat])
                 cmdType = CMD_TYPE.TON;
             }
             else if (uartData.indexOf("ver") != -1) {
@@ -1405,6 +1527,7 @@ namespace newbit_积木类 {
                 basic.showNumber(show_number)
                 cmdType = CMD_TYPE.POS;
             }
+			/*
             else if (uartData.indexOf("coo") != -1) {
                 StrAt = uartData.indexOf("coo")
                 coo_x = parseInt(uartData.substr(StrAt + 4, 2))
@@ -1413,26 +1536,21 @@ namespace newbit_积木类 {
 
                 cmdType = CMD_TYPE.COO;
             }
+			
             else if (uartData.indexOf("tim") != -1) {
                 StrAt = uartData.indexOf("tim")
                 hour = parseInt(uartData.substr(StrAt + 4, 2))
                 minus = parseInt(uartData.substr(StrAt + 7, 2))
                 cmdType = CMD_TYPE.TIM;
             }
+			
             else if (uartData.indexOf("mod") != -1) {
 
                 StrAt = uartData.indexOf("mod")
                 mode = parseInt(uartData.substr(StrAt + 4, 1))
                 cmdType = CMD_TYPE.MOD;
             }
-            else if (uartData.indexOf("sen") != -1) {
-
-                StrAt = uartData.indexOf("sen")
-                stringReceive = uartData.substr(StrAt + 4, uartData.length - StrAt - 4)  /// mark 	
-                cmdType = CMD_TYPE.SEN;
-            }
-
-            else if (uartData.indexOf("che") != -1) {
+			  else if (uartData.indexOf("che") != -1) {
                 StrAt = uartData.indexOf("che")
                 pin = parseInt(uartData.substr(StrAt + 4, 1))
                 cmdType = CMD_TYPE.CHE;
@@ -1443,6 +1561,16 @@ namespace newbit_积木类 {
                 analog_pin = parseInt(uartData.substr(StrAt + 4, 1))
                 cmdType = CMD_TYPE.EXT;
             }
+			*/
+            else if (uartData.indexOf("sen") != -1) {
+
+                StrAt = uartData.indexOf("sen")
+                stringReceive = uartData.substr(StrAt + 4, uartData.length - StrAt - 4)  /// mark
+                basic.showString(stringReceive)
+                cmdType = CMD_TYPE.SEN;
+            }
+
+
             else if (uartData.indexOf("tem") != -1) {
                 let wendu = input.temperature()
                 bluetooth.uartWriteString("*@tem-" + wendu + "#")
@@ -1476,45 +1604,7 @@ namespace newbit_积木类 {
                 newbit_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
                 cmdType = CMD_TYPE.SERVO_MOVE
             }
-            else if (uartData.indexOf("Serone") != -1) {
-                StrAt = uartData.indexOf("Serone")
-                Stm32_POS = parseInt(uartData.substr(StrAt + 7, 4))
-                Stm32_ID = parseInt(uartData.substr(StrAt + 12, 1))
-                SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
-                cmdType = CMD_TYPE.SERVO_ONE
-            }
-            else if (uartData.indexOf("Sergroup") != -1) {
-                StrAt = uartData.indexOf("Sergroup")
-                Stm32_GROUP = parseInt(uartData.substr(StrAt + 9, 3))
-                SendServoGroupToMcu(Stm32_GROUP, 1)
-                cmdType = CMD_TYPE.SERVO_GROUP
-            }
-            else if (uartData.indexOf("Sercontrol") != -1) {
 
-                StrAt = uartData.indexOf("Sercontrol")  // 
-
-                if (uartData.charAt(StrAt + 11) == 'S') {
-                    Move_T = 9
-                }
-                else if (uartData.charAt(StrAt + 11) == 'B') {
-                    Move_T = 10
-                }
-                else if (uartData.charAt(StrAt + 11) == 'L') {
-                    Move_T = 11
-                }
-                else if (uartData.charAt(StrAt + 11) == 'R') {
-                    Move_T = 12
-                }
-                else if (uartData.charAt(StrAt + 11) == '0') {
-                    Move_T = 17
-                }
-                else {
-                    Move_T = 17
-
-                }
-                SendMoveTypeToMcu(Move_T)
-                cmdType = CMD_TYPE.STM32_MOVE
-            }
             return cmdType
         }
         else {
