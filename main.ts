@@ -1464,6 +1464,13 @@ namespace newbit_积木类 {
                 rgb_color = parseInt(uartData.substr(StrAt + 6, 1))
                 rgb_bright = parseInt(uartData.substr(StrAt + 8, 3))
                 if (rgb_id != 0) {
+			if (rgb_color == 5) {
+                            rgb_color = 6
+			} else if (rgb_color == 6) {
+			    rgb_color = 5
+			} else if (rgb_color == 8) {
+			    rgb_color = 9
+			}
                     newbit_显示类.setPixelRGB(rgb_id - 1, rgb_color)
                     newbit_显示类.setBrightness(rgb_bright * 2.5)
                     newbit_显示类.showLight()
