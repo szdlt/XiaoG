@@ -1372,6 +1372,14 @@ namespace newbit_积木类 {
                 SendServoGroupToMcu(Stm32_GROUP, 1)
                 cmdType = CMD_TYPE.SERVO_GROUP
             }
+	     else if (uartData.indexOf("Sercontrol-Z") != -1) {
+
+                cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
+            }
+            else if (uartData.indexOf("Sercontrol-X") != -1) {
+
+                cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
+            }
             else if (uartData.indexOf("Sercontrol") != -1) {
 
                 StrAt = uartData.indexOf("Sercontrol")  // 
@@ -1401,14 +1409,6 @@ namespace newbit_积木类 {
                 }
                 SendMoveTypeToMcu(Move_T)
                 cmdType = CMD_TYPE.STM32_MOVE
-            }
-            else if (uartData.indexOf("Sercontrol-Z") != -1) {
-
-                cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
-            }
-            else if (uartData.indexOf("Sercontrol-X") != -1) {
-
-                cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
             }
             else if (uartData.indexOf("mst") != -1) {
                 StrAt = uartData.indexOf("mst")
