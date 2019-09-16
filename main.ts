@@ -1,4 +1,4 @@
-/*  2019.0916.14:51
+/*  2019.0916.16:34
 modified from duncan
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -647,28 +647,7 @@ namespace HelloMaker_小车类 {
     let value5_past = -1
     let value6_past = -1
     let car_speed = 200
-    export enum enMusic {
-        dadadum = 0,
-        entertainer,
-        prelude,
-        ode,
-        nyan,
-        ringtone,
-        funk,
-        blues,
-        birthday,
-        wedding,
-        funereal,
-        punchline,
-        baddy,
-        chase,
-        ba_ding,
-        wawawawaa,
-        jump_up,
-        jump_down,
-        power_up,
-        power_down
-    }
+
     export enum enPos {
         //% blockId="LeftState" block="左边状态"
         LeftState = 0,
@@ -1169,33 +1148,27 @@ namespace HelloMaker_积木类 {
     let tone = -1
     let dlbot_beat = -1
     let show_number = -1
-    let coo_x = -1
-    let coo_y = -1
-    let coo_on = -1
-    let hour = -1
-    let minus = -1
-    let mode = -1
+    let time = -1
     let move = -1
     let speed = -1
-    let time = -1
     let direction = -1
-    let position = -1
-    let pin = -1
-    let analog_pin = -1
     let Stm32_POS = -1
     let Stm32_ID = -1
     let Stm32_GROUP = -1
     let Robot_Mode = -1
     let Move_T = -1
     let stringReceive = ""
-	let dl_CarSpeed = 200
-    let Tone = [65, 65, 73, 82, 87, 98, 110, 123,
-        131, 147, 165, 175, 196, 220, 247,
-        262, 294, 330, 349, 392, 440, 494,
-        523, 587, 659, 698, 784, 880, 988,
-        1047, 1175, 1319, 1397, 1568, 1760, 1976,
-        2093, 2349, 2637, 2794, 3136, 3520, 3951,
-        4186, 4699]
+    let dl_CarSpeed = 200
+    let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
+
+    /*
+    131, 147, 165, 175, 196, 220, 247,
+    262, 294, 330, 349, 392, 440, 494,
+    523, 587, 659, 698, 784, 880, 988,
+    1047, 1175, 1319, 1397, 1568, 1760, 1976,
+    2093, 2349, 2637, 2794, 3136, 3520, 3951,
+    4186, 4699]
+    */
     let Beat = [16, 16, 8, 4, 2, 1, 32, 64]
     enum CMD_TYPE {
         NO_COMMAND,
@@ -1222,7 +1195,7 @@ namespace HelloMaker_积木类 {
         STM32_MOVE,
         ROBOT_MODE_BIZHANG,
         ROBOT_MODE_XUNJI,
-		ROBOT_SPEED_ADJUST
+        ROBOT_SPEED_ADJUST
 
     }
     let CMD_MULT_SERVO_MOVE = 3
@@ -1362,7 +1335,7 @@ namespace HelloMaker_积木类 {
     export function BuildingBlocks(uartData: string): number {
         if (uartData.indexOf("*@") != -1) {
             if (uartData.indexOf("Serone") != -1) {
-               let Angle = 0
+                let Angle = 0
                 StrAt = uartData.indexOf("Serone")
                 Stm32_POS = parseInt(uartData.substr(StrAt + 7, 4))
                 Stm32_ID = parseInt(uartData.substr(StrAt + 12, 1))
@@ -1377,17 +1350,17 @@ namespace HelloMaker_积木类 {
                 SendServoGroupToMcu(Stm32_GROUP, 1)
                 cmdType = CMD_TYPE.SERVO_GROUP
             }
-	     else if (uartData.indexOf("Sercontrol-Z") != -1) {
+            else if (uartData.indexOf("Sercontrol-Z") != -1) {
 
                 cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
             }
-		else if (uartData.indexOf("speed") != -1) {
-                 StrAt = uartData.indexOf("speed")
-                 dl_CarSpeed = parseInt(uartData.substr(StrAt + 6, 3))
-                 cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
+            else if (uartData.indexOf("speed") != -1) {
+                StrAt = uartData.indexOf("speed")
+                dl_CarSpeed = parseInt(uartData.substr(StrAt + 6, 3))
+                cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
             }
-			
-			
+
+
             else if (uartData.indexOf("Sercontrol-X") != -1) {
 
                 cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
@@ -1475,13 +1448,13 @@ namespace HelloMaker_积木类 {
                 rgb_color = parseInt(uartData.substr(StrAt + 6, 1))
                 rgb_bright = parseInt(uartData.substr(StrAt + 8, 3))
                 if (rgb_id != 0) {
-			if (rgb_color == 5) {
-                            rgb_color = 6
-			} else if (rgb_color == 6) {
-			    rgb_color = 5
-			} else if (rgb_color == 8) {
-			    rgb_color = 9
-			}
+                    if (rgb_color == 5) {
+                        rgb_color = 6
+                    } else if (rgb_color == 6) {
+                        rgb_color = 5
+                    } else if (rgb_color == 8) {
+                        rgb_color = 9
+                    }
                     HelloMaker_显示类.setPixelRGB(rgb_id - 1, rgb_color)
                     HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
                     HelloMaker_显示类.showLight()
@@ -1587,8 +1560,6 @@ namespace HelloMaker_积木类 {
                 basic.showString(stringReceive)
                 cmdType = CMD_TYPE.SEN;
             }
-
-
             else if (uartData.indexOf("tem") != -1) {
                 let wendu = input.temperature()
                 bluetooth.uartWriteString("*@tem-" + wendu + "#")
@@ -1611,7 +1582,6 @@ namespace HelloMaker_积木类 {
                 }
                 cmdType = CMD_TYPE.STA;
             }
-
             else if (uartData.indexOf("ser") != -1) {
 
                 StrAt = uartData.indexOf("ser")
@@ -1622,7 +1592,6 @@ namespace HelloMaker_积木类 {
                 HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
                 cmdType = CMD_TYPE.SERVO_MOVE
             }
-
             return cmdType
         }
         else {
@@ -1630,5 +1599,3 @@ namespace HelloMaker_积木类 {
         }
     }
 }
-
-
