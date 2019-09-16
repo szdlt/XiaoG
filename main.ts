@@ -1360,10 +1360,13 @@ namespace HelloMaker_积木类 {
     export function BuildingBlocks(uartData: string): number {
         if (uartData.indexOf("*@") != -1) {
             if (uartData.indexOf("Serone") != -1) {
+               let Angle = 0
                 StrAt = uartData.indexOf("Serone")
                 Stm32_POS = parseInt(uartData.substr(StrAt + 7, 4))
                 Stm32_ID = parseInt(uartData.substr(StrAt + 12, 1))
                 SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
+                Angle = Math.map(Stm32_POS, 0, 1000, 0, 180)
+                HelloMaker_小车类.Servo_Car(Stm32_ID, Angle, 0)
                 cmdType = CMD_TYPE.SERVO_ONE
             }
             else if (uartData.indexOf("Sergroup") != -1) {
