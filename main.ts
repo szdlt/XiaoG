@@ -1396,11 +1396,11 @@ namespace HelloMaker_积木类 {
                     Move_T = 10
                 }
                 else if (uartData.charAt(StrAt + 11) == 'L') {
-                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Left)
+                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_SpinLeft)
                     Move_T = 11
                 }
                 else if (uartData.charAt(StrAt + 11) == 'R') {
-                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Right)
+                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_SpinRight)
                     Move_T = 12
                 }
                 else if (uartData.charAt(StrAt + 11) == '0') {
