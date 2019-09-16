@@ -1,4 +1,4 @@
-/*  2019.0915.15:09
+/*  2019.0916.14:51
 modified from duncan
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -1188,6 +1188,7 @@ namespace HelloMaker_积木类 {
     let Robot_Mode = -1
     let Move_T = -1
     let stringReceive = ""
+	let dl_CarSpeed = 200
     let Tone = [65, 65, 73, 82, 87, 98, 110, 123,
         131, 147, 165, 175, 196, 220, 247,
         262, 294, 330, 349, 392, 440, 494,
@@ -1220,7 +1221,8 @@ namespace HelloMaker_积木类 {
         SERVO_GROUP,
         STM32_MOVE,
         ROBOT_MODE_BIZHANG,
-        ROBOT_MODE_XUNJI
+        ROBOT_MODE_XUNJI,
+		ROBOT_SPEED_ADJUST
 
     }
     let CMD_MULT_SERVO_MOVE = 3
@@ -1379,6 +1381,13 @@ namespace HelloMaker_积木类 {
 
                 cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
             }
+		else if (uartData.indexOf("speed") != -1) {
+                 StrAt = uartData.indexOf("speed")
+                 dl_CarSpeed = parseInt(uartData.substr(StrAt + 6, 3))
+                 cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
+            }
+			
+			
             else if (uartData.indexOf("Sercontrol-X") != -1) {
 
                 cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
@@ -1386,21 +1395,20 @@ namespace HelloMaker_积木类 {
             else if (uartData.indexOf("Sercontrol") != -1) {
 
                 StrAt = uartData.indexOf("Sercontrol")  // 
-
                 if (uartData.charAt(StrAt + 11) == 'S') {
-                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Run)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
                     Move_T = 9
                 }
                 else if (uartData.charAt(StrAt + 11) == 'B') {
-                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Back)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, dl_CarSpeed * 2.5)
                     Move_T = 10
                 }
                 else if (uartData.charAt(StrAt + 11) == 'L') {
-                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_SpinLeft)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, 255)
                     Move_T = 11
                 }
                 else if (uartData.charAt(StrAt + 11) == 'R') {
-                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_SpinRight)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, 255)
                     Move_T = 12
                 }
                 else if (uartData.charAt(StrAt + 11) == '0') {
