@@ -1308,8 +1308,8 @@ namespace HelloMaker_积木类 {
     export function BuildingBlocksInit() {
 
         serial.redirect(
-            SerialPin.P12,
             SerialPin.P13,
+            SerialPin.P12,
             BaudRate.BaudRate9600)
         HelloMaker_传感器类.initColorSensor()
         HelloMaker_显示类.initRGBLight()
