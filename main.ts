@@ -1156,7 +1156,7 @@ namespace HelloMaker_积木类 {
     let Stm32_ID = -1
     let Stm32_GROUP = -1
     let Robot_Mode = -1
-    let Move_T = -1
+    export  let Move_T = -1
     let stringReceive = ""
     let dl_CarSpeed = 200
     let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
