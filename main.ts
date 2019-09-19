@@ -7,80 +7,62 @@ load dependency
 namespace HelloMaker_显示类 {
 
     let lhRGBLight: QbitRGBLight.LHQbitRGBLight;
-	let lhRGBLight_: QbitRGBLight.LHQbitRGBLight;
+    let lhRGBLight_: QbitRGBLight.LHQbitRGBLight;
     //% blockId="initRGBLight" block="initRGBLight before use"
     //% weight=94
     export function initRGBLight() {
         if (!lhRGBLight) {
-            lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 2, QbitRGBPixelMode.RGB);
+            lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 1, QbitRGBPixelMode.RGB);
         }
-		 
+
+        
+        if (!lhRGBLight_) {
+            lhRGBLight_ = QbitRGBLight.create(DigitalPin.P8, 1, QbitRGBPixelMode.RGB);
+        }
         clearLight();
     }
-	 //% blockId="initRGBLight1" block="initRGBLight before use"
-    //% weight=94
-	export function initRGBLight1() {
-		  if (!lhRGBLight_) {
-            lhRGBLight_ = QbitRGBLight.create(DigitalPin.P8, 2, QbitRGBPixelMode.RGB);
-        }
-        clearLight1();
-    }
-	
+
     //% blockId="setBrightness" block="set brightness %brightness"
     //% brightness.min=0 brightness.max=255
     //% weight=92
     export function setBrightness(brightness: number): void {
         lhRGBLight.setBrightness(brightness);
-    }
-	 //% blockId="setBrightness1" block="set brightness %brightness"
-    //% brightness.min=0 brightness.max=255
-    //% weight=92
-    export function setBrightness1(brightness: number): void {
-		lhRGBLight_.setBrightness(brightness);
+        lhRGBLight_.setBrightness(brightness);
     }
 
     //% weight=91 blockId=setPixelRGB block="Set|%lightoffset|color to %rgb"
     export function setPixelRGB(lightoffset: Lights, rgb: QbitRGBColors) {
-           lhRGBLight.setPixelColor(lightoffset, rgb, false);
+        if (lightoffset == 0) {
+            lhRGBLight.setPixelColor(0, rgb, false);
+        }
+        else if (lightoffset == 1) {
+            lhRGBLight_.setPixelColor(0, rgb, false);
+        }
     }
-	 
-    //% weight=91 blockId=setPixelRGB1 block="Set|%lightoffset|color to %rgb"
-    export function setPixelRGB1(lightoffset: Lights, rgb: QbitRGBColors) {
-		   lhRGBLight_.setPixelColor(lightoffset, rgb, false);
-    }
-	
+
+
     //% weight=90 blockId=setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
     export function setPixelRGBArgs(lightoffset: Lights, rgb: number) {
-        lhRGBLight.setPixelColor(lightoffset, rgb, false);
+
+        if (lightoffset == 0) {
+            lhRGBLight.setPixelColor(0, rgb, false);
+        }
+        else if (lightoffset == 1) {
+            lhRGBLight_.setPixelColor(0, rgb, false);
+        }
     }
-	
-    //% weight=90 blockId=setPixelRGBArgs1 block="Set|%lightoffset|color to %rgb"
-    export function setPixelRGBArgs1(lightoffset: Lights, rgb: number) {
-       
-		lhRGBLight_.setPixelColor(lightoffset, rgb, false);
-    }
-	
     //% weight=88 blockId=showLight block="Show light"
     export function showLight() {
         lhRGBLight.show();
-    }
-	
-    //% weight=88 blockId=showLight1 block="Show light"
-    export function showLight1() {
         lhRGBLight_.show();
     }
-	
+
     //% weight=86 blockGap=50 blockId=clearLight block="Clear light"
     export function clearLight() {
         lhRGBLight.clear();
-		
+        lhRGBLight_.clear();
     }
 
-    //% weight=86 blockGap=50 blockId=clearLight1 block="Clear light"
-    export function clearLight1() {
-        lhRGBLight_.clear();
-		
-    }
 }
 
 //% color="#87CEEB" weight=24 icon="\uf1b6"
@@ -1186,7 +1168,7 @@ namespace HelloMaker_积木类 {
     let Stm32_ID = -1
     let Stm32_GROUP = -1
     let Robot_Mode = -1
-    export  let Move_T = -1
+    export let Move_T = -1
     let stringReceive = ""
     let dl_CarSpeed = 80
     let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
@@ -1343,9 +1325,8 @@ namespace HelloMaker_积木类 {
             BaudRate.BaudRate9600)
         HelloMaker_传感器类.initColorSensor()
         HelloMaker_显示类.initRGBLight()
-		HelloMaker_显示类.initRGBLight1()
         HelloMaker_显示类.setPixelRGB(Lights.Light1, QbitRGBColors.Red)
-        HelloMaker_显示类.setPixelRGB1(Lights.Light1, QbitRGBColors.Red)
+        HelloMaker_显示类.setPixelRGB(Lights.Light2, QbitRGBColors.Red)
         HelloMaker_显示类.showLight()
         HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S1, 90, 0)
@@ -1373,7 +1354,7 @@ namespace HelloMaker_积木类 {
                 HelloMaker_小车类.Servo_Car(Stm32_ID, Angle, 0)
                 cmdType = CMD_TYPE.SERVO_ONE
             }
-			else if (StrAt = uartData.indexOf("Sergroup"), StrAt != -1) {
+            else if (StrAt = uartData.indexOf("Sergroup"), StrAt != -1) {
                 Stm32_GROUP = parseInt(uartData.substr(StrAt + 9, 3))
                 SendServoGroupToMcu(Stm32_GROUP, 1)
                 cmdType = CMD_TYPE.SERVO_GROUP
@@ -1382,15 +1363,15 @@ namespace HelloMaker_积木类 {
 
                 cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
             }
-			else if (StrAt = uartData.indexOf("speed"), StrAt != -1) {
+            else if (StrAt = uartData.indexOf("speed"), StrAt != -1) {
                 dl_CarSpeed = parseInt(uartData.substr(StrAt + 6, 3))
                 cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
             }
 
             else if (uartData.indexOf("Sercontrol-X") != -1) {
                 cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
-            }		
-			else if (StrAt = uartData.indexOf("Sercontrol"), StrAt != -1) {
+            }
+            else if (StrAt = uartData.indexOf("Sercontrol"), StrAt != -1) {
                 if (uartData.charAt(StrAt + 11) == 'S') {
                     HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
                     Move_T = 9
@@ -1400,11 +1381,11 @@ namespace HelloMaker_积木类 {
                     Move_T = 10
                 }
                 else if (uartData.charAt(StrAt + 11) == 'L') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft,  dl_CarSpeed * 2.5)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, dl_CarSpeed * 2.5)
                     Move_T = 11
                 }
                 else if (uartData.charAt(StrAt + 11) == 'R') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight,  dl_CarSpeed * 2.5)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, dl_CarSpeed * 2.5)
                     Move_T = 12
                 }
                 else if (uartData.charAt(StrAt + 11) == '0') {
@@ -1417,10 +1398,10 @@ namespace HelloMaker_积木类 {
                 SendMoveTypeToMcu(Move_T)
                 cmdType = CMD_TYPE.STM32_MOVE
             }
-			else if (StrAt = uartData.indexOf("mst"), StrAt != -1) {
-					move = parseInt(uartData.substr(StrAt + 4, 1))
-					speed = parseInt(uartData.substr(StrAt + 6, 3))
-					time = parseInt(uartData.substr(StrAt + 10, 2))
+            else if (StrAt = uartData.indexOf("mst"), StrAt != -1) {
+                move = parseInt(uartData.substr(StrAt + 4, 1))
+                speed = parseInt(uartData.substr(StrAt + 6, 3))
+                time = parseInt(uartData.substr(StrAt + 10, 2))
 
                 if (move == 1) {
                     HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, speed * 2.5)
@@ -1439,7 +1420,7 @@ namespace HelloMaker_积木类 {
                 cmdType = CMD_TYPE.MST;
 
             }
-			else if (StrAt = uartData.indexOf("dst"), StrAt != -1) {
+            else if (StrAt = uartData.indexOf("dst"), StrAt != -1) {
                 direction = parseInt(uartData.substr(StrAt + 4, 1))
                 speed = parseInt(uartData.substr(StrAt + 6, 3))
                 time = parseInt(uartData.substr(StrAt + 10, 2))
@@ -1463,7 +1444,7 @@ namespace HelloMaker_积木类 {
                 HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                 cmdType = CMD_TYPE.STO;
             }
-			else if (StrAt = uartData.indexOf("lig"), StrAt != -1) {
+            else if (StrAt = uartData.indexOf("lig"), StrAt != -1) {
                 rgb_id = parseInt(uartData.substr(StrAt + 4, 1))
                 rgb_color = parseInt(uartData.substr(StrAt + 6, 1))
                 rgb_bright = parseInt(uartData.substr(StrAt + 8, 3))
@@ -1475,26 +1456,24 @@ namespace HelloMaker_积木类 {
                     } else if (rgb_color == 8) {
                         rgb_color = 9
                     }
-					if(rgb_id == 1){
-                       HelloMaker_显示类.setPixelRGB(0, rgb_color)
-                       HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
-                       HelloMaker_显示类.showLight()
-					}
-					else if(rgb_id == 2){
-					   HelloMaker_显示类.setPixelRGB1(0, rgb_color)
-                       HelloMaker_显示类.setBrightness1(rgb_bright * 2.5)
-                       HelloMaker_显示类.showLight1()
-						
-					}
+                    if (rgb_id == 1) {
+                        HelloMaker_显示类.setPixelRGB(0, rgb_color)
+                    }
+                    else if (rgb_id == 2) {
+                        HelloMaker_显示类.setPixelRGB(1, rgb_color)
+                    }
+
+                    HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
+                    HelloMaker_显示类.showLight()
+
                 }
                 else {
                        HelloMaker_显示类.clearLight()
-					   HelloMaker_显示类.clearLight1()
                 }
                 cmdType = CMD_TYPE.LIG;
 
             }
-			else if (StrAt = uartData.indexOf("col"), StrAt != -1) {
+            else if (StrAt = uartData.indexOf("col"), StrAt != -1) {
                 color_id = parseInt(uartData.substr(StrAt + 4, 1))
                 if (color_id == 1) {
                     if (HelloMaker_传感器类.checkCurrentColor(HelloMaker_传感器类.Colors.Red) == true) {
@@ -1527,21 +1506,21 @@ namespace HelloMaker_积木类 {
                 }
                 cmdType = CMD_TYPE.COL;
             }
-            else if (StrAt = uartData.indexOf("ton"), StrAt != -1) {          
-					tone = parseInt(uartData.substr(StrAt + 4, 2))
-					dlbot_beat = parseInt(uartData.substr(StrAt + 7, 1))
-					//  music.playTone(Tone[tone], Beat[dlbot_beat])
-					cmdType = CMD_TYPE.TON;
+            else if (StrAt = uartData.indexOf("ton"), StrAt != -1) {
+                tone = parseInt(uartData.substr(StrAt + 4, 2))
+                dlbot_beat = parseInt(uartData.substr(StrAt + 7, 1))
+                //  music.playTone(Tone[tone], Beat[dlbot_beat])
+                cmdType = CMD_TYPE.TON;
             }
-			
+
             else if (uartData.indexOf("ver") != -1) {
                 cmdType = CMD_TYPE.VER;
                 bluetooth.uartWriteString("*@Microbit_V0#")
             }
-			else if (StrAt = uartData.indexOf("pos"), StrAt != -1) {       
-					show_number = parseInt(uartData.substr(StrAt + 7, uartData.length - StrAt - 7))  /// mark 
-					basic.showNumber(show_number)
-					cmdType = CMD_TYPE.POS;
+            else if (StrAt = uartData.indexOf("pos"), StrAt != -1) {
+                show_number = parseInt(uartData.substr(StrAt + 7, uartData.length - StrAt - 7))  /// mark 
+                basic.showNumber(show_number)
+                cmdType = CMD_TYPE.POS;
             }
 			/*
             else if (uartData.indexOf("coo") != -1) {
@@ -1578,7 +1557,7 @@ namespace HelloMaker_积木类 {
                 cmdType = CMD_TYPE.EXT;
             }
 			*/
-			else if (StrAt = uartData.indexOf("sen"), StrAt != -1) {
+            else if (StrAt = uartData.indexOf("sen"), StrAt != -1) {
                 stringReceive = uartData.substr(StrAt + 4, uartData.length - StrAt - 4)  /// mark
                 basic.showString(stringReceive)
                 cmdType = CMD_TYPE.SEN;
@@ -1588,7 +1567,7 @@ namespace HelloMaker_积木类 {
                 bluetooth.uartWriteString("*@tem-" + wendu + "#")
                 cmdType = CMD_TYPE.TEM;
             }
-         
+
             else if (uartData.indexOf("sta") != -1) {
 
                 if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.White))) {
@@ -1605,7 +1584,7 @@ namespace HelloMaker_积木类 {
                 }
                 cmdType = CMD_TYPE.STA;
             }
-			else if (StrAt = uartData.indexOf("ser"), StrAt != -1) {
+            else if (StrAt = uartData.indexOf("ser"), StrAt != -1) {
                 dlbot_pos = parseInt(uartData.substr(StrAt + 4, 4))
                 dlbot_id = parseInt(uartData.substr(StrAt + 9, 1))
                 dlbot_speed = parseInt(uartData.substr(StrAt + 11, 2))
@@ -1620,3 +1599,4 @@ namespace HelloMaker_积木类 {
         }
     }
 }
+ 
