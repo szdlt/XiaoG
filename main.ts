@@ -23,7 +23,7 @@ namespace HelloMaker_显示类 {
 		  if (!lhRGBLight_) {
             lhRGBLight_ = QbitRGBLight.create(DigitalPin.P8, 2, QbitRGBPixelMode.RGB);
         }
-        clearLight();
+        clearLight1();
     }
 	
     //% blockId="setBrightness" block="set brightness %brightness"
@@ -1475,12 +1475,21 @@ namespace HelloMaker_积木类 {
                     } else if (rgb_color == 8) {
                         rgb_color = 9
                     }
-                    HelloMaker_显示类.setPixelRGB(rgb_id - 1, rgb_color)
-                    HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
-                    HelloMaker_显示类.showLight()
+					if(rgb_id == 1){
+                       HelloMaker_显示类.setPixelRGB(0, rgb_color)
+                       HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
+                       HelloMaker_显示类.showLight()
+					}
+					else if(rgb_id == 2){
+					   HelloMaker_显示类.setPixelRGB1(0, rgb_color)
+                       HelloMaker_显示类.setBrightness1(rgb_bright * 2.5)
+                       HelloMaker_显示类.showLight1()
+						
+					}
                 }
                 else {
-                    HelloMaker_显示类.clearLight()
+                       HelloMaker_显示类.clearLight()
+					   HelloMaker_显示类.clearLight1()
                 }
                 cmdType = CMD_TYPE.LIG;
 
