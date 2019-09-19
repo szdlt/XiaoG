@@ -7,50 +7,80 @@ load dependency
 namespace HelloMaker_显示类 {
 
     let lhRGBLight: QbitRGBLight.LHQbitRGBLight;
+	let lhRGBLight_: QbitRGBLight.LHQbitRGBLight;
     //% blockId="initRGBLight" block="initRGBLight before use"
     //% weight=94
     export function initRGBLight() {
         if (!lhRGBLight) {
-            lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 4, QbitRGBPixelMode.RGB);
+            lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 2, QbitRGBPixelMode.RGB);
+        }
+		 
+        clearLight();
+    }
+	 //% blockId="initRGBLight1" block="initRGBLight before use"
+    //% weight=94
+	export function initRGBLight1() {
+		  if (!lhRGBLight_) {
+            lhRGBLight_ = QbitRGBLight.create(DigitalPin.P8, 2, QbitRGBPixelMode.RGB);
         }
         clearLight();
     }
+	
     //% blockId="setBrightness" block="set brightness %brightness"
     //% brightness.min=0 brightness.max=255
     //% weight=92
     export function setBrightness(brightness: number): void {
         lhRGBLight.setBrightness(brightness);
     }
-	/**
-     * Set the color of the colored lights, after finished the setting please perform  the display of colored lights.
-     */
+	 //% blockId="setBrightness1" block="set brightness %brightness"
+    //% brightness.min=0 brightness.max=255
+    //% weight=92
+    export function setBrightness1(brightness: number): void {
+		lhRGBLight_.setBrightness(brightness);
+    }
+
     //% weight=91 blockId=setPixelRGB block="Set|%lightoffset|color to %rgb"
     export function setPixelRGB(lightoffset: Lights, rgb: QbitRGBColors) {
-        lhRGBLight.setPixelColor(lightoffset, rgb, false);
+           lhRGBLight.setPixelColor(lightoffset, rgb, false);
     }
-    /**
-    * Set RGB Color argument
-    */
+	 
+    //% weight=91 blockId=setPixelRGB1 block="Set|%lightoffset|color to %rgb"
+    export function setPixelRGB1(lightoffset: Lights, rgb: QbitRGBColors) {
+		   lhRGBLight_.setPixelColor(lightoffset, rgb, false);
+    }
+	
     //% weight=90 blockId=setPixelRGBArgs block="Set|%lightoffset|color to %rgb"
     export function setPixelRGBArgs(lightoffset: Lights, rgb: number) {
         lhRGBLight.setPixelColor(lightoffset, rgb, false);
     }
-	/**
-     * Display the colored lights, and set the color of the colored lights to match the use. After setting the color of the colored lights, the color of the lights must be displayed.
-     */
+	
+    //% weight=90 blockId=setPixelRGBArgs1 block="Set|%lightoffset|color to %rgb"
+    export function setPixelRGBArgs1(lightoffset: Lights, rgb: number) {
+       
+		lhRGBLight_.setPixelColor(lightoffset, rgb, false);
+    }
+	
     //% weight=88 blockId=showLight block="Show light"
     export function showLight() {
         lhRGBLight.show();
     }
-
-    /**
-     * Clear the color of the colored lights and turn off the lights.
-     */
+	
+    //% weight=88 blockId=showLight1 block="Show light"
+    export function showLight1() {
+        lhRGBLight_.show();
+    }
+	
     //% weight=86 blockGap=50 blockId=clearLight block="Clear light"
     export function clearLight() {
         lhRGBLight.clear();
+		
     }
 
+    //% weight=86 blockGap=50 blockId=clearLight1 block="Clear light"
+    export function clearLight1() {
+        lhRGBLight_.clear();
+		
+    }
 }
 
 //% color="#87CEEB" weight=24 icon="\uf1b6"
@@ -1158,7 +1188,7 @@ namespace HelloMaker_积木类 {
     let Robot_Mode = -1
     export  let Move_T = -1
     let stringReceive = ""
-    let dl_CarSpeed = 200
+    let dl_CarSpeed = 80
     let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
 
     /*
@@ -1359,7 +1389,7 @@ namespace HelloMaker_积木类 {
 
             else if (uartData.indexOf("Sercontrol-X") != -1) {
                 cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
-            }
+            }		
 			else if (StrAt = uartData.indexOf("Sercontrol"), StrAt != -1) {
                 if (uartData.charAt(StrAt + 11) == 'S') {
                     HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
@@ -1370,11 +1400,11 @@ namespace HelloMaker_积木类 {
                     Move_T = 10
                 }
                 else if (uartData.charAt(StrAt + 11) == 'L') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, 255)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft,  dl_CarSpeed * 2.5)
                     Move_T = 11
                 }
                 else if (uartData.charAt(StrAt + 11) == 'R') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, 255)
+                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight,  dl_CarSpeed * 2.5)
                     Move_T = 12
                 }
                 else if (uartData.charAt(StrAt + 11) == '0') {
