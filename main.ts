@@ -1,4 +1,4 @@
-/*  2019.0918.17:50
+/*  2019.0919.13:56
 modified from duncan
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -1343,10 +1343,10 @@ namespace HelloMaker_积木类 {
             BaudRate.BaudRate9600)
         HelloMaker_传感器类.initColorSensor()
         HelloMaker_显示类.initRGBLight()
+		HelloMaker_显示类.initRGBLight1()
         HelloMaker_显示类.setPixelRGB(Lights.Light1, QbitRGBColors.Red)
-        HelloMaker_显示类.setPixelRGB(Lights.Light2, QbitRGBColors.Red)
+        HelloMaker_显示类.setPixelRGB1(Lights.Light1, QbitRGBColors.Red)
         HelloMaker_显示类.showLight()
-        HelloMaker_电机类.Vibrator_Close()
         HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S1, 90, 0)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S2, 90, 0)
