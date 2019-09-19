@@ -1,4 +1,4 @@
-/*  2019.0919.13:56
+/*  2019.0919.21:49
 modified from duncan
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -12,7 +12,7 @@ namespace HelloMaker_显示类 {
     //% weight=94
     export function initRGBLight() {
         if (!lhRGBLight) {
-            lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 1, QbitRGBPixelMode.RGB);
+            lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 2, QbitRGBPixelMode.RGB);
         }
 
         
@@ -34,6 +34,7 @@ namespace HelloMaker_显示类 {
     export function setPixelRGB(lightoffset: Lights, rgb: QbitRGBColors) {
         if (lightoffset == 0) {
             lhRGBLight.setPixelColor(0, rgb, false);
+	    lhRGBLight.setPixelColor(1, rgb, false);
         }
         else if (lightoffset == 1) {
             lhRGBLight_.setPixelColor(0, rgb, false);
@@ -46,6 +47,7 @@ namespace HelloMaker_显示类 {
 
         if (lightoffset == 0) {
             lhRGBLight.setPixelColor(0, rgb, false);
+	    lhRGBLight.setPixelColor(1, rgb, false);
         }
         else if (lightoffset == 1) {
             lhRGBLight_.setPixelColor(0, rgb, false);
