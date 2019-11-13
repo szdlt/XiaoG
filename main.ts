@@ -684,9 +684,9 @@ namespace HelloMaker_小车类 {
         S1 = 1,
         S2,
         S3,
-        S4,
-        S5,
-        S6
+        S4
+    //    S5,
+    //    S6
     }
     export enum CarRunState {
         //% blockId="Car_Normal" block="正常"
@@ -989,10 +989,15 @@ namespace HelloMaker_小车类 {
         // 50hz: 20,000 us
         if (num == 1) { value_past = value1_past; }
         else if (num == 2) { value_past = value2_past; }
+		
+		
         else if (num == 3) { value_past = value3_past; }
         else if (num == 4) { value_past = value4_past; }
-        else if (num == 5) { value_past = value5_past; }
-        else if (num == 6) { value_past = value6_past; }
+		
+		
+		
+    //    else if (num == 5) { value_past = value5_past; }
+    //    else if (num == 6) { value_past = value6_past; }
 
 
         while (value_past != value) {
@@ -1032,8 +1037,8 @@ namespace HelloMaker_小车类 {
         else if (num == 2) { value2_past = value; }
         else if (num == 3) { value3_past = value; }
         else if (num == 4) { value4_past = value; }
-        else if (num == 5) { value5_past = value; }
-        else if (num == 6) { value6_past = value; }
+    //    else if (num == 5) { value5_past = value; }
+    //    else if (num == 6) { value6_past = value; }
     }
     //% blockId=HelloMaker_Avoid_Sensor block="Avoid_Sensor|value %value"
     //% weight=95
@@ -1395,8 +1400,8 @@ namespace HelloMaker_积木类 {
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S2, 90, 0)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S3, 90, 0)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S4, 90, 0)
-        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S5, 90, 0)
-        HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S6, 90, 0)
+    //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S5, 90, 0)
+    //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S6, 90, 0)
     }
 
     //% blockId=HelloMaker_BuildingBlocks block="BuildingBlocks|%uartData"
@@ -1661,4 +1666,3 @@ namespace HelloMaker_积木类 {
         }
     }
 }
- 
