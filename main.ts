@@ -701,8 +701,11 @@ namespace HelloMaker_小车类 {
         //% blockId="Motor0" block="电机1"
         Motor0 = 0,
         //% blockId="Motor1"  block="电机2"
-        Motor1 = 1
-
+        Motor1 = 1,
+        //% blockId="Motor2" block="电机3"
+        Motor2 = 2,
+        //% blockId="Motor3"  block="电机4"
+        Motor3 = 3
 
     }
     export enum MotorDir {
@@ -795,6 +798,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350) {
             speed = 350
         }
+		setPwm(12-4, 0, speed);
+        setPwm(13-4, 0, 0);
+        setPwm(15-4, 0, speed);
+        setPwm(14-4, 0, 0);
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
         setPwm(15, 0, speed);
@@ -813,6 +820,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
+		setPwm(12-4, 0, 0);
+        setPwm(13-4, 0, speed);
+        setPwm(15-4, 0, 0);
+        setPwm(14-4, 0, speed);
         setPwm(12, 0, 0);
         setPwm(13, 0, speed);
         setPwm(15, 0, 0);
@@ -830,6 +841,11 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
+		setPwm(8, 0, 0);
+        setPwm(9, 0, 0);
+        setPwm(11, 0, speed);
+        setPwm(10, 0, 0);
+		
         setPwm(12, 0, 0);
         setPwm(13, 0, 0);
         setPwm(15, 0, speed);
@@ -847,6 +863,12 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
+		setPwm(12-4, 0, speed);
+        setPwm(13-4, 0, 0);
+
+        setPwm(15-4, 0, 0);
+        setPwm(14-4, 0, 0);
+		
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
 
@@ -858,6 +880,10 @@ namespace HelloMaker_小车类 {
         // pins.analogWritePin(AnalogPin.P1, 1023 - speed);
     }
     function Car_stop() {
+		setPwm(12-4, 0, 0);
+        setPwm(13-4, 0, 0);
+        setPwm(15-4, 0, 0);
+        setPwm(14-4, 0, 0);
         setPwm(12, 0, 0);
         setPwm(13, 0, 0);
         setPwm(15, 0, 0);
@@ -875,6 +901,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
+		setPwm(12-4, 0, 0);
+        setPwm(13-4, 0, speed);
+        setPwm(15-4, 0, speed);
+        setPwm(14-4, 0, 0);
         setPwm(12, 0, 0);
         setPwm(13, 0, speed);
         setPwm(15, 0, speed);
@@ -892,6 +922,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
+		setPwm(12-4, 0, speed);
+        setPwm(13-4, 0, 0);
+        setPwm(15-4, 0, 0);
+        setPwm(14-4, 0, speed);
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
         setPwm(15, 0, 0);
@@ -1119,7 +1153,7 @@ namespace HelloMaker_小车类 {
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
     export function MotorRun(index0: MotorNum, index1: MotorDir, speed: number) {
-        if (index0 == MotorNum.Motor1) {
+        if (index0 == MotorNum.Motor0) {
             if (index1 == MotorDir.clockwise) {
                 setPwm(12, 0, speed * 16);
                 setPwm(13, 0, 0);
@@ -1131,7 +1165,7 @@ namespace HelloMaker_小车类 {
 
             }
         }
-        else if (index0 == MotorNum.Motor0) {
+        else if (index0 == MotorNum.Motor1) {
             if (index1 == MotorDir.clockwise) {
                 setPwm(14, 0, speed * 16);
                 setPwm(15, 0, 0);
@@ -1140,6 +1174,32 @@ namespace HelloMaker_小车类 {
             else if (index1 == MotorDir.anticlockwise) {
                 setPwm(15, 0, speed * 16);
                 setPwm(14, 0, 0);
+
+            }
+
+        }
+		else if (index0 == MotorNum.Motor2) {
+            if (index1 == MotorDir.clockwise) {
+                setPwm(8, 0, speed * 16);
+                setPwm(9, 0, 0);
+
+            }
+            else if (index1 == MotorDir.anticlockwise) {
+                setPwm(9, 0, speed * 16);
+                setPwm(8, 0, 0);
+
+            }
+
+        }
+		else if (index0 == MotorNum.Motor3) {
+            if (index1 == MotorDir.clockwise) {
+                setPwm(10, 0, speed * 16);
+                setPwm(11, 0, 0);
+
+            }
+            else if (index1 == MotorDir.anticlockwise) {
+                setPwm(11, 0, speed * 16);
+                setPwm(10, 0, 0);
 
             }
 
