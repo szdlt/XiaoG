@@ -778,8 +778,6 @@ namespace HelloMaker_小车类 {
         if (!initialized) {
             initPCA9685();
         }
-        if (channel < 9 && channel > 5)
-            channel += 3;
         let buf = pins.createBuffer(5);
         buf[0] = LED0_ON_L + 4 * channel;
         buf[1] = on & 0xff;
