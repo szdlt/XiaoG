@@ -1,4 +1,4 @@
-/*  2019.0919.21:49
+/*  2019.1115.10:42
 modified from duncan
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -1183,19 +1183,6 @@ namespace HelloMaker_小车类 {
         }
 		else if (index0 == MotorNum.Motor2) {
             if (index1 == MotorDir.clockwise) {
-                setPwm(8, 0, speed * 16);
-                setPwm(9, 0, 0);
-
-            }
-            else if (index1 == MotorDir.anticlockwise) {
-                setPwm(9, 0, speed * 16);
-                setPwm(8, 0, 0);
-
-            }
-
-        }
-		else if (index0 == MotorNum.Motor3) {
-            if (index1 == MotorDir.clockwise) {
                 setPwm(10, 0, speed * 16);
                 setPwm(11, 0, 0);
 
@@ -1207,6 +1194,20 @@ namespace HelloMaker_小车类 {
             }
 
         }
+		else if (index0 == MotorNum.Motor3) {
+            if (index1 == MotorDir.clockwise) {
+                setPwm(8, 0, speed * 16);
+                setPwm(9, 0, 0);
+
+            }
+            else if (index1 == MotorDir.anticlockwise) {
+                setPwm(9, 0, speed * 16);
+                setPwm(8, 0, 0);
+
+            }
+
+        }
+		
     }
 }
 
