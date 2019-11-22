@@ -15,7 +15,6 @@ namespace HelloMaker_显示类 {
             lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 2, QbitRGBPixelMode.RGB);
         }
 
-
         if (!lhRGBLight_) {
             lhRGBLight_ = QbitRGBLight.create(DigitalPin.P8, 1, QbitRGBPixelMode.RGB);
         }
@@ -1089,12 +1088,12 @@ namespace HelloMaker_小车类 {
         switch (direct) {
             case enPos.Left1State: {
                 if (IIC_data & 0x1) {
-                    if (value == enLineState.White) {
+                    if (value == enLineState.Black) {
                         temp = true;
                     }
                 }
                 else {
-                    if (value == enLineState.Black) {
+                    if (value == enLineState.White ) {
                         temp = true;
                     }
                 }
@@ -1102,12 +1101,12 @@ namespace HelloMaker_小车类 {
             }
             case enPos.Left2State: {
                 if (IIC_data & 0x2) {
-                    if (value == enLineState.White) {
+                    if (value == enLineState.Black) {
                         temp = true;
                     }
                 }
                 else {
-                    if (value == enLineState.Black) {
+                    if (value == enLineState.White ) {
                         temp = true;
                     }
                 }
@@ -1115,12 +1114,12 @@ namespace HelloMaker_小车类 {
             }
             case enPos.Right1State: {
                 if (IIC_data & 0x8) {
-                    if (value == enLineState.White) {
+                    if (value == enLineState.Black) {
                         temp = true;
                     }
                 }
                 else {
-                    if (value == enLineState.Black) {
+                    if (value == enLineState.White ) {
                         temp = true;
                     }
                 }
@@ -1129,12 +1128,12 @@ namespace HelloMaker_小车类 {
 
             case enPos.Right2State: {
                 if (IIC_data & 0x4) {
-                    if (value == enLineState.White) {
+                    if (value == enLineState.Black) {
                         temp = true;
                     }
                 }
                 else {
-                    if (value == enLineState.Black) {
+                    if (value == enLineState.White ) {
                         temp = true;
                     }
                 }
