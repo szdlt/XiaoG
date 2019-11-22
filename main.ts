@@ -662,14 +662,14 @@ namespace HelloMaker_小车类 {
     let car_speed = 200
 
     export enum enPos {
-        //% blockId="Left1State" block="左一状态"
-        Left1State = 0,
-        //% blockId="Left2State" block="左二状态"
-        Left2State = 1,
-        //% blockId="Right1State" block="右一状态"
-        Right1State = 2,
-        //% blockId="Right2State" block="右二状态"
-        Right2State = 3
+        //% blockId="Sensor1" block="传感器1"
+        Sensor1 = 0,
+        //% blockId="Sensor2" block="传感器2"
+        Sensor2 = 1,
+        //% blockId="Sensor3" block="传感器3"
+        Sensor3 = 2,
+        //% blockId="Sensor4" block="传感器4"
+        Sensor4 = 3
     }
     export enum enLineState {
         //% blockId="White" block="白线"
@@ -1086,7 +1086,7 @@ namespace HelloMaker_小车类 {
         let IIC_data = 0
         IIC_data = pins.i2cReadNumber(45, NumberFormat.UInt8LE, false)
         switch (direct) {
-            case enPos.Left1State: {
+            case enPos.Sensor1: {
                 if (IIC_data & 0x1) {
                     if (value == enLineState.Black) {
                         temp = true;
@@ -1099,7 +1099,7 @@ namespace HelloMaker_小车类 {
                 }
                 break;
             }
-            case enPos.Left2State: {
+            case enPos.Sensor2: {
                 if (IIC_data & 0x2) {
                     if (value == enLineState.Black) {
                         temp = true;
@@ -1112,8 +1112,9 @@ namespace HelloMaker_小车类 {
                 }
                 break;
             }
-            case enPos.Right1State: {
-                if (IIC_data & 0x8) {
+           
+            case enPos.Sensor3: {
+                if (IIC_data & 0x4) {
                     if (value == enLineState.Black) {
                         temp = true;
                     }
@@ -1125,9 +1126,8 @@ namespace HelloMaker_小车类 {
                 }
                 break;
             }
-
-            case enPos.Right2State: {
-                if (IIC_data & 0x4) {
+			 case enPos.Sensor4: {
+                if (IIC_data & 0x8) {
                     if (value == enLineState.Black) {
                         temp = true;
                     }
@@ -1664,16 +1664,16 @@ namespace HelloMaker_积木类 {
 
             else if (uartData.indexOf("sta") != -1) {
 
-                if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left1State, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right1State, HelloMaker_小车类.enLineState.White))) {
+                if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor1, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor3, HelloMaker_小车类.enLineState.White))) {
                     bluetooth.uartWriteString("*@sta-0#")
                 }
-                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left1State, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right1State, HelloMaker_小车类.enLineState.Black))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor1, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor3, HelloMaker_小车类.enLineState.Black))) {
                     bluetooth.uartWriteString("*@sta-1#")
                 }
-                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left2State, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right2State, HelloMaker_小车类.enLineState.White))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor2, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor4, HelloMaker_小车类.enLineState.White))) {
                     bluetooth.uartWriteString("*@sta-2#")
                 }
-                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left2State, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right2State, HelloMaker_小车类.enLineState.Black))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor2, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor4, HelloMaker_小车类.enLineState.Black))) {
                     bluetooth.uartWriteString("*@sta-3#")
                 }
                 cmdType = CMD_TYPE.STA;
