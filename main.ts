@@ -1,4 +1,4 @@
-/*  2019.1115.10:42
+/*  2019.1122.10:45
 modified from duncan
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -15,7 +15,7 @@ namespace HelloMaker_显示类 {
             lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 2, QbitRGBPixelMode.RGB);
         }
 
-        
+
         if (!lhRGBLight_) {
             lhRGBLight_ = QbitRGBLight.create(DigitalPin.P8, 1, QbitRGBPixelMode.RGB);
         }
@@ -34,7 +34,7 @@ namespace HelloMaker_显示类 {
     export function setPixelRGB(lightoffset: Lights, rgb: QbitRGBColors) {
         if (lightoffset == 0) {
             lhRGBLight.setPixelColor(0, rgb, false);
-	    lhRGBLight.setPixelColor(1, rgb, false);
+            lhRGBLight.setPixelColor(1, rgb, false);
         }
         else if (lightoffset == 1) {
             lhRGBLight_.setPixelColor(0, rgb, false);
@@ -47,7 +47,7 @@ namespace HelloMaker_显示类 {
 
         if (lightoffset == 0) {
             lhRGBLight.setPixelColor(0, rgb, false);
-	    lhRGBLight.setPixelColor(1, rgb, false);
+            lhRGBLight.setPixelColor(1, rgb, false);
         }
         else if (lightoffset == 1) {
             lhRGBLight_.setPixelColor(0, rgb, false);
@@ -663,10 +663,14 @@ namespace HelloMaker_小车类 {
     let car_speed = 200
 
     export enum enPos {
-        //% blockId="LeftState" block="左边状态"
-        LeftState = 0,
-        //% blockId="RightState" block="右边状态"
-        RightState = 1
+        //% blockId="Left1State" block="左一状态"
+        Left1State = 0,
+        //% blockId="Left2State" block="左二状态"
+        Left2State = 1,
+        //% blockId="Right1State" block="右一状态"
+        Right1State = 2,
+        //% blockId="Right2State" block="右二状态"
+        Right2State = 3
     }
     export enum enLineState {
         //% blockId="White" block="白线"
@@ -685,8 +689,8 @@ namespace HelloMaker_小车类 {
         S2,
         S3,
         S4
-    //    S5,
-    //    S6
+        //    S5,
+        //    S6
     }
     export enum CarRunState {
         //% blockId="Car_Normal" block="正常"
@@ -796,10 +800,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350) {
             speed = 350
         }
-		setPwm(12-4, 0, speed);
-        setPwm(13-4, 0, 0);
-        setPwm(15-4, 0, speed);
-        setPwm(14-4, 0, 0);
+        setPwm(12 - 4, 0, speed);
+        setPwm(13 - 4, 0, 0);
+        setPwm(15 - 4, 0, speed);
+        setPwm(14 - 4, 0, 0);
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
         setPwm(15, 0, speed);
@@ -818,10 +822,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-		setPwm(12-4, 0, 0);
-        setPwm(13-4, 0, speed);
-        setPwm(15-4, 0, 0);
-        setPwm(14-4, 0, speed);
+        setPwm(12 - 4, 0, 0);
+        setPwm(13 - 4, 0, speed);
+        setPwm(15 - 4, 0, 0);
+        setPwm(14 - 4, 0, speed);
         setPwm(12, 0, 0);
         setPwm(13, 0, speed);
         setPwm(15, 0, 0);
@@ -839,11 +843,11 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-		setPwm(8, 0, 0);
+        setPwm(8, 0, 0);
         setPwm(9, 0, 0);
         setPwm(11, 0, speed);
         setPwm(10, 0, 0);
-		
+
         setPwm(12, 0, 0);
         setPwm(13, 0, 0);
         setPwm(15, 0, speed);
@@ -861,12 +865,12 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-		setPwm(12-4, 0, speed);
-        setPwm(13-4, 0, 0);
+        setPwm(12 - 4, 0, speed);
+        setPwm(13 - 4, 0, 0);
 
-        setPwm(15-4, 0, 0);
-        setPwm(14-4, 0, 0);
-		
+        setPwm(15 - 4, 0, 0);
+        setPwm(14 - 4, 0, 0);
+
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
 
@@ -878,10 +882,10 @@ namespace HelloMaker_小车类 {
         // pins.analogWritePin(AnalogPin.P1, 1023 - speed);
     }
     function Car_stop() {
-		setPwm(12-4, 0, 0);
-        setPwm(13-4, 0, 0);
-        setPwm(15-4, 0, 0);
-        setPwm(14-4, 0, 0);
+        setPwm(12 - 4, 0, 0);
+        setPwm(13 - 4, 0, 0);
+        setPwm(15 - 4, 0, 0);
+        setPwm(14 - 4, 0, 0);
         setPwm(12, 0, 0);
         setPwm(13, 0, 0);
         setPwm(15, 0, 0);
@@ -899,10 +903,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-		setPwm(12-4, 0, 0);
-        setPwm(13-4, 0, speed);
-        setPwm(15-4, 0, speed);
-        setPwm(14-4, 0, 0);
+        setPwm(12 - 4, 0, 0);
+        setPwm(13 - 4, 0, speed);
+        setPwm(15 - 4, 0, speed);
+        setPwm(14 - 4, 0, 0);
         setPwm(12, 0, 0);
         setPwm(13, 0, speed);
         setPwm(15, 0, speed);
@@ -920,10 +924,10 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-		setPwm(12-4, 0, speed);
-        setPwm(13-4, 0, 0);
-        setPwm(15-4, 0, 0);
-        setPwm(14-4, 0, speed);
+        setPwm(12 - 4, 0, speed);
+        setPwm(13 - 4, 0, 0);
+        setPwm(15 - 4, 0, 0);
+        setPwm(14 - 4, 0, speed);
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
         setPwm(15, 0, 0);
@@ -987,15 +991,15 @@ namespace HelloMaker_小车类 {
         // 50hz: 20,000 us
         if (num == 1) { value_past = value1_past; }
         else if (num == 2) { value_past = value2_past; }
-		
-		
+
+
         else if (num == 3) { value_past = value3_past; }
         else if (num == 4) { value_past = value4_past; }
-		
-		
-		
-    //    else if (num == 5) { value_past = value5_past; }
-    //    else if (num == 6) { value_past = value6_past; }
+
+
+
+        //    else if (num == 5) { value_past = value5_past; }
+        //    else if (num == 6) { value_past = value6_past; }
 
 
         while (value_past != value) {
@@ -1035,8 +1039,8 @@ namespace HelloMaker_小车类 {
         else if (num == 2) { value2_past = value; }
         else if (num == 3) { value3_past = value; }
         else if (num == 4) { value4_past = value; }
-    //    else if (num == 5) { value5_past = value; }
-    //    else if (num == 6) { value6_past = value; }
+        //    else if (num == 5) { value5_past = value; }
+        //    else if (num == 6) { value6_past = value; }
     }
     //% blockId=HelloMaker_Avoid_Sensor block="Avoid_Sensor|value %value"
     //% weight=95
@@ -1080,34 +1084,59 @@ namespace HelloMaker_小车类 {
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
     export function Line_Sensor(direct: enPos, value: enLineState): boolean {
         let temp: boolean = false;
+        let IIC_data = 0
+        IIC_data = pins.i2cReadNumber(45, NumberFormat.UInt8LE, false)
         switch (direct) {
-            case enPos.LeftState: {
-                if (pins.analogReadPin(AnalogPin.P2) < 500) {
+            case enPos.Left1State: {
+                if (IIC_data & 0x1) {
                     if (value == enLineState.White) {
                         temp = true;
                     }
-                    setPwm(7, 0, 4095);
                 }
                 else {
                     if (value == enLineState.Black) {
                         temp = true;
                     }
-                    setPwm(7, 0, 0);
                 }
                 break;
             }
-            case enPos.RightState: {
-                if (pins.analogReadPin(AnalogPin.P1) < 500) {
+            case enPos.Left2State: {
+                if (IIC_data & 0x2) {
                     if (value == enLineState.White) {
                         temp = true;
                     }
-                    setPwm(6, 0, 4095);
                 }
                 else {
                     if (value == enLineState.Black) {
                         temp = true;
                     }
-                    setPwm(6, 0, 0);
+                }
+                break;
+            }
+            case enPos.Right1State: {
+                if (IIC_data & 0x8) {
+                    if (value == enLineState.White) {
+                        temp = true;
+                    }
+                }
+                else {
+                    if (value == enLineState.Black) {
+                        temp = true;
+                    }
+                }
+                break;
+            }
+
+            case enPos.Right2State: {
+                if (IIC_data & 0x4) {
+                    if (value == enLineState.White) {
+                        temp = true;
+                    }
+                }
+                else {
+                    if (value == enLineState.Black) {
+                        temp = true;
+                    }
                 }
                 break;
             }
@@ -1181,7 +1210,7 @@ namespace HelloMaker_小车类 {
             }
 
         }
-		else if (index0 == MotorNum.Motor2) {
+        else if (index0 == MotorNum.Motor2) {
             if (index1 == MotorDir.clockwise) {
                 setPwm(10, 0, speed * 16);
                 setPwm(11, 0, 0);
@@ -1194,7 +1223,7 @@ namespace HelloMaker_小车类 {
             }
 
         }
-		else if (index0 == MotorNum.Motor3) {
+        else if (index0 == MotorNum.Motor3) {
             if (index1 == MotorDir.clockwise) {
                 setPwm(8, 0, speed * 16);
                 setPwm(9, 0, 0);
@@ -1207,7 +1236,7 @@ namespace HelloMaker_小车类 {
             }
 
         }
-		
+
     }
 }
 
@@ -1399,8 +1428,8 @@ namespace HelloMaker_积木类 {
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S2, 90, 0)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S3, 90, 0)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S4, 90, 0)
-    //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S5, 90, 0)
-    //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S6, 90, 0)
+        //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S5, 90, 0)
+        //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S6, 90, 0)
     }
 
     //% blockId=HelloMaker_BuildingBlocks block="BuildingBlocks|%uartData"
@@ -1534,7 +1563,7 @@ namespace HelloMaker_积木类 {
 
                 }
                 else {
-                       HelloMaker_显示类.clearLight()
+                    HelloMaker_显示类.clearLight()
                 }
                 cmdType = CMD_TYPE.LIG;
 
@@ -1636,16 +1665,16 @@ namespace HelloMaker_积木类 {
 
             else if (uartData.indexOf("sta") != -1) {
 
-                if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.White))) {
+                if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left1State, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right1State, HelloMaker_小车类.enLineState.White))) {
                     bluetooth.uartWriteString("*@sta-0#")
                 }
-                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.Black))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left1State, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right1State, HelloMaker_小车类.enLineState.Black))) {
                     bluetooth.uartWriteString("*@sta-1#")
                 }
-                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.White))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left2State, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right2State, HelloMaker_小车类.enLineState.White))) {
                     bluetooth.uartWriteString("*@sta-2#")
                 }
-                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.LeftState, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.RightState, HelloMaker_小车类.enLineState.Black))) {
+                else if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Left2State, HelloMaker_小车类.enLineState.Black) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Right2State, HelloMaker_小车类.enLineState.Black))) {
                     bluetooth.uartWriteString("*@sta-3#")
                 }
                 cmdType = CMD_TYPE.STA;
@@ -1665,3 +1694,4 @@ namespace HelloMaker_积木类 {
         }
     }
 }
+ 
