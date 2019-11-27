@@ -799,6 +799,7 @@ namespace HelloMaker_小车类 {
         if (speed <= 350) {
             speed = 350
         }
+		
         setPwm(12 - 4, 0, speed);
         setPwm(13 - 4, 0, 0);
         setPwm(15 - 4, 0, speed);
@@ -807,6 +808,7 @@ namespace HelloMaker_小车类 {
         setPwm(13, 0, 0);
         setPwm(15, 0, speed);
         setPwm(14, 0, 0);
+		
         //pins.digitalWritePin(DigitalPin.P16, 1);
         // pins.analogWritePin(AnalogPin.P1, 1023-speed); //速度控制
 
@@ -1467,19 +1469,19 @@ namespace HelloMaker_积木类 {
             }
             else if (StrAt = uartData.indexOf("Sercontrol"), StrAt != -1) {
                 if (uartData.charAt(StrAt + 11) == 'S') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
+                 //   HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
                     Move_T = 9
                 }
                 else if (uartData.charAt(StrAt + 11) == 'B') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, dl_CarSpeed * 2.5)
+                //    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, dl_CarSpeed * 2.5)
                     Move_T = 10
                 }
                 else if (uartData.charAt(StrAt + 11) == 'L') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, dl_CarSpeed * 2.5)
+                //    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, dl_CarSpeed * 2.5)
                     Move_T = 11
                 }
                 else if (uartData.charAt(StrAt + 11) == 'R') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, dl_CarSpeed * 2.5)
+               //     HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, dl_CarSpeed * 2.5)
                     Move_T = 12
                 }
                 else if (uartData.charAt(StrAt + 11) == '0') {
