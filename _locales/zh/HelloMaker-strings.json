@@ -14,6 +14,7 @@
   "HelloMaker_传感器类.Smog_Sensor|block": "烟雾传感器|%value|烟雾",
   "HelloMaker_传感器类.Touch_Sensor|block": "触摸传感器|%value|触摸",
   "HelloMaker_传感器类.Humidity_Sensor|block": "湿度传感器检测到土壤湿度|%value",
+  "HelloMaker_传感器类.Potentiometer|block": "旋钮电位器返回值（0-100）",
   "HelloMaker_音乐类.Buzzer|block": "关闭蜂鸣器",
   "HelloMaker_电机类.Vibrator_Open|block": "开始震动",
   "HelloMaker_电机类.Vibrator_Close|block": "停止震动",
