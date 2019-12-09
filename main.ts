@@ -684,9 +684,9 @@ namespace HelloMaker_小车类 {
         NOOBSTACLE = 1
     }
     export enum NumAvoidSensor {
-        //% blockId="Sensor1" block="红外避障传感器1"
+        //% blockId="Sensor1" block="1"
         Sensor1 = 0,
-        //% blockId="Sensor2" block="红外避障传感器2"
+        //% blockId="Sensor2" block="2"
         Sensor2 = 1
     }
     export enum enServo {
