@@ -523,7 +523,16 @@ namespace HelloMaker_传感器类 {
         }
 
     }
-
+    //% blockId=HelloMaker_Potentiometer block="Potentiometer return voltage"
+    //% weight=100
+    //% blockGap=10
+    //% color="#87CEEB"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+    export function Potentiometer():number {
+        
+           return  pins.analogReadPin(AnalogPin.P1)*10/102 
+                   
+	}
     //% blockId=HelloMaker_Flame_Sensor block="Flame_Sensor|%value|火焰"
     //% weight=100
     //% blockGap=10
@@ -538,42 +547,7 @@ namespace HelloMaker_传感器类 {
         else {
             return false;
         }
-
-    }
-
-    function IR_send_38k() {
-        for (let i: number = 0; i < 8; i++) {
-            pins.digitalWritePin(DigitalPin.P9, 1);
-            control.waitMicros(13);
-            pins.digitalWritePin(DigitalPin.P9, 0);
-            control.waitMicros(13);
-        }
-    }
-    //% blockId=HelloMaker_IR_Sensor block="IR_Sensor|%value|障碍物"
-    //% weight=100
-    //% blockGap=10
-    //% color="#87CEEB"
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
-    function IR_Sensor(pin: DigitalPin, value: enIR): boolean {
-
-        pins.setPull(pin, PinPullMode.PullUp);
-        //IR_send_38k();
-        if (pins.digitalReadPin(pin) == value) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    //% blockId=HelloMaker_IR_Send block="IR_Send|pin %pin"
-    //% weight=100
-    //% blockGap=10
-    //% color="#87CEEB"
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
-    function IR_Send(pin: DigitalPin): void {
-        IR_send_38k();
-    }
+    } 
 }
 
 /*****************************************************************************************************************************************
@@ -1062,6 +1036,7 @@ namespace HelloMaker_小车类 {
         //    else if (num == 5) { value5_past = value; }
         //    else if (num == 6) { value6_past = value; }
     }
+	
     //% blockId=HelloMaker_Avoid_Sensor block="Avoid_Sensor|num: %num|value %value"
     //% weight=95
     //% blockGap=10
