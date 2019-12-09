@@ -1456,16 +1456,18 @@ namespace HelloMaker_积木类 {
                 let Angle = 0
                 Stm32_POS = parseInt(uartData.substr(StrAt + 7, 4))
                 Stm32_ID = parseInt(uartData.substr(StrAt + 12, 1))
-                SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
+           //   SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
                 Angle = Math.map(Stm32_POS, 0, 1000, 0, 180)
                 HelloMaker_小车类.Servo_Car(Stm32_ID, Angle, 0)
                 cmdType = CMD_TYPE.SERVO_ONE
             }
+	/*
             else if (StrAt = uartData.indexOf("Sergroup"), StrAt != -1) {
                 Stm32_GROUP = parseInt(uartData.substr(StrAt + 9, 3))
                 SendServoGroupToMcu(Stm32_GROUP, 1)
                 cmdType = CMD_TYPE.SERVO_GROUP
             }
+	*/
             else if (uartData.indexOf("Sercontrol-Z") != -1) {
 
                 cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
@@ -1502,9 +1504,10 @@ namespace HelloMaker_积木类 {
                 else {
                     Move_T = 17
                 }
-                SendMoveTypeToMcu(Move_T)
-                cmdType = CMD_TYPE.STM32_MOVE
+             //   SendMoveTypeToMcu(Move_T)
+                  cmdType = CMD_TYPE.STM32_MOVE
             }
+	   /*
             else if (StrAt = uartData.indexOf("mst"), StrAt != -1) {
                 move = parseInt(uartData.substr(StrAt + 4, 1))
                 speed = parseInt(uartData.substr(StrAt + 6, 3))
@@ -1527,6 +1530,7 @@ namespace HelloMaker_积木类 {
                 cmdType = CMD_TYPE.MST;
 
             }
+			
             else if (StrAt = uartData.indexOf("dst"), StrAt != -1) {
                 direction = parseInt(uartData.substr(StrAt + 4, 1))
                 speed = parseInt(uartData.substr(StrAt + 6, 3))
@@ -1547,6 +1551,7 @@ namespace HelloMaker_积木类 {
                 }
                 cmdType = CMD_TYPE.DST;
             }
+			
             else if (uartData.indexOf("sto") != -1) {
                 HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                 cmdType = CMD_TYPE.STO;
@@ -1629,7 +1634,7 @@ namespace HelloMaker_积木类 {
                 basic.showNumber(show_number)
                 cmdType = CMD_TYPE.POS;
             }
-			/*
+			
             else if (uartData.indexOf("coo") != -1) {
                 StrAt = uartData.indexOf("coo")
                 coo_x = parseInt(uartData.substr(StrAt + 4, 2))
@@ -1663,7 +1668,7 @@ namespace HelloMaker_积木类 {
                 analog_pin = parseInt(uartData.substr(StrAt + 4, 1))
                 cmdType = CMD_TYPE.EXT;
             }
-			*/
+			
             else if (StrAt = uartData.indexOf("sen"), StrAt != -1) {
                 stringReceive = uartData.substr(StrAt + 4, uartData.length - StrAt - 4)  /// mark
                 basic.showString(stringReceive)
@@ -1674,7 +1679,7 @@ namespace HelloMaker_积木类 {
                 bluetooth.uartWriteString("*@tem-" + wendu + "#")
                 cmdType = CMD_TYPE.TEM;
             }
-
+            
             else if (uartData.indexOf("sta") != -1) {
 
                 if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor1, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor3, HelloMaker_小车类.enLineState.White))) {
@@ -1691,6 +1696,7 @@ namespace HelloMaker_积木类 {
                 }
                 cmdType = CMD_TYPE.STA;
             }
+			
             else if (StrAt = uartData.indexOf("ser"), StrAt != -1) {
                 dlbot_pos = parseInt(uartData.substr(StrAt + 4, 4))
                 dlbot_id = parseInt(uartData.substr(StrAt + 9, 1))
@@ -1699,6 +1705,7 @@ namespace HelloMaker_积木类 {
                 HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
                 cmdType = CMD_TYPE.SERVO_MOVE
             }
+           */
             return cmdType
         }
         else {
