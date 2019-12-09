@@ -19,7 +19,7 @@
   "HelloMaker_电机类.Vibrator_Close|block": "停止震动",
   "HelloMaker_小车类.Ultrasonic_Car|block": "超声波返回（cm）",
   "HelloMaker_小车类.Line_Sensor|block": "巡线传感器|位置 %direct|检测到 %value",
-  "HelloMaker_小车类.Avoid_Sensor|block": "红外避障传感器|检测到 %value|障碍物",
+  "HelloMaker_小车类.Avoid_Sensor|block": "红外避障传感器%num|%value|检测到障碍物",
   "HelloMaker_小车类.Servo_Car|block": "小车舵机|编号 %num|角度 %value|速度 %speed",
   "HelloMaker_小车类.CarCtrl|block": "小车控制|%index",
   "HelloMaker_小车类.CarCtrlSpeed|block": "小车控制|%index|速度 %speed",
