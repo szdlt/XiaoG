@@ -1,25 +1,25 @@
 /**
- * QbitRGBLight package
+ * DlbitRGBLight package
  */
 
-enum QbitRGBColors {
-    //% block=red
+enum DlbitRGBColors {
+    //% block=红
     Red = 1,
-    //% block=orange
+    //% block=橙
     Orange = 2,
-    //% block=yellow
+    //% block=黄
     Yellow = 3,
-    //% block=green
+    //% block=绿
     Green = 4,
-    //% block=blue
+    //% block=蓝
     Blue = 5,
-    //% block=indigo
+    //% block=靛
     Indigo = 6,
-    //% block=violet
+    //% block=蓝紫
     Violet = 7,
-    //% block=purple
+    //% block=紫
     Purple = 8,
-    //% block=white
+    //% block=白
     White = 9
 }
 
@@ -35,9 +35,9 @@ enum QbitRGBColors {
 }
 
 /**
- * Different modes for RGB or RGB+W RGBLight QbitRGBColors
+ * Different modes for RGB or RGB+W RGBLight DlbitRGBColors
  */
-enum QbitRGBPixelMode {
+enum DlbitRGBPixelMode {
     //% block="RGB (GRB format)"
     RGB = 0,
     //% block="RGB+W"
@@ -47,26 +47,26 @@ enum QbitRGBPixelMode {
 }
 
 /**
- * QbitRGBLight Functions
+ * DlbitRGBLight Functions
  */
-namespace QbitRGBLight {
+namespace DlbitRGBLight {
     //% shim=sendBufferAsm
-    //% parts="QbitRGBLight"
+    //% parts="DlbitRGBLight"
     function sendBuffer(buf: Buffer, pin: DigitalPin) {
 
     }
 
     /**
-    * A LHQbitRGBLight class
+    * A LHDlbitRGBLight class
     */
-    export class LHQbitRGBLight {
+    export class LHDlbitRGBLight {
         buf: Buffer;
         pin: DigitalPin;
         // TODO: encode as bytes instead of 32bit
         brightness: number;
         start: number; // start offset in LED strip
         _length: number; // number of LEDs
-        _mode: QbitRGBPixelMode;
+        _mode: DlbitRGBPixelMode;
 
         setBrightness(brightness: number): void {
             this.brightness = brightness & 0xff;
@@ -78,11 +78,11 @@ namespace QbitRGBLight {
             // don't yield to avoid races on initialization
         }
 
-        setPixelColor(pixeloffset: number, rgb: QbitRGBColors, flag: boolean): void {
+        setPixelColor(pixeloffset: number, rgb: DlbitRGBColors, flag: boolean): void {
             this.setPixelRGB(pixeloffset, rgb, flag);
         }
 
-        private setPixelRGB(pixeloffset: number, rgb: QbitRGBColors, flag: boolean): void {
+        private setPixelRGB(pixeloffset: number, rgb: DlbitRGBColors, flag: boolean): void {
             if (pixeloffset < 0
                 || pixeloffset >= this._length)
                 return;
@@ -92,39 +92,39 @@ namespace QbitRGBLight {
             {
                 switch (rgb)
                 {
-                    case QbitRGBColors.Red:
+                    case DlbitRGBColors.Red:
                         tureRgb = 0x00FF00;
                         break;    
     
-                    case QbitRGBColors.Orange:
+                    case DlbitRGBColors.Orange:
                         tureRgb = 0xF6BA41;    
                         break;    
     
-                    case QbitRGBColors.Yellow:
+                    case DlbitRGBColors.Yellow:
                         tureRgb = 0xFFFF00;
                         break;    
                         
-                    case QbitRGBColors.Green:
+                    case DlbitRGBColors.Green:
                         tureRgb = 0xFF0000;    
                         break;    
     
-                    case QbitRGBColors.Blue:
+                    case DlbitRGBColors.Blue:
                         tureRgb = 0x0000FF;
                         break;    
                         
-                    case QbitRGBColors.Indigo:
+                    case DlbitRGBColors.Indigo:
                         tureRgb = 0x004b82;    
                         break;    
     
-                    case QbitRGBColors.Violet:
+                    case DlbitRGBColors.Violet:
                         tureRgb = 0x2B8AE2;
                         break;    
                         
-                    case QbitRGBColors.Purple:
+                    case DlbitRGBColors.Purple:
                         tureRgb = 0x00FFFF;    
                         break;   
     
-                    case QbitRGBColors.White:
+                    case DlbitRGBColors.White:
                         tureRgb = 0xFFFFFF;    
                         break;   
                 }
@@ -133,46 +133,46 @@ namespace QbitRGBLight {
             {
                 switch (rgb)
                 {
-                    case QbitRGBColors.Red:
+                    case DlbitRGBColors.Red:
                         tureRgb = 0xFF0000;
                         break;    
     
-                    case QbitRGBColors.Orange:
+                    case DlbitRGBColors.Orange:
                         tureRgb = 0xFFA500;    
                         break;    
     
-                    case QbitRGBColors.Yellow:
+                    case DlbitRGBColors.Yellow:
                         tureRgb = 0xFFFF00;
                         break;    
                         
-                    case QbitRGBColors.Green:
+                    case DlbitRGBColors.Green:
                         tureRgb = 0x00FF00;    
                         break;    
     
-                    case QbitRGBColors.Blue:
+                    case DlbitRGBColors.Blue:
                         tureRgb = 0x0000FF;
                         break;    
                         
-                    case QbitRGBColors.Indigo:
+                    case DlbitRGBColors.Indigo:
                         tureRgb = 0x4b0082;    
                         break;    
     
-                    case QbitRGBColors.Violet:
+                    case DlbitRGBColors.Violet:
                         tureRgb = 0x8a2be2;
                         break;    
                         
-                    case QbitRGBColors.Purple:
+                    case DlbitRGBColors.Purple:
                         tureRgb = 0xFF00FF;    
                         break;   
     
-                    case QbitRGBColors.White:
+                    case DlbitRGBColors.White:
                         tureRgb = 0xFFFFFF;    
                         break;   
                 }
        
             }
 
-            let stride = this._mode === QbitRGBPixelMode.RGBW ? 4 : 3;
+            let stride = this._mode === DlbitRGBPixelMode.RGBW ? 4 : 3;
             pixeloffset = (pixeloffset + this.start) * stride;
 
             let red = unpackR(tureRgb);
@@ -189,7 +189,7 @@ namespace QbitRGBLight {
         }
 
         private setBufferRGB(offset: number, red: number, green: number, blue: number): void {
-            if (this._mode === QbitRGBPixelMode.RGB_RGB) {
+            if (this._mode === DlbitRGBPixelMode.RGB_RGB) {
                 this.buf[offset + 0] = red;
                 this.buf[offset + 1] = green;
             } else {
@@ -204,14 +204,14 @@ namespace QbitRGBLight {
         }
 
         clear(): void {
-            const stride = this._mode === QbitRGBPixelMode.RGBW ? 4 : 3;
+            const stride = this._mode === DlbitRGBPixelMode.RGBW ? 4 : 3;
             this.buf.fill(0, this.start * stride, this._length * stride);
             this.show();
         }
     }
-    export function create(pin: DigitalPin, numleds: number, mode: QbitRGBPixelMode): LHQbitRGBLight {
-        let light = new LHQbitRGBLight();
-        let stride = mode === QbitRGBPixelMode.RGBW ? 4 : 3;
+    export function create(pin: DigitalPin, numleds: number, mode: DlbitRGBPixelMode): LHDlbitRGBLight {
+        let light = new LHDlbitRGBLight();
+        let stride = mode === DlbitRGBPixelMode.RGBW ? 4 : 3;
         light.buf = pins.createBuffer(numleds * stride);
         light.start = 0;
         light._length = numleds;
