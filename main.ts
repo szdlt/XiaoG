@@ -807,12 +807,12 @@ namespace HelloMaker_小车类 {
         if (speed <= 350) {
             speed = 350
         }
-	/*
-        setPwm(12 - 4, 0, speed);
-        setPwm(13 - 4, 0, 0);
-        setPwm(15 - 4, 0, speed);
-        setPwm(14 - 4, 0, 0);
-	*/
+        /*
+            setPwm(12 - 4, 0, speed);
+            setPwm(13 - 4, 0, 0);
+            setPwm(15 - 4, 0, speed);
+            setPwm(14 - 4, 0, 0);
+        */
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
         setPwm(15, 0, speed);
@@ -832,12 +832,12 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-	/*
-        setPwm(12 - 4, 0, 0);
-        setPwm(13 - 4, 0, speed);
-        setPwm(15 - 4, 0, 0);
-        setPwm(14 - 4, 0, speed);
-	*/
+        /*
+            setPwm(12 - 4, 0, 0);
+            setPwm(13 - 4, 0, speed);
+            setPwm(15 - 4, 0, 0);
+            setPwm(14 - 4, 0, speed);
+        */
         setPwm(12, 0, 0);
         setPwm(13, 0, speed);
         setPwm(15, 0, 0);
@@ -855,12 +855,12 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-	/*
-        setPwm(8, 0, 0);
-        setPwm(9, 0, 0);
-        setPwm(11, 0, speed);
-        setPwm(10, 0, 0);
-        */
+        /*
+            setPwm(8, 0, 0);
+            setPwm(9, 0, 0);
+            setPwm(11, 0, speed);
+            setPwm(10, 0, 0);
+            */
         setPwm(12, 0, 0);
         setPwm(13, 0, 0);
         setPwm(15, 0, speed);
@@ -878,13 +878,13 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-	/*
-        setPwm(12 - 4, 0, speed);
-        setPwm(13 - 4, 0, 0);
-
-        setPwm(15 - 4, 0, 0);
-        setPwm(14 - 4, 0, 0);
-        */
+        /*
+            setPwm(12 - 4, 0, speed);
+            setPwm(13 - 4, 0, 0);
+    
+            setPwm(15 - 4, 0, 0);
+            setPwm(14 - 4, 0, 0);
+            */
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
 
@@ -896,12 +896,12 @@ namespace HelloMaker_小车类 {
         // pins.analogWritePin(AnalogPin.P1, 1023 - speed);
     }
     function Car_stop() {
-	/*
-        setPwm(12 - 4, 0, 0);
-        setPwm(13 - 4, 0, 0);
-        setPwm(15 - 4, 0, 0);
-        setPwm(14 - 4, 0, 0);
-	*/
+        /*
+            setPwm(12 - 4, 0, 0);
+            setPwm(13 - 4, 0, 0);
+            setPwm(15 - 4, 0, 0);
+            setPwm(14 - 4, 0, 0);
+        */
         setPwm(12, 0, 0);
         setPwm(13, 0, 0);
         setPwm(15, 0, 0);
@@ -919,12 +919,12 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-	/*
-        setPwm(12 - 4, 0, 0);
-        setPwm(13 - 4, 0, speed);
-        setPwm(15 - 4, 0, speed);
-        setPwm(14 - 4, 0, 0);
-	*/
+        /*
+            setPwm(12 - 4, 0, 0);
+            setPwm(13 - 4, 0, speed);
+            setPwm(15 - 4, 0, speed);
+            setPwm(14 - 4, 0, 0);
+        */
         setPwm(12, 0, 0);
         setPwm(13, 0, speed);
         setPwm(15, 0, speed);
@@ -942,12 +942,12 @@ namespace HelloMaker_小车类 {
         if (speed <= 350 && speed != 0) {
             speed = 350
         }
-	/*
-        setPwm(12 - 4, 0, speed);
-        setPwm(13 - 4, 0, 0);
-        setPwm(15 - 4, 0, 0);
-        setPwm(14 - 4, 0, speed);
-	*/
+        /*
+            setPwm(12 - 4, 0, speed);
+            setPwm(13 - 4, 0, 0);
+            setPwm(15 - 4, 0, 0);
+            setPwm(14 - 4, 0, speed);
+        */
         setPwm(12, 0, speed);
         setPwm(13, 0, 0);
         setPwm(15, 0, 0);
@@ -1071,7 +1071,7 @@ namespace HelloMaker_小车类 {
         let temp: boolean = false;
         switch (value) {
             case enAvoidState.OBSTACLE: {
-                if (num == Sensor1) {
+                if (num == NumAvoidSensor.Sensor1) {
                     if (pins.analogReadPin(AnalogPin.P1) < 800) {
                         temp = true;
                     }
@@ -1079,7 +1079,7 @@ namespace HelloMaker_小车类 {
                         temp = false;
                     }
                 }
-                else if (num == Sensor2) {
+                else if (num == NumAvoidSensor.Sensor2) {
                     if (pins.analogReadPin(AnalogPin.P2) < 800) {
                         temp = true;
                     }
@@ -1090,7 +1090,7 @@ namespace HelloMaker_小车类 {
                 break;
             }
             case enAvoidState.NOOBSTACLE: {
-                if (num == 1) {
+                if (num == NumAvoidSensor.Sensor1) {
                     if (pins.analogReadPin(AnalogPin.P1) > 800) {
                         temp = true;
                     }
@@ -1098,7 +1098,7 @@ namespace HelloMaker_小车类 {
                         temp = false;
                     }
                 }
-                else if (num == 2) {
+                else if (num == NumAvoidSensor.Sensor2) {
                     if (pins.analogReadPin(AnalogPin.P2) > 800) {
                         temp = true;
                     }
