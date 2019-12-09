@@ -1,4 +1,4 @@
-/*  2019.1209.11:15
+/*  2019.1209.12:02
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -6,17 +6,17 @@ load dependency
 //% color="#C814B8" weight=25 icon="\uf1d4"
 namespace HelloMaker_显示类 {
 
-    let lhRGBLight: QbitRGBLight.LHQbitRGBLight;
-    let lhRGBLight_: QbitRGBLight.LHQbitRGBLight;
+    let lhRGBLight: DlbitRGBLight.LHDlbitRGBLight;
+    let lhRGBLight_: DlbitRGBLight.LHDlbitRGBLight;
     //% blockId="initRGBLight" block="initRGBLight before use"
     //% weight=94
     export function initRGBLight() {
         if (!lhRGBLight) {
-            lhRGBLight = QbitRGBLight.create(DigitalPin.P16, 2, QbitRGBPixelMode.RGB);
+            lhRGBLight = DlbitRGBLight.create(DigitalPin.P16, 2, DlbitRGBPixelMode.RGB);
         }
 
         if (!lhRGBLight_) {
-            lhRGBLight_ = QbitRGBLight.create(DigitalPin.P8, 1, QbitRGBPixelMode.RGB);
+            lhRGBLight_ = DlbitRGBLight.create(DigitalPin.P8, 1, DlbitRGBPixelMode.RGB);
         }
         clearLight();
     }
@@ -30,7 +30,7 @@ namespace HelloMaker_显示类 {
     }
 
     //% weight=91 blockId=setPixelRGB block="Set|%lightoffset|color to %rgb"
-    export function setPixelRGB(lightoffset: Lights, rgb: QbitRGBColors) {
+    export function setPixelRGB(lightoffset: Lights, rgb: DlbitRGBColors) {
         if (lightoffset == 0) {
             lhRGBLight.setPixelColor(0, rgb, false);
             lhRGBLight.setPixelColor(1, rgb, false);
@@ -1454,8 +1454,8 @@ namespace HelloMaker_积木类 {
             BaudRate.BaudRate9600)
         HelloMaker_传感器类.initColorSensor()
         HelloMaker_显示类.initRGBLight()
-        HelloMaker_显示类.setPixelRGB(Lights.Light1, QbitRGBColors.Red)
-        HelloMaker_显示类.setPixelRGB(Lights.Light2, QbitRGBColors.Red)
+        HelloMaker_显示类.setPixelRGB(Lights.Light1, DlbitRGBColors.Red)
+        HelloMaker_显示类.setPixelRGB(Lights.Light2, DlbitRGBColors.Red)
         HelloMaker_显示类.showLight()
         HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S1, 90, 0)
