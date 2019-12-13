@@ -106,20 +106,20 @@ enum STATE {
     ALL_STATE
 }
 
-enum GESTURE_TYPE {
-    //% block=无
+export enum GESTURE_TYPE {
+    //% blockId="None" block=无
     None = 0,
-    //% block=向右
+    //% blockId="Right" block=向右
     Right = 1,
-    //% block=向左
+    //% blockId="Left" block=向左
     Left = 2,
-    //% block=向上
+    //% blockId="Up" block=向上
     Up = 3,
-    //% block=向下
+    //% blockId="Down" block=向下
     Down = 4,
-    //% block=向前
+    //% blockId="Forward" block=向前
     Forward = 5,
-    //% block=向后
+    //% blockId="Backward" block=向后
     Backward = 6
 }
 enum DIR {
@@ -886,11 +886,11 @@ function read(): number {
 /**
  * 使用手势传感器前，先进行初始化。
  */
-    //% weight=84 blockId=HelloMaker_gesture_init block="Init Gesture sensor" 
-    //% weight=100
-    //% blockGap=10
-    //% color="#87CEEB"
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+//% weight=84 blockId=HelloMaker_gesture_init block="Init Gesture sensor" 
+//% weight=100
+//% blockGap=10
+//% color="#87CEEB"
+//% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
  
 export function gesture_init() {
     pads9960_init();
@@ -923,10 +923,10 @@ export function gesture_init() {
     //% blockGap=10
     //% color="#87CEEB"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
-export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
-    control.onEvent(3100, gesture, handler);
+  export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
+                  control.onEvent(3100, gesture, handler);
 
-} 
+    } 
 
  function InitColor(): boolean {
         let id = APDS9960ReadReg(APDS9960_ID);
