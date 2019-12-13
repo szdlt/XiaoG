@@ -1,4 +1,4 @@
-/*  2019.1213.15:21
+/*2019.1213.15:21
 Add  Gesture detect function
 "HelloMaker": "file:../pxt-HelloMaker"
 */
@@ -886,7 +886,7 @@ function read(): number {
 /**
  * 使用手势传感器前，先进行初始化。
  */
-    //% weight=84 blockId=HelloMaker_gesture_init block="初始化手势传感器" 
+    //% weight=84 blockId=HelloMaker_gesture_init block="Init Gesture sensor" 
     //% weight=100
     //% blockGap=10
     //% color="#87CEEB"
@@ -918,7 +918,11 @@ export function gesture_init() {
  * @param gesture type of gesture to detect
  * @param handler code to run
  */
-//% blockId="gesture_listener_block" block="检测手势|%gesture"
+    //% weight=84 blockId=HelloMaker_gesture_listener block="handle Check|%gesture"
+    //% weight=100
+    //% blockGap=10
+    //% color="#87CEEB"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
 export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
     control.onEvent(3100, gesture, handler);
 
