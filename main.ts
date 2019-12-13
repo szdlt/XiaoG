@@ -1,4 +1,4 @@
-/*2019.1213.15:21
+/*2019.1213.16:56
 Add  Gesture detect function
 "HelloMaker": "file:../pxt-HelloMaker"
 */
@@ -170,16 +170,7 @@ const LED_DRIVE_50MA = 1;
 const LED_DRIVE_25MA = 2;
 const LED_DRIVE_12_5MA = 3;
 
-const OFF = 0;
-const ON = 1;
-const POWER = 0;
-const AMBIENT_LIGHT = 1;
-const PROXIMITY = 2;
-const WAIT = 3;
-const AMBIENT_LIGHT_INT = 4;
-const PROXIMITY_INT = 5;
-const GESTURE = 6;
-const ALL = 7;
+
 
 const GESTURE_THRESHOLD_OUT = 30;
 const GESTURE_SENSITIVITY_1 = 33
@@ -202,12 +193,6 @@ const LED_BOOST_100 = 0
 const LED_BOOST_150 = 1
 const LED_BOOST_200 = 2
 const LED_BOOST_300 = 3
-
-/* ALS Gain (AGAIN) values */
-const AGAIN_1X = 0;
-const AGAIN_4X = 1;
-const AGAIN_16X = 2;
-const AGAIN_64X = 3;
 /* Gesture Gain (GGAIN) values */
 const GGAIN_1X = 0
 const GGAIN_2X = 1
@@ -219,6 +204,13 @@ const PGAIN_1X = 0
 const PGAIN_2X = 1
 const PGAIN_4X = 2
 const PGAIN_8X = 3
+
+/* ALS Gain (AGAIN) values */
+const AGAIN_1X = 0;
+const AGAIN_4X = 1;
+const AGAIN_16X = 2;
+const AGAIN_64X = 3;
+
 
 /* Default values */
 const DEFAULT_ATIME = 219;    // 103ms
@@ -245,6 +237,16 @@ const DEFAULT_GIEN = 0;       // Disable gesture interrupts
 const DEFAULT_LDRIVE = LED_DRIVE_100MA;
 const DEFAULT_AGAIN = AGAIN_4X;
 
+const OFF = 0;
+const ON = 1;
+const POWER = 0;
+const AMBIENT_LIGHT = 1;
+const PROXIMITY = 2;
+const WAIT = 3;
+const AMBIENT_LIGHT_INT = 4;
+const PROXIMITY_INT = 5;
+const GESTURE = 6;
+const ALL = 7;
 const DEFAULT_GGAIN = GGAIN_4X
 const DEFAULT_GLDRIVE = LED_DRIVE_100MA
 const DEFAULT_GWTIME = GWTIME_2_8MS
@@ -285,14 +287,7 @@ function APDS9960ReadReg(reg: number): number {
     return val;
 }
 
-/**
-* @brief Reads a block (array) of bytes from the I2C device and register
-*
-* @param[in] reg the register to read from
-* @param[out] val pointer to the beginning of the data
-* @param[in] len number of bytes to read
-* @return Number of bytes read. -1 on read error.
-*/
+
 function APDS9960ReadRegBlock(addr: number, len: number): number {
     let i: number = 0;
     let y: number = 0;
@@ -309,18 +304,6 @@ function APDS9960ReadRegBlock(addr: number, len: number): number {
 }
 
 
-/**
-* @brief Sets the gain of the photodiode during gesture mode
-*
-* Value    Gain
-*   0       1x
-*   1       2x
-*   2       4x
-*   3       8x
-*
-* @param[in] gain the value for the photodiode gain
-* @return True if operation successful. False otherwise.
-*/
 function setGestureGain(gain: number) {
     let val: number;
 
@@ -337,18 +320,7 @@ function setGestureGain(gain: number) {
     APDS9960WriteReg(0xA3, val);
 }
 
-/**
-     * @brief Sets the LED drive current during gesture mode
-     *
-     * Value    LED Current
-     *   0        100 mA
-     *   1         50 mA
-     *   2         25 mA
-     *   3         12.5 mA
-     *
-     * @param[in] drive the value for the LED drive current
-     * @return True if operation successful. False otherwise.
-     */
+
 function setGestureLEDDrive(drive: number) {
     let val2: number;
 
@@ -365,18 +337,7 @@ function setGestureLEDDrive(drive: number) {
     APDS9960WriteReg(0xA3, val2);
 }
 
-/**
-    * @brief Sets the LED current boost value
-    *
-    * Value  Boost Current
-    *   0        100%
-    *   1        150%
-    *   2        200%
-    *   3        300%
-    *
-    * @param[in] drive the value (0-3) for current boost (100-300%)
-    * @return True if operation successful. False otherwise.
-    */
+
 function setLEDBoost(boost: number) {
     let val3: number;
 
@@ -393,23 +354,6 @@ function setLEDBoost(boost: number) {
     APDS9960WriteReg(0x90, val3);
 }
 
-/**
-     * @brief Sets the time in low power mode between gesture detections
-     *
-     * Value    Wait time
-     *   0          0 ms
-     *   1          2.8 ms
-     *   2          5.6 ms
-     *   3          8.4 ms
-     *   4         14.0 ms
-     *   5         22.4 ms
-     *   6         30.8 ms
-     *   7         39.2 ms
-     *
-     * @param[in] the value for the wait time
-     * @return True if operation successful. False otherwise.
-     */
-
 function setGestureWaitTime(time: number) {
     let val4: number;
 
@@ -425,12 +369,6 @@ function setGestureWaitTime(time: number) {
     APDS9960WriteReg(0xA3, val4);
 }
 
-/**
- * @brief Turns gesture-related interrupts on or off
- *
- * @param[in] enable 1 to enable interrupts, 0 to turn them off
- * @return True if operation successful. False otherwise.
- */
 function setGestureIntEnable(enable: number) {
     let val5: number;
 
@@ -447,9 +385,6 @@ function setGestureIntEnable(enable: number) {
     APDS9960WriteReg(0xAB, val5);
 }
 
-/**
- * @brief Resets all the parameters in the gesture data member
- */
 function resetGestureParameters() {
 
     gesture_data.index = 0;
@@ -469,12 +404,6 @@ function resetGestureParameters() {
 
 }
 
-/**
-  * @brief Tells the state machine to either enter or exit gesture state machine
-  *
-  * @param[in] mode 1 to enter gesture state machine, 0 to exit.
-  * @return True if operation successful. False otherwise.
-  */
 function setGestureMode(mode: number) {
     let val6: number;
 
@@ -490,12 +419,6 @@ function setGestureMode(mode: number) {
     APDS9960WriteReg(0xAB, val6);
 }
 
-/**
- * @brief Starts the gesture recognition engine on the APDS-9960
- *
- * @param[in] interrupts true to enable hardware external interrupt on gesture
- * @return True if engine enabled correctly. False on error.
- */
 function enableGestureSensor(interrupts: boolean) {
 
     /* Enable gesture mode
@@ -539,11 +462,6 @@ function pads9960_init() {
     }
 }
 
-/**
- * @brief Determines if there is a gesture available for reading
- *
- * @return True if gesture available. False otherwise.
- */
 function isGestureAvailable(): boolean {
     let val8: number;
 
@@ -560,11 +478,6 @@ function isGestureAvailable(): boolean {
     }
 }
 
-/**
- * @brief Processes the raw gesture data to determine swipe direction
- *
- * @return True if near or far state seen. False otherwise.
- */
 function processGestureData(): boolean {
     let u_first: number = 0;
     let d_first: number = 0;
@@ -702,18 +615,10 @@ function processGestureData(): boolean {
         }
     }
 
-
-
     return true;
 }
 
-/**
- * @brief Determines swipe direction or near/far state
- *
- * @return True if near/far event. False otherwise.
- */
 function decodeGesture(): boolean {
-
 
     //("gesture_state"+gesture_state);
     // serial.writeLine("gesture_ud_count: "+gesture_ud_count+" ; "+"gesture_lr_count: "+gesture_lr_count);
@@ -766,12 +671,6 @@ function decodeGesture(): boolean {
     return true;
 }
 
-
-/**
- * @brief Processes a gesture event and returns best guessed gesture
- *
- * @return Number corresponding to gesture. -1 on error.
- */
 function readGesture(): number {
     let fifo_level: number = 0;
     let bytes_read: number = 0;
@@ -850,9 +749,7 @@ function readGesture(): number {
     motion = gesture_motion;
     return motion;
 }
-/**
- * 读取手势数值，无手势：0；右：1；左：2；上：3；下：4；前进：5；后退：6
- */
+
 //% blockId=gesture_read block="读取手势值|%strip"
 //% advanced=true
 function read(): number {
@@ -882,10 +779,6 @@ function read(): number {
     return result;
 }
 
-
-/**
- * 使用手势传感器前，先进行初始化。
- */
 //% weight=84 blockId=HelloMaker_gesture_init block="Init Gesture sensor" 
 //% weight=100
 //% blockGap=10
@@ -896,12 +789,10 @@ export function gesture_init() {
     pads9960_init();
     enableGestureSensor(false);
     basic.pause(100);
-    //initiate gesture monitoring
     control.inBackground(() => {
         let prevGst = GESTURE_TYPE.None;
         while (true) {
             let gst = read();
-            // basic.showNumber(gst);
             if (gst != prevGst) {
                 prevGst = gst;
                 control.raiseEvent(3100, gst, EventCreationMode.CreateAndFire);
@@ -913,17 +804,13 @@ export function gesture_init() {
     })
 
 }
-/**
- * 手势传感器检测挥手动作：无、上、下、左、右、前进、后退。
- * @param gesture type of gesture to detect
- * @param handler code to run
- */
-    //% weight=84 blockId=HelloMaker_gesture_listener block="handle Check|%gesture"
-    //% weight=100
-    //% blockGap=10
-    //% color="#87CEEB"
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
-  export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
+
+//% weight=84 blockId=HelloMaker_onGesture block="handle Check|%gesture"
+//% weight=100
+//% blockGap=10
+//% color="#87CEEB"
+//% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
                   control.onEvent(3100, gesture, handler);
 
     } 
