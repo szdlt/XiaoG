@@ -1,9 +1,9 @@
-/*  2019.1209.12:02
-redunce some useless function  for APP moldule
-load dependency
+/*  2019.1213.15:21
+Add  Gesture detect function
 "HelloMaker": "file:../pxt-HelloMaker"
 */
 //% color="#C814B8" weight=25 icon="\uf1d4"
+
 namespace HelloMaker_显示类 {
 
     let lhRGBLight: DlbitRGBLight.LHDlbitRGBLight;
@@ -99,103 +99,833 @@ namespace HelloMaker_传感器类 {
         //% blockId="Black" block="黑色"
         Black = 0x05
     }
-    const APDS9960_I2C_ADDR = 0x39;
-    const APDS9960_ID_1 = 0xA8;
-    const APDS9960_ID_2 = 0x9C;
-    /* APDS-9960 register addresses */
-    const APDS9960_ENABLE = 0x80;
-    const APDS9960_ATIME = 0x81;
-    const APDS9960_WTIME = 0x83;
-    const APDS9960_AILTL = 0x84;
-    const APDS9960_AILTH = 0x85;
-    const APDS9960_AIHTL = 0x86;
-    const APDS9960_AIHTH = 0x87;
-    const APDS9960_PILT = 0x89;
-    const APDS9960_PIHT = 0x8B;
-    const APDS9960_PERS = 0x8C;
-    const APDS9960_CONFIG1 = 0x8D;
-    const APDS9960_PPULSE = 0x8E;
-    const APDS9960_CONTROL = 0x8F;
-    const APDS9960_CONFIG2 = 0x90;
-    const APDS9960_ID = 0x92;
-    const APDS9960_STATUS = 0x93;
-    const APDS9960_CDATAL = 0x94;
-    const APDS9960_CDATAH = 0x95;
-    const APDS9960_RDATAL = 0x96;
-    const APDS9960_RDATAH = 0x97;
-    const APDS9960_GDATAL = 0x98;
-    const APDS9960_GDATAH = 0x99;
-    const APDS9960_BDATAL = 0x9A;
-    const APDS9960_BDATAH = 0x9B;
-    const APDS9960_PDATA = 0x9C;
-    const APDS9960_POFFSET_UR = 0x9D;
-    const APDS9960_POFFSET_DL = 0x9E;
-    const APDS9960_CONFIG3 = 0x9F;
+enum STATE {
+    NA_STATE,
+    NEAR_STATE,
+    FAR_STATE,
+    ALL_STATE
+}
 
-    const LED_DRIVE_100MA = 0;
-    const LED_DRIVE_50MA = 1;
-    const LED_DRIVE_25MA = 2;
-    const LED_DRIVE_12_5MA = 3;
+enum GESTURE_TYPE {
+    //% block=无
+    None = 0,
+    //% block=向右
+    Right = 1,
+    //% block=向左
+    Left = 2,
+    //% block=向上
+    Up = 3,
+    //% block=向下
+    Down = 4,
+    //% block=向前
+    Forward = 5,
+    //% block=向后
+    Backward = 6
+}
+enum DIR {
+    DIR_NONE,
+    DIR_LEFT,
+    DIR_RIGHT,
+    DIR_UP,
+    DIR_DOWN,
+    DIR_NEAR,
+    DIR_FAR,
+    DIR_ALL
+}
+const APDS9960_I2C_ADDR = 0x39;
+const APDS9960_ID_1 = 0xA8;
+const APDS9960_ID_2 = 0x9C;
+/* APDS-9960 register addresses */
+const APDS9960_ENABLE = 0x80;
+const APDS9960_ATIME = 0x81;
+const APDS9960_WTIME = 0x83;
+const APDS9960_AILTL = 0x84;
+const APDS9960_AILTH = 0x85;
+const APDS9960_AIHTL = 0x86;
+const APDS9960_AIHTH = 0x87;
+const APDS9960_PILT = 0x89;
+const APDS9960_PIHT = 0x8B;
+const APDS9960_PERS = 0x8C;
+const APDS9960_CONFIG1 = 0x8D;
+const APDS9960_PPULSE = 0x8E;
+const APDS9960_CONTROL = 0x8F;
+const APDS9960_CONFIG2 = 0x90;
+const APDS9960_ID = 0x92;
+const APDS9960_STATUS = 0x93;
+const APDS9960_CDATAL = 0x94;
+const APDS9960_CDATAH = 0x95;
+const APDS9960_RDATAL = 0x96;
+const APDS9960_RDATAH = 0x97;
+const APDS9960_GDATAL = 0x98;
+const APDS9960_GDATAH = 0x99;
+const APDS9960_BDATAL = 0x9A;
+const APDS9960_BDATAH = 0x9B;
+const APDS9960_PDATA = 0x9C;
+const APDS9960_POFFSET_UR = 0x9D;
+const APDS9960_POFFSET_DL = 0x9E;
+const APDS9960_CONFIG3 = 0x9F;
 
-    /* ALS Gain (AGAIN) values */
-    const AGAIN_1X = 0;
-    const AGAIN_4X = 1;
-    const AGAIN_16X = 2;
-    const AGAIN_64X = 3;
+const LED_DRIVE_100MA = 0;
+const LED_DRIVE_50MA = 1;
+const LED_DRIVE_25MA = 2;
+const LED_DRIVE_12_5MA = 3;
 
-    /* Default values */
-    const DEFAULT_ATIME = 219;    // 103ms
-    const DEFAULT_WTIME = 246;    // 27ms
-    const DEFAULT_PROX_PPULSE = 0x87;    // 16us, 8 pulses
-    const DEFAULT_GESTURE_PPULSE = 0x89;    // 16us, 10 pulses
-    const DEFAULT_POFFSET_UR = 0;       // 0 offset
-    const DEFAULT_POFFSET_DL = 0;       // 0 offset      
-    const DEFAULT_CONFIG1 = 0x60;    // No 12x wait (WTIME) factor
-    const DEFAULT_PILT = 0;       // Low proximity threshold
-    const DEFAULT_PIHT = 50;      // High proximity threshold
-    const DEFAULT_AILT = 0xFFFF;  // Force interrupt for calibration
-    const DEFAULT_AIHT = 0;
-    const DEFAULT_PERS = 0x11;    // 2 consecutive prox or ALS for int.
-    const DEFAULT_CONFIG2 = 0x01;    // No saturation interrupts or LED boost  
-    const DEFAULT_CONFIG3 = 0;       // Enable all photodiodes, no SAI
-    const DEFAULT_GPENTH = 40;      // Threshold for entering gesture mode
-    const DEFAULT_GEXTH = 30;      // Threshold for exiting gesture mode    
-    const DEFAULT_GCONF1 = 0x40;    // 4 gesture events for int., 1 for exit
-    const DEFAULT_GOFFSET = 0;       // No offset scaling for gesture mode
-    const DEFAULT_GPULSE = 0xC9;    // 32us, 10 pulses
-    const DEFAULT_GCONF3 = 0;       // All photodiodes active during gesture
-    const DEFAULT_GIEN = 0;       // Disable gesture interrupts
-    const DEFAULT_LDRIVE = LED_DRIVE_100MA;
-    const DEFAULT_AGAIN = AGAIN_4X;
+const OFF = 0;
+const ON = 1;
+const POWER = 0;
+const AMBIENT_LIGHT = 1;
+const PROXIMITY = 2;
+const WAIT = 3;
+const AMBIENT_LIGHT_INT = 4;
+const PROXIMITY_INT = 5;
+const GESTURE = 6;
+const ALL = 7;
 
+const GESTURE_THRESHOLD_OUT = 30;
+const GESTURE_SENSITIVITY_1 = 33
+const GESTURE_SENSITIVITY_2 = 18
 
-    const OFF = 0;
-    const ON = 1;
-    const POWER = 0;
-    const AMBIENT_LIGHT = 1;
-    const PROXIMITY = 2;
-    const WAIT = 3;
-    const AMBIENT_LIGHT_INT = 4;
-    const PROXIMITY_INT = 5;
-    const GESTURE = 6;
-    const ALL = 7;
+/* Gesture wait time values */
+const GWTIME_0MS = 0
+const GWTIME_2_8MS = 1
+const GWTIME_5_6MS = 2
+const GWTIME_8_4MS = 3
+const GWTIME_14_0MS = 4
+const GWTIME_22_4MS = 5
+const GWTIME_30_8MS = 6
+const GWTIME_39_2MS = 7
+const FIFO_PAUSE_TIME = 30      // Wait period (ms) between FIFO reads
 
 
-    function i2cwrite(reg: number, value: number) {
-        let buf = pins.createBuffer(2);
-        buf[0] = reg;
-        buf[1] = value;
-        pins.i2cWriteBuffer(APDS9960_I2C_ADDR, buf);
+/* LED Boost values */
+const LED_BOOST_100 = 0
+const LED_BOOST_150 = 1
+const LED_BOOST_200 = 2
+const LED_BOOST_300 = 3
+
+/* ALS Gain (AGAIN) values */
+const AGAIN_1X = 0;
+const AGAIN_4X = 1;
+const AGAIN_16X = 2;
+const AGAIN_64X = 3;
+/* Gesture Gain (GGAIN) values */
+const GGAIN_1X = 0
+const GGAIN_2X = 1
+const GGAIN_4X = 2
+const GGAIN_8X = 3
+
+/* Proximity Gain (PGAIN) values */
+const PGAIN_1X = 0
+const PGAIN_2X = 1
+const PGAIN_4X = 2
+const PGAIN_8X = 3
+
+/* Default values */
+const DEFAULT_ATIME = 219;    // 103ms
+const DEFAULT_WTIME = 246;    // 27ms
+const DEFAULT_PROX_PPULSE = 0x87;    // 16us, 8 pulses
+const DEFAULT_GESTURE_PPULSE = 0x89;    // 16us, 10 pulses
+const DEFAULT_POFFSET_UR = 0;       // 0 offset
+const DEFAULT_POFFSET_DL = 0;       // 0 offset      
+const DEFAULT_CONFIG1 = 0x60;    // No 12x wait (WTIME) factor
+const DEFAULT_PILT = 0;       // Low proximity threshold
+const DEFAULT_PIHT = 50;      // High proximity threshold
+const DEFAULT_AILT = 0xFFFF;  // Force interrupt for calibration
+const DEFAULT_AIHT = 0;
+const DEFAULT_PERS = 0x11;    // 2 consecutive prox or ALS for int.
+const DEFAULT_CONFIG2 = 0x01;    // No saturation interrupts or LED boost  
+const DEFAULT_CONFIG3 = 0;       // Enable all photodiodes, no SAI
+const DEFAULT_GPENTH = 40;      // Threshold for entering gesture mode
+const DEFAULT_GEXTH = 30;      // Threshold for exiting gesture mode    
+const DEFAULT_GCONF1 = 0x40;    // 4 gesture events for int., 1 for exit
+const DEFAULT_GOFFSET = 0;       // No offset scaling for gesture mode
+const DEFAULT_GPULSE = 0xC9;    // 32us, 10 pulses
+const DEFAULT_GCONF3 = 0;       // All photodiodes active during gesture
+const DEFAULT_GIEN = 0;       // Disable gesture interrupts
+const DEFAULT_LDRIVE = LED_DRIVE_100MA;
+const DEFAULT_AGAIN = AGAIN_4X;
+
+const DEFAULT_GGAIN = GGAIN_4X
+const DEFAULT_GLDRIVE = LED_DRIVE_100MA
+const DEFAULT_GWTIME = GWTIME_2_8MS
+const DEFAULT_PGAIN = PGAIN_4X
+
+
+class gesture_data_type {
+    u_data: Buffer;
+    d_data: Buffer;
+    l_data: Buffer;
+    r_data: Buffer;
+    index: number;
+    total_gestures: number;
+    in_threshold: number;
+    out_threshold: number;
+}
+
+let gesture_data = new gesture_data_type;
+let data_buf: Buffer = pins.createBuffer(128);
+let gesture_ud_delta: number;
+let gesture_lr_delta: number;
+let gesture_ud_count: number;
+let gesture_lr_count: number;
+let gesture_near_count: number;
+let gesture_far_count: number;
+let gesture_state: number;
+let gesture_motion: number;
+function APDS9960WriteReg(reg: number, value: number) {
+    let buf = pins.createBuffer(2);
+    buf[0] = reg;
+    buf[1] = value;
+    pins.i2cWriteBuffer(APDS9960_I2C_ADDR, buf);
+}
+
+function APDS9960ReadReg(reg: number): number {
+    pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
+    let val = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE);
+    return val;
+}
+
+/**
+* @brief Reads a block (array) of bytes from the I2C device and register
+*
+* @param[in] reg the register to read from
+* @param[out] val pointer to the beginning of the data
+* @param[in] len number of bytes to read
+* @return Number of bytes read. -1 on read error.
+*/
+function APDS9960ReadRegBlock(addr: number, len: number): number {
+    let i: number = 0;
+    let y: number = 0;
+
+    for (let j = 0; j < len; j = j + 4) {
+
+        data_buf[j] = APDS9960ReadReg(0xFc);
+        data_buf[j + 1] = APDS9960ReadReg(0xFd);
+        data_buf[j + 2] = APDS9960ReadReg(0xFe);
+        data_buf[j + 3] = APDS9960ReadReg(0xFf);
+        basic.pause(10);
+    }
+    return len;
+}
+
+
+/**
+* @brief Sets the gain of the photodiode during gesture mode
+*
+* Value    Gain
+*   0       1x
+*   1       2x
+*   2       4x
+*   3       8x
+*
+* @param[in] gain the value for the photodiode gain
+* @return True if operation successful. False otherwise.
+*/
+function setGestureGain(gain: number) {
+    let val: number;
+
+    /* Read value from GCONF2 register */
+    val = APDS9960ReadReg(0xA3);
+
+    /* Set bits in register to given value */
+    gain &= 0b00000011;
+    gain = gain << 5;
+    val &= 0b10011111;
+    val |= gain;
+
+    /* Write register value back into GCONF2 register */
+    APDS9960WriteReg(0xA3, val);
+}
+
+/**
+     * @brief Sets the LED drive current during gesture mode
+     *
+     * Value    LED Current
+     *   0        100 mA
+     *   1         50 mA
+     *   2         25 mA
+     *   3         12.5 mA
+     *
+     * @param[in] drive the value for the LED drive current
+     * @return True if operation successful. False otherwise.
+     */
+function setGestureLEDDrive(drive: number) {
+    let val2: number;
+
+    /* Read value from GCONF2 register */
+    val2 = APDS9960ReadReg(0xA3);
+
+    /* Set bits in register to given value */
+    drive &= 0b00000011;
+    drive = drive << 3;
+    val2 &= 0b11100111;
+    val2 |= drive;
+
+    /* Write register value back into GCONF2 register */
+    APDS9960WriteReg(0xA3, val2);
+}
+
+/**
+    * @brief Sets the LED current boost value
+    *
+    * Value  Boost Current
+    *   0        100%
+    *   1        150%
+    *   2        200%
+    *   3        300%
+    *
+    * @param[in] drive the value (0-3) for current boost (100-300%)
+    * @return True if operation successful. False otherwise.
+    */
+function setLEDBoost(boost: number) {
+    let val3: number;
+
+    /* Read value from CONFIG2 register */
+    val3 = APDS9960ReadReg(0x90);
+
+    /* Set bits in register to given value */
+    boost &= 0b00000011;
+    boost = boost << 4;
+    val3 &= 0b11001111;
+    val3 |= boost;
+
+    /* Write register value back into CONFIG2 register */
+    APDS9960WriteReg(0x90, val3);
+}
+
+/**
+     * @brief Sets the time in low power mode between gesture detections
+     *
+     * Value    Wait time
+     *   0          0 ms
+     *   1          2.8 ms
+     *   2          5.6 ms
+     *   3          8.4 ms
+     *   4         14.0 ms
+     *   5         22.4 ms
+     *   6         30.8 ms
+     *   7         39.2 ms
+     *
+     * @param[in] the value for the wait time
+     * @return True if operation successful. False otherwise.
+     */
+
+function setGestureWaitTime(time: number) {
+    let val4: number;
+
+    /* Read value from GCONF2 register */
+    val4 = APDS9960ReadReg(0xA3);
+
+    /* Set bits in register to given value */
+    time &= 0b00000111;
+    val4 &= 0b11111000;
+    val4 |= time;
+
+    /* Write register value back into GCONF2 register */
+    APDS9960WriteReg(0xA3, val4);
+}
+
+/**
+ * @brief Turns gesture-related interrupts on or off
+ *
+ * @param[in] enable 1 to enable interrupts, 0 to turn them off
+ * @return True if operation successful. False otherwise.
+ */
+function setGestureIntEnable(enable: number) {
+    let val5: number;
+
+    /* Read value from GCONF4 register */
+    val5 = APDS9960ReadReg(0xAB);
+
+    /* Set bits in register to given value */
+    enable &= 0b00000001;
+    enable = enable << 1;
+    val5 &= 0b11111101;
+    val5 |= enable;
+
+    /* Write register value back into GCONF4 register */
+    APDS9960WriteReg(0xAB, val5);
+}
+
+/**
+ * @brief Resets all the parameters in the gesture data member
+ */
+function resetGestureParameters() {
+
+    gesture_data.index = 0;
+    gesture_data.total_gestures = 0;
+
+    gesture_ud_delta = 0;
+    gesture_lr_delta = 0;
+
+    gesture_ud_count = 0;
+    gesture_lr_count = 0;
+
+    gesture_near_count = 0;
+    gesture_far_count = 0;
+
+    gesture_state = 0;
+    gesture_motion = DIR.DIR_NONE;
+
+}
+
+/**
+  * @brief Tells the state machine to either enter or exit gesture state machine
+  *
+  * @param[in] mode 1 to enter gesture state machine, 0 to exit.
+  * @return True if operation successful. False otherwise.
+  */
+function setGestureMode(mode: number) {
+    let val6: number;
+
+    /* Read value from GCONF4 register */
+    val6 = APDS9960ReadReg(0xAB);
+
+    /* Set bits in register to given value */
+    mode &= 0b00000001;
+    val6 &= 0b11111110;
+    val6 |= mode;
+
+    /* Write register value back into GCONF4 register */
+    APDS9960WriteReg(0xAB, val6);
+}
+
+/**
+ * @brief Starts the gesture recognition engine on the APDS-9960
+ *
+ * @param[in] interrupts true to enable hardware external interrupt on gesture
+ * @return True if engine enabled correctly. False on error.
+ */
+function enableGestureSensor(interrupts: boolean) {
+
+    /* Enable gesture mode
+    Set ENABLE to 0 (power off)
+    Set WTIME to 0xFF
+    Set AUX to LED_BOOST_300
+    Enable PON, WEN, PEN, GEN in ENABLE 
+    */
+    resetGestureParameters();
+    APDS9960WriteReg(0x83, 0xFF);
+    APDS9960WriteReg(0x8E, DEFAULT_GESTURE_PPULSE);
+    setLEDBoost(LED_BOOST_300);
+    if (interrupts) {
+        setGestureIntEnable(1);
+    } else {
+        setGestureIntEnable(0);
+    }
+    setGestureMode(1);
+    enablePower();
+    setMode(WAIT, 1)
+    setMode(PROXIMITY, 1);
+    setMode(GESTURE, 1);
+}
+function pads9960_init() {
+
+    let aa = APDS9960ReadReg(0X92);
+    if (aa == 0xAB || aa == 0xA8 || aa == 0xC9) {
+        APDS9960WriteReg(0xA0, DEFAULT_GPENTH);//0x28
+        APDS9960WriteReg(0xA1, DEFAULT_GEXTH);//0x1e
+        APDS9960WriteReg(0xA2, DEFAULT_GCONF1);//0x40
+        setGestureGain(DEFAULT_GGAIN);//0x41
+        setGestureLEDDrive(DEFAULT_GLDRIVE);
+        setGestureWaitTime(DEFAULT_GWTIME);
+        APDS9960WriteReg(0xA4, DEFAULT_GOFFSET);
+        APDS9960WriteReg(0xA5, DEFAULT_GOFFSET);
+        APDS9960WriteReg(0xA7, DEFAULT_GOFFSET);
+        APDS9960WriteReg(0xA9, DEFAULT_GOFFSET);
+        APDS9960WriteReg(0xA6, DEFAULT_GPULSE);//0xc9
+        APDS9960WriteReg(0xAA, DEFAULT_GCONF3);//00
+        setGestureIntEnable(DEFAULT_GIEN);
+    }
+}
+
+/**
+ * @brief Determines if there is a gesture available for reading
+ *
+ * @return True if gesture available. False otherwise.
+ */
+function isGestureAvailable(): boolean {
+    let val8: number;
+
+    /* Read value from GSTATUS register */
+    val8 = APDS9960ReadReg(0xAF);
+    /* Shift and mask out GVALID bit */
+    val8 &= 0b00000001;
+
+    /* Return true/false based on GVALID bit */
+    if (val8 == 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * @brief Processes the raw gesture data to determine swipe direction
+ *
+ * @return True if near or far state seen. False otherwise.
+ */
+function processGestureData(): boolean {
+    let u_first: number = 0;
+    let d_first: number = 0;
+    let l_first: number = 0;
+    let r_first: number = 0;
+    let u_last: number = 0;
+    let d_last: number = 0;
+    let l_last: number = 0;
+    let r_last: number = 0;
+    let ud_ratio_first: number;
+    let lr_ratio_first: number;
+    let ud_ratio_last: number;
+    let lr_ratio_last: number;
+    let ud_delta: number;
+    let lr_delta: number;
+    let k: number;
+
+    /* If we have less than 4 total gestures, that's not enough */
+    if (gesture_data.total_gestures <= 4) {
+        return false;
     }
 
-    function i2cread(reg: number): number {
-        pins.i2cWriteNumber(APDS9960_I2C_ADDR, reg, NumberFormat.UInt8BE);
-        let val = pins.i2cReadNumber(APDS9960_I2C_ADDR, NumberFormat.UInt8BE);
-        return val;
+    /* Check to make sure our data isn't out of bounds */
+    if ((gesture_data.total_gestures <= 32) && (gesture_data.total_gestures > 0)) {
+
+        /* Find the first value in U/D/L/R above the threshold */
+        for (k = 0; k < gesture_data.total_gestures; k++) {
+            if ((gesture_data.u_data[k] > GESTURE_THRESHOLD_OUT) &&
+                (gesture_data.d_data[k] > GESTURE_THRESHOLD_OUT) &&
+                (gesture_data.l_data[k] > GESTURE_THRESHOLD_OUT) &&
+                (gesture_data.r_data[k] > GESTURE_THRESHOLD_OUT)) {
+
+                u_first = gesture_data.u_data[k];
+                d_first = gesture_data.d_data[k];
+                l_first = gesture_data.l_data[k];
+                r_first = gesture_data.r_data[k];
+                break;
+            }
+        }
+
+        /* If one of the _first values is 0, then there is no good data */
+        if ((u_first == 0) || (d_first == 0) || (l_first == 0) || (r_first == 0)) {
+
+            return false;
+        }
+        /* Find the last value in U/D/L/R above the threshold */
+        for (k = gesture_data.total_gestures - 1; k >= 0; k--) {
+
+
+            if ((gesture_data.u_data[k] > GESTURE_THRESHOLD_OUT) &&
+                (gesture_data.d_data[k] > GESTURE_THRESHOLD_OUT) &&
+                (gesture_data.l_data[k] > GESTURE_THRESHOLD_OUT) &&
+                (gesture_data.r_data[k] > GESTURE_THRESHOLD_OUT)) {
+
+                u_last = gesture_data.u_data[k];
+                d_last = gesture_data.d_data[k];
+                l_last = gesture_data.l_data[k];
+                r_last = gesture_data.r_data[k];
+                break;
+            }
+        }
     }
 
-    function InitColor(): boolean {
-        let id = i2cread(APDS9960_ID);
+    /* Calculate the first vs. last ratio of up/down and left/right */
+    ud_ratio_first = ((u_first - d_first) * 100) / (u_first + d_first);
+    lr_ratio_first = ((l_first - r_first) * 100) / (l_first + r_first);
+    ud_ratio_last = ((u_last - d_last) * 100) / (u_last + d_last);
+    lr_ratio_last = ((l_last - r_last) * 100) / (l_last + r_last);
+    if (ud_ratio_first == 0 && lr_ratio_first == 0 && ud_ratio_last == 0 && lr_ratio_last == 0) {
+
+        pads9960_init();
+        enableGestureSensor(false);
+    }
+
+
+    /* Determine the difference between the first and last ratios */
+    ud_delta = ud_ratio_last - ud_ratio_first;
+    lr_delta = lr_ratio_last - lr_ratio_first;
+
+
+    /* Accumulate the UD and LR delta values */
+    gesture_ud_delta += ud_delta;
+    gesture_lr_delta += lr_delta;
+
+    /* Determine U/D gesture */
+    if (gesture_ud_delta >= GESTURE_SENSITIVITY_1) {
+        gesture_ud_count = 1;
+    } else if (gesture_ud_delta <= -GESTURE_SENSITIVITY_1) {
+        gesture_ud_count = -1;
+    } else {
+        gesture_ud_count = 0;
+    }
+
+    /* Determine L/R gesture */
+    if (gesture_lr_delta >= GESTURE_SENSITIVITY_1) {
+        gesture_lr_count = 1;
+    } else if (gesture_lr_delta <= -GESTURE_SENSITIVITY_1) {
+        gesture_lr_count = -1;
+    } else {
+        gesture_lr_count = 0;
+    }
+
+    /* Determine Near/Far gesture */
+    if ((gesture_ud_count == 0) && (gesture_lr_count == 0)) {
+        if ((Math.abs(ud_delta) < GESTURE_SENSITIVITY_2) && (Math.abs(lr_delta) < GESTURE_SENSITIVITY_2)) {
+
+            if ((ud_delta == 0) && (lr_delta == 0)) {
+                gesture_near_count++;
+            } else if ((ud_delta != 0) || (lr_delta != 0)) {
+                gesture_far_count++;
+            }
+
+            if ((gesture_near_count >= 10) && (gesture_far_count >= 2)) {
+                if ((ud_delta == 0) && (lr_delta == 0)) {
+                    gesture_state = STATE.NEAR_STATE;
+                } else if ((ud_delta != 0) && (lr_delta != 0)) {
+                    gesture_state = STATE.FAR_STATE;
+                }
+                return true;
+            }
+        }
+    } else {
+        if ((Math.abs(ud_delta) < GESTURE_SENSITIVITY_2) && (Math.abs(lr_delta) < GESTURE_SENSITIVITY_2)) {
+
+            if ((ud_delta == 0) && (lr_delta == 0)) {
+                gesture_near_count++;
+            }
+
+            if (gesture_near_count >= 10) {
+                gesture_ud_count = 0;
+                gesture_lr_count = 0;
+                gesture_ud_delta = 0;
+                gesture_lr_delta = 0;
+            }
+        }
+    }
+
+
+
+    return true;
+}
+
+/**
+ * @brief Determines swipe direction or near/far state
+ *
+ * @return True if near/far event. False otherwise.
+ */
+function decodeGesture(): boolean {
+
+
+    //("gesture_state"+gesture_state);
+    // serial.writeLine("gesture_ud_count: "+gesture_ud_count+" ; "+"gesture_lr_count: "+gesture_lr_count);
+    /* Return if near or far event is detected */
+    if (gesture_state == STATE.NEAR_STATE) {
+        gesture_motion = DIR.DIR_NEAR;
+        return true;
+    } else if (gesture_state == STATE.FAR_STATE) {
+        gesture_motion = DIR.DIR_FAR;
+        return true;
+    }
+
+    /* Determine swipe direction */
+    if ((gesture_ud_count == -1) && (gesture_lr_count == 0)) {
+        gesture_motion = DIR.DIR_UP;
+    } else if ((gesture_ud_count == 1) && (gesture_lr_count == 0)) {
+        gesture_motion = DIR.DIR_DOWN;
+    } else if ((gesture_ud_count == 0) && (gesture_lr_count == 1)) {
+        gesture_motion = DIR.DIR_RIGHT;
+    } else if ((gesture_ud_count == 0) && (gesture_lr_count == -1)) {
+        gesture_motion = DIR.DIR_LEFT;
+    } else if ((gesture_ud_count == -1) && (gesture_lr_count == 1)) {
+        if (Math.abs(gesture_ud_delta) > Math.abs(gesture_lr_delta)) {
+            gesture_motion = DIR.DIR_UP;
+        } else {
+            gesture_motion = DIR.DIR_RIGHT;
+        }
+    } else if ((gesture_ud_count == 1) && (gesture_lr_count == -1)) {
+        if (Math.abs(gesture_ud_delta) > Math.abs(gesture_lr_delta)) {
+            gesture_motion = DIR.DIR_DOWN;
+        } else {
+            gesture_motion = DIR.DIR_LEFT;
+        }
+    } else if ((gesture_ud_count == -1) && (gesture_lr_count == -1)) {
+        if (Math.abs(gesture_ud_delta) > Math.abs(gesture_lr_delta)) {
+            gesture_motion = DIR.DIR_UP;
+        } else {
+            gesture_motion = DIR.DIR_LEFT;
+        }
+    } else if ((gesture_ud_count == 1) && (gesture_lr_count == 1)) {
+        if (Math.abs(gesture_ud_delta) > Math.abs(gesture_lr_delta)) {
+            gesture_motion = DIR.DIR_DOWN;
+        } else {
+            gesture_motion = DIR.DIR_RIGHT;
+        }
+    } else {
+        return false;
+    }
+
+    return true;
+}
+
+
+/**
+ * @brief Processes a gesture event and returns best guessed gesture
+ *
+ * @return Number corresponding to gesture. -1 on error.
+ */
+function readGesture(): number {
+    let fifo_level: number = 0;
+    let bytes_read: number = 0;
+    let fifo_data: number[] = [];
+    let gstatus: number;
+    let motion: number;
+    let l: number;
+    //resetGestureParameters();
+    gesture_data.d_data = pins.createBuffer(32);
+    gesture_data.u_data = pins.createBuffer(32);
+    gesture_data.l_data = pins.createBuffer(32);
+    gesture_data.r_data = pins.createBuffer(32);
+    //("read sensor start");
+    /* Make sure that power and gesture is on and data is valid */
+    if (!isGestureAvailable() || !(getMode() & 0b01000001)) {
+        return DIR.DIR_NONE;
+    }
+
+    /* Keep looping as long as gesture data is valid */
+    while (1) {
+        basic.pause(30);
+        /* Get the contents of the STATUS register. Is data still valid? */
+        gstatus = APDS9960ReadReg(0xAF);
+        /* If we have valid data, read in FIFO */
+        if ((gstatus & 0b00000001) == 0b00000001) {
+            /* Read the current FIFO level */
+            fifo_level = APDS9960ReadReg(0xAE);
+
+            /* If there's stuff in the FIFO, read it into our data block */
+            if (fifo_level > 0) {
+                bytes_read = APDS9960ReadRegBlock(0xFC,
+                    (fifo_level * 4));
+
+                for (let m = 0; m < bytes_read; m++) {
+
+                    fifo_data[m] = data_buf[m];
+                }
+
+                if (bytes_read >= 4) {
+                    for (let ii = 0; ii < bytes_read; ii = ii + 4) {
+                        gesture_data.u_data[gesture_data.index] = fifo_data[ii + 0];
+                        gesture_data.d_data[gesture_data.index] = fifo_data[ii + 1];
+                        gesture_data.l_data[gesture_data.index] = fifo_data[ii + 2];
+                        gesture_data.r_data[gesture_data.index] = fifo_data[ii + 3];
+                        gesture_data.index++;
+                        gesture_data.total_gestures++;
+                    }
+
+                    /* Filter and process gesture data. Decode near/far state */
+                    if (processGestureData()) {
+                        if (decodeGesture()) {
+                            motion = gesture_motion;
+                            resetGestureParameters();
+                            return motion;
+                        }
+                    }
+                    /* Reset data */
+                    gesture_data.index = 0;
+                    gesture_data.total_gestures = 0;
+                }
+
+            }
+
+        }
+        else {
+            /* Determine best guessed gesture and clean up */
+            basic.pause(30);
+            decodeGesture();
+            motion = gesture_motion;
+            resetGestureParameters();
+            return motion;
+        }
+
+    }
+
+    motion = gesture_motion;
+    return motion;
+}
+/**
+ * 读取手势数值，无手势：0；右：1；左：2；上：3；下：4；前进：5；后退：6
+ */
+//% blockId=gesture_read block="读取手势值|%strip"
+//% advanced=true
+function read(): number {
+    let result = GESTURE_TYPE.None;
+    switch (readGesture()) {
+        case DIR.DIR_UP:
+            result = GESTURE_TYPE.Up;
+            break;
+        case DIR.DIR_DOWN:
+            result = GESTURE_TYPE.Down;
+            break;
+        case DIR.DIR_LEFT:
+            result = GESTURE_TYPE.Left;
+            break;
+        case DIR.DIR_RIGHT:
+            result = GESTURE_TYPE.Right;
+            break;
+        case DIR.DIR_NEAR:
+            result = GESTURE_TYPE.Forward;
+            break;
+        case DIR.DIR_FAR:
+            result = GESTURE_TYPE.Backward;
+            break;
+        default:
+
+    }
+    return result;
+}
+
+
+/**
+ * 使用手势传感器前，先进行初始化。
+ */
+    //% weight=84 blockId=HelloMaker_gesture_init block="初始化手势传感器" 
+    //% weight=100
+    //% blockGap=10
+    //% color="#87CEEB"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=4
+ 
+export function gesture_init() {
+    pads9960_init();
+    enableGestureSensor(false);
+    basic.pause(100);
+    //initiate gesture monitoring
+    control.inBackground(() => {
+        let prevGst = GESTURE_TYPE.None;
+        while (true) {
+            let gst = read();
+            // basic.showNumber(gst);
+            if (gst != prevGst) {
+                prevGst = gst;
+                control.raiseEvent(3100, gst, EventCreationMode.CreateAndFire);
+
+            }
+            basic.pause(50);
+        }
+
+    })
+
+}
+/**
+ * 手势传感器检测挥手动作：无、上、下、左、右、前进、后退。
+ * @param gesture type of gesture to detect
+ * @param handler code to run
+ */
+//% blockId="gesture_listener_block" block="检测手势|%gesture"
+export function onGesture(gesture: GESTURE_TYPE, handler: () => void) {
+    control.onEvent(3100, gesture, handler);
+
+} 
+
+ function InitColor(): boolean {
+        let id = APDS9960ReadReg(APDS9960_ID);
         //  serial.writeLine("id:")
         //  serial.writeNumber(id); 
         if (!(id == APDS9960_ID_1 || id == APDS9960_ID_2)) {
@@ -203,19 +933,19 @@ namespace HelloMaker_传感器类 {
         }
         //  serial.writeLine("set mode:")
         setMode(ALL, OFF);
-        i2cwrite(APDS9960_ATIME, DEFAULT_ATIME);
-        i2cwrite(APDS9960_WTIME, DEFAULT_WTIME);
-        i2cwrite(APDS9960_PPULSE, DEFAULT_PROX_PPULSE);
-        i2cwrite(APDS9960_POFFSET_UR, DEFAULT_POFFSET_UR);
-        i2cwrite(APDS9960_POFFSET_DL, DEFAULT_POFFSET_DL);
-        i2cwrite(APDS9960_CONFIG1, DEFAULT_CONFIG1);
+        APDS9960WriteReg(APDS9960_ATIME, DEFAULT_ATIME);
+        APDS9960WriteReg(APDS9960_WTIME, DEFAULT_WTIME);
+        APDS9960WriteReg(APDS9960_PPULSE, DEFAULT_PROX_PPULSE);
+        APDS9960WriteReg(APDS9960_POFFSET_UR, DEFAULT_POFFSET_UR);
+        APDS9960WriteReg(APDS9960_POFFSET_DL, DEFAULT_POFFSET_DL);
+        APDS9960WriteReg(APDS9960_CONFIG1, DEFAULT_CONFIG1);
         setLEDDrive(DEFAULT_LDRIVE);
         setAmbientLightGain(DEFAULT_AGAIN);
         setLightIntLowThreshold(DEFAULT_AILT);
         setLightIntHighThreshold(DEFAULT_AIHT);
-        i2cwrite(APDS9960_PERS, DEFAULT_PERS);
-        i2cwrite(APDS9960_CONFIG2, DEFAULT_CONFIG2);
-        i2cwrite(APDS9960_CONFIG3, DEFAULT_CONFIG3);
+        APDS9960WriteReg(APDS9960_PERS, DEFAULT_PERS);
+        APDS9960WriteReg(APDS9960_CONFIG2, DEFAULT_CONFIG2);
+        APDS9960WriteReg(APDS9960_CONFIG3, DEFAULT_CONFIG3);
         return true;
     }
 
@@ -240,36 +970,36 @@ namespace HelloMaker_传感器类 {
                 reg_val = 0x00;
             }
         }
-        i2cwrite(APDS9960_ENABLE, reg_val);
+        APDS9960WriteReg(APDS9960_ENABLE, reg_val);
     }
 
     function getMode(): number {
-        let enable_value = i2cread(APDS9960_ENABLE);
+        let enable_value = APDS9960ReadReg(APDS9960_ENABLE);
         return enable_value;
     }
 
     function setLEDDrive(drive: number) {
-        let val = i2cread(APDS9960_CONTROL);
+        let val = APDS9960ReadReg(APDS9960_CONTROL);
         /* Set bits in register to given value */
         drive &= 0b00000011;
         drive = drive << 6;
         val &= 0b00111111;
         val |= drive;
-        i2cwrite(APDS9960_CONTROL, val);
+        APDS9960WriteReg(APDS9960_CONTROL, val);
     }
 
     function setLightIntLowThreshold(threshold: number) {
         let val_low = threshold & 0x00FF;
         let val_high = (threshold & 0xFF00) >> 8;
-        i2cwrite(APDS9960_AILTL, val_low);
-        i2cwrite(APDS9960_AILTH, val_high);
+        APDS9960WriteReg(APDS9960_AILTL, val_low);
+        APDS9960WriteReg(APDS9960_AILTH, val_high);
     }
 
     function setLightIntHighThreshold(threshold: number) {
         let val_low = threshold & 0x00FF;
         let val_high = (threshold & 0xFF00) >> 8;
-        i2cwrite(APDS9960_AIHTL, val_low);
-        i2cwrite(APDS9960_AIHTH, val_high);
+        APDS9960WriteReg(APDS9960_AIHTL, val_low);
+        APDS9960WriteReg(APDS9960_AIHTH, val_high);
     }
 
 
@@ -286,16 +1016,16 @@ namespace HelloMaker_传感器类 {
     }
 
     function setAmbientLightGain(drive: number) {
-        let val = i2cread(APDS9960_CONTROL);
+        let val = APDS9960ReadReg(APDS9960_CONTROL);
         /* Set bits in register to given value */
         drive &= 0b00000011;
         val &= 0b11111100;
         val |= drive;
-        i2cwrite(APDS9960_CONTROL, val);
+        APDS9960WriteReg(APDS9960_CONTROL, val);
     }
 
     function getAmbientLightGain(): number {
-        let val = i2cread(APDS9960_CONTROL);
+        let val = APDS9960ReadReg(APDS9960_CONTROL);
         val &= 0b00000011;
         return val;
     }
@@ -305,46 +1035,46 @@ namespace HelloMaker_传感器类 {
     }
 
     function setAmbientLightIntEnable(enable: number) {
-        let val = i2cread(APDS9960_ENABLE);
+        let val = APDS9960ReadReg(APDS9960_ENABLE);
         /* Set bits in register to given value */
         enable &= 0b00000001;
         enable = enable << 4;
         val &= 0b11101111;
         val |= enable;
-        i2cwrite(APDS9960_ENABLE, val);
+        APDS9960WriteReg(APDS9960_ENABLE, val);
     }
 
     function readAmbientLight(): number {
-        let val_byte = i2cread(APDS9960_CDATAL);
+        let val_byte = APDS9960ReadReg(APDS9960_CDATAL);
         let val = val_byte;
-        val_byte = i2cread(APDS9960_CDATAH);
+        val_byte = APDS9960ReadReg(APDS9960_CDATAH);
         val = val + val_byte << 8;
         return val;
     }
 
     function readRedLight(): number {
 
-        let val_byte = i2cread(APDS9960_RDATAL);
+        let val_byte = APDS9960ReadReg(APDS9960_RDATAL);
         let val = val_byte;
-        val_byte = i2cread(APDS9960_RDATAH);
+        val_byte = APDS9960ReadReg(APDS9960_RDATAH);
         val = val + val_byte << 8;
         return val;
     }
 
     function readGreenLight(): number {
 
-        let val_byte = i2cread(APDS9960_GDATAL);
+        let val_byte = APDS9960ReadReg(APDS9960_GDATAL);
         let val = val_byte;
-        val_byte = i2cread(APDS9960_GDATAH);
+        val_byte = APDS9960ReadReg(APDS9960_GDATAH);
         val = val + val_byte << 8;
         return val;
     }
 
     function readBlueLight(): number {
 
-        let val_byte = i2cread(APDS9960_BDATAL);
+        let val_byte = APDS9960ReadReg(APDS9960_BDATAL);
         let val = val_byte;
-        val_byte = i2cread(APDS9960_BDATAH);
+        val_byte = APDS9960ReadReg(APDS9960_BDATAH);
         val = val + val_byte << 8;
         return val;
     }
@@ -360,9 +1090,9 @@ namespace HelloMaker_传感器类 {
         control.waitMicros(100);
     }
 
-    /*
- *  Color sensor to obtain color value.
- */
+    /**
+     ** Color sensor to obtain color value.
+    **/
     //% weight=84 blockId=HelloMaker_checkCurrentColor block="checkCurrentColor|color %color" 
     //% weight=100
     //% blockGap=10
