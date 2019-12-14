@@ -719,7 +719,19 @@ namespace HelloMaker_小车类 {
         //% blockId="Car_SpeedDown" block="减速"
         Car_SpeedDown = 9
     }
-
+    export enum BalanceCarState {
+        //% blockId="Balance_Run" block="前行"
+        Balance_Run = 1,
+        //% blockId="Balance_Back" block="后退"
+        Balance_Back = 2,
+        //% blockId="Balance_Left" block="左转"
+        Balance_Left = 3,
+        //% blockId="Balance_Right" block="右转"
+        Balance_Right = 4,
+        //% blockId="Balance_Stop" block="停止"
+        Balance_Stop = 5
+      
+    }
 
     function i2cwrite_(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -1191,25 +1203,23 @@ namespace HelloMaker_小车类 {
 	//% blockId=HelloMaker_BalanceMode block="BalanceMode|%index"
     //% weight=93
     //% blockGap=10
-	//% index.min=1 index.max=5
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
-    export function BalanceMode(index: CarState): void {
+    export function BalanceMode(index: BalanceCarState): void {
 		    switch (index) {
-            case CarState.Car_Run: 
+            case BalanceCarState.Balance_Run: 
 			
 			break;
-            case CarState.Car_Back: 
+            case BalanceCarState.Balance_Back: 
 			
 			break;
-            case CarState.Car_Left: 
-			
+            case BalanceCarState.Balance_Left: 
+				
+			break;
+            case BalanceCarState.Balance_Right: 
 			
 			break;
-            case CarState.Car_Right: 
-			
-			break;
-            case CarState.Car_Stop: 
+            case BalanceCarState.Balance_Stop: 
 			
 			break;
             
@@ -1532,7 +1542,7 @@ namespace HelloMaker_积木类 {
                     Move_T = 17
                 }
                 //   SendMoveTypeToMcu(Move_T)
-                cmdType = CMD_TYPE.STM32_MOVE
+                    cmdType = CMD_TYPE.STM32_MOVE
             }
             /*
                  else if (StrAt = uartData.indexOf("mst"), StrAt != -1) {
