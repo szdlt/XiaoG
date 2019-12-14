@@ -23,6 +23,7 @@
   "HelloMaker_小车类.Avoid_Sensor|block": "红外避障传感器%num|%value|检测到障碍物",
   "HelloMaker_小车类.Servo_Car|block": "小车舵机|编号 %num|角度 %value|速度 %speed",
   "HelloMaker_小车类.CarCtrl|block": "小车控制|%index",
+  "HelloMaker_小车类.BalanceMode|block": "平衡车控制|%index",
   "HelloMaker_小车类.CarCtrlSpeed|block": "小车控制|%index|速度 %speed",
   "HelloMaker_小车类.MotorRun|block": "电机控制|%index0|%index1|速度%speed",
   "HelloMaker_积木类.BuildingBlocks|block": "深联积木%uartData",
