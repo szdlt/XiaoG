@@ -1187,6 +1187,36 @@ namespace HelloMaker_小车类 {
             case CarState.Car_SpinRight: Car_spinright(speed); break;
         }
     }
+	
+	//% blockId=HelloMaker_BalanceMode block="BalanceMode|%index"
+    //% weight=93
+    //% blockGap=10
+	//% index.min=1 index.max=5
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
+    export function BalanceMode(index: CarState): void {
+		    switch (index) {
+            case CarState.Car_Run: 
+			
+			break;
+            case CarState.Car_Back: 
+			
+			break;
+            case CarState.Car_Left: 
+			
+			
+			break;
+            case CarState.Car_Right: 
+			
+			break;
+            case CarState.Car_Stop: 
+			
+			break;
+            
+        }	
+	}
+	
+	
     //% blockId=HelloMaker_MotorRun block="MotorRun|%index0|%index1|speed%speed"
     //% weight=93
     //% blockGap=10
