@@ -12,7 +12,7 @@ namespace HelloMaker_显示类 {
     //% weight=94
     export function initRGBLight() {
         if (!lhRGBLight) {
-            lhRGBLight = DlbitRGBLight.create(DigitalPin.P16, 2, DlbitRGBPixelMode.RGB);
+            lhRGBLight = DlbitRGBLight.create(DigitalPin.P16, 1, DlbitRGBPixelMode.RGB);
         }
 
         if (!lhRGBLight_) {
@@ -33,7 +33,7 @@ namespace HelloMaker_显示类 {
     export function setPixelRGB(lightoffset: Lights, rgb: DlbitRGBColors) {
         if (lightoffset == 0) {
             lhRGBLight.setPixelColor(0, rgb, false);
-            lhRGBLight.setPixelColor(1, rgb, false);
+        //  lhRGBLight.setPixelColor(1, rgb, false);
         }
         else if (lightoffset == 1) {
             lhRGBLight_.setPixelColor(0, rgb, false);
@@ -46,7 +46,7 @@ namespace HelloMaker_显示类 {
 
         if (lightoffset == 0) {
             lhRGBLight.setPixelColor(0, rgb, false);
-            lhRGBLight.setPixelColor(1, rgb, false);
+         //   lhRGBLight.setPixelColor(1, rgb, false);
         }
         else if (lightoffset == 1) {
             lhRGBLight_.setPixelColor(0, rgb, false);
