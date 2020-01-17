@@ -1435,7 +1435,6 @@ namespace HelloMaker_积木类 {
 
     }
 
-
     function SendServoGroupToMcu(group: number, times: number) {
 
         serial.writeNumber(2)
@@ -1493,18 +1492,18 @@ namespace HelloMaker_积木类 {
                 let Angle = 0
                 Stm32_POS = parseInt(uartData.substr(StrAt + 7, 4))
                 Stm32_ID = parseInt(uartData.substr(StrAt + 12, 1))
-                //   SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
+                SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
                 Angle = Math.map(Stm32_POS, 0, 1000, 0, 180)
                 HelloMaker_小车类.Servo_Car(Stm32_ID, Angle, 0)
                 cmdType = CMD_TYPE.SERVO_ONE
             }
-            /*
-                    else if (StrAt = uartData.indexOf("Sergroup"), StrAt != -1) {
+            
+           else if (StrAt = uartData.indexOf("Sergroup"), StrAt != -1) {
                         Stm32_GROUP = parseInt(uartData.substr(StrAt + 9, 3))
                         SendServoGroupToMcu(Stm32_GROUP, 1)
                         cmdType = CMD_TYPE.SERVO_GROUP
-                    }
-            */
+                   }
+           
             else if (uartData.indexOf("Sercontrol-Z") != -1) {
 
                 cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
@@ -1541,7 +1540,7 @@ namespace HelloMaker_积木类 {
                 else {
                     Move_T = 17
                 }
-                //   SendMoveTypeToMcu(Move_T)
+                    SendMoveTypeToMcu(Move_T)
                     cmdType = CMD_TYPE.STM32_MOVE
             }
             /*
