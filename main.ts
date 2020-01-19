@@ -978,7 +978,7 @@ namespace HelloMaker_小车类 {
         return Math.floor(d / 40);
         
     }
-	    //% blockId=PreciseUltrasonic block="超声波精准测距得到结果为（cm）"
+	    //% blockId=PreciseUltrasonic block="超声波精准测距(cm)"
         export function  PreciseUltrasonic(): number {
 			let distance = 0
 			for (let i = 0; i < 5; i++) {
