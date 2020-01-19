@@ -18,7 +18,7 @@
   "HelloMaker_音乐类.Buzzer|block": "关闭蜂鸣器",
   "HelloMaker_电机类.Vibrator_Open|block": "开始震动",
   "HelloMaker_电机类.Vibrator_Close|block": "停止震动",
-  "HelloMaker_小车类.Ultrasonic_Car|block": "超声波快速测距得到的结果为",
+  "HelloMaker_小车类.Ultrasonic_Car|block": "超声波快速测距(cm)",
   "HelloMaker_小车类.Line_Sensor|block": "巡线传感器|位置 %direct|检测到 %value",
   "HelloMaker_小车类.Avoid_Sensor|block": "红外避障传感器%num|%value|检测到障碍物",
   "HelloMaker_小车类.Servo_Car|block": "小车舵机|编号 %num|角度 %value|速度 %speed",
