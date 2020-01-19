@@ -1,8 +1,22 @@
-/*  2019.1209.12:02
+/*  2020.0119.10:59
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
 */
+
+ enum Colors {
+        //% blockId="Red" block="红色"
+        Red = 0x01,
+        //% blockId="Green" block="绿色"
+        Green = 0x02,
+        //% blockId="Blue" block="蓝色"
+        Blue = 0x03,
+        //% blockId="White" block="白色"
+        White = 0x04,
+        //% blockId="Black" block="黑色"
+        Black = 0x05
+    }
+
 //% color="#C814B8" weight=25 icon="\uf1d4"
 namespace HelloMaker_显示类 {
 
@@ -87,18 +101,7 @@ namespace HelloMaker_传感器类 {
         //% blockId="OK" block="正常"
         OK = 1
     }
-    export enum Colors {
-        //% blockId="Red" block="红色"
-        Red = 0x01,
-        //% blockId="Green" block="绿色"
-        Green = 0x02,
-        //% blockId="Blue" block="蓝色"
-        Blue = 0x03,
-        //% blockId="White" block="白色"
-        White = 0x04,
-        //% blockId="Black" block="黑色"
-        Black = 0x05
-    }
+   
     const APDS9960_I2C_ADDR = 0x39;
     const APDS9960_ID_1 = 0xA8;
     const APDS9960_ID_2 = 0x9C;
@@ -1361,6 +1364,11 @@ namespace HelloMaker_积木类 {
     let CMD_TANK_LEFT = 11
     let CMD_TANK_RIGHT = 12
     let CMD_TANK_STOP = 17
+	let CMD_SR04_DISTANCE = 33
+    let CMD_SERVO_SPD = 34
+    let CMD_RGB_DETECT = 35
+	
+	
     let cmdType = -1
 
     function UartSend4data(num: number) {
@@ -1425,15 +1433,15 @@ namespace HelloMaker_积木类 {
         UartSend4data(pos)
     }
 
-    function SendRobotModeToMcu(mode: number) {
-
-        serial.writeNumber(2)
-        serial.writeNumber(2)
-        serial.writeNumber(4)
-        serial.writeNumber(0)
-        UartSend2data(mode)
-
-    }
+//    function SendRobotModeToMcu(mode: number) {
+//
+//       serial.writeNumber(2)
+//       serial.writeNumber(2)
+//       serial.writeNumber(4)
+//       serial.writeNumber(0)
+//       UartSend2data(mode)
+//
+//   }
 
     function SendServoGroupToMcu(group: number, times: number) {
 
@@ -1446,6 +1454,7 @@ namespace HelloMaker_积木类 {
         UartSend3data(group)
         UartSend3data(times)
     }
+	
     function SendMoveTypeToMcu(type: number) {
 
         serial.writeNumber(2)
@@ -1455,6 +1464,36 @@ namespace HelloMaker_积木类 {
         UartSend2data(type)
     }
 
+    //% blockId=HelloMaker_SendRGBColor block="SendRGBColor"
+    //% weight=96
+    //% blockGap=10
+    //% color="#006400"
+	//% objColor.min=1 objColor.max=3
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=9
+	export function SendRGBColor(objColor: Colors) {
+
+        serial.writeNumber(2)
+        serial.writeNumber(2)
+        serial.writeNumber(0)
+        serial.writeNumber(5)
+		UartSend2data(CMD_RGB_DETECT)
+        serial.writeNumber(objColor)
+    }
+	//% blockId=HelloMaker_SendBarrierDistance block="SendBarrierDistance"
+    //% weight=96
+    //% blockGap=10
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=9
+	export function SendBarrierDistance(distance: number) {
+
+        serial.writeNumber(2)
+        serial.writeNumber(2)
+        serial.writeNumber(0)
+        serial.writeNumber(6)
+		UartSend2data(CMD_SR04_DISTANCE)
+        UartSend2data(distance)
+    }
+		
     //% blockId=HelloMaker_BuildingBlocksInit block="BuildingBlocksInit"
     //% weight=96
     //% blockGap=10
@@ -1476,8 +1515,8 @@ namespace HelloMaker_积木类 {
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S2, 90, 0)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S3, 90, 0)
         HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S4, 90, 0)
-        //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S5, 90, 0)
-        //    HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S6, 90, 0)
+     // HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S5, 90, 0)
+     // HelloMaker_小车类.Servo_Car(HelloMaker_小车类.enServo.S6, 90, 0)
     }
 
     //% blockId=HelloMaker_BuildingBlocks block="BuildingBlocks|%uartData"
