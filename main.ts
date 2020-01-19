@@ -978,7 +978,7 @@ namespace HelloMaker_小车类 {
         return Math.floor(d / 40);
         
     }
-	    //% blockId=PreciseUltrasonic block="超声波精准测距(cm)"
+	    //% blockId=PreciseUltrasonic block="超声波精准测距得到结果为（cm）"
         export function  PreciseUltrasonic(): number {
 			let distance = 0
 			for (let i = 0; i < 5; i++) {
@@ -1431,12 +1431,10 @@ namespace HelloMaker_积木类 {
         serial.writeNumber(2)
         serial.writeNumber(2)
         serial.writeNumber(1)
-        serial.writeNumber(2)
+        serial.writeNumber(3)
         serial.writeNumber(0)
         serial.writeNumber(3)
-        serial.writeNumber(1)
-        serial.writeNumber(0)
-        serial.writeNumber(0)
+        UartSend4data(time)
         serial.writeNumber(id)
         UartSend4data(pos)
     }
@@ -1497,9 +1495,9 @@ namespace HelloMaker_积木类 {
         serial.writeNumber(2)
         serial.writeNumber(2)
         serial.writeNumber(0)
-        serial.writeNumber(6)
+        serial.writeNumber(7)
 		UartSend2data(CMD_SR04_DISTANCE)
-        UartSend2data(distance)
+        UartSend3data(distance)
     }
 		
     //% blockId=HelloMaker_BuildingBlocksInit block="BuildingBlocksInit"
