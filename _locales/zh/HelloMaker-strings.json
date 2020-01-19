@@ -18,7 +18,7 @@
   "HelloMaker_音乐类.Buzzer|block": "关闭蜂鸣器",
   "HelloMaker_电机类.Vibrator_Open|block": "开始震动",
   "HelloMaker_电机类.Vibrator_Close|block": "停止震动",
-  "HelloMaker_小车类.Ultrasonic_Car|block": "超声波返回（cm）",
+  "HelloMaker_小车类.Ultrasonic_Car|block": "超声波快速测距得到的结果为",
   "HelloMaker_小车类.Line_Sensor|block": "巡线传感器|位置 %direct|检测到 %value",
   "HelloMaker_小车类.Avoid_Sensor|block": "红外避障传感器%num|%value|检测到障碍物",
   "HelloMaker_小车类.Servo_Car|block": "小车舵机|编号 %num|角度 %value|速度 %speed",
@@ -27,8 +27,7 @@
   "HelloMaker_小车类.CarCtrlSpeed|block": "小车控制|%index|速度 %speed",
   "HelloMaker_小车类.MotorRun|block": "电机控制|%index0|%index1|速度%speed",
   "HelloMaker_积木类.BuildingBlocks|block": "深联积木%uartData",
-  "HelloMaker_积木类.BuildingBlocksInit|block": "深联积木初始化",
-  "HelloMaker_积木类.SendRGBColor|block": "告诉机械臂物体颜色为%objColor",
-  "HelloMaker_积木类.SendBarrierDistance|block": "告诉机械臂前方物体距离为%distance"
+  "HelloMaker_积木类.BuildingBlocksInit|block": "深联积木初始化"
+  "HelloMaker_积木类.SendRGBColor|block": "发送物体颜色%objColor",
+  "HelloMaker_积木类.SendBarrierDistance|block": "发送物体距离%distance"
 }
-
