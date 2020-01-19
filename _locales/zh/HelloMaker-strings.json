@@ -27,7 +27,7 @@
   "HelloMaker_小车类.CarCtrlSpeed|block": "小车控制|%index|速度 %speed",
   "HelloMaker_小车类.MotorRun|block": "电机控制|%index0|%index1|速度%speed",
   "HelloMaker_积木类.BuildingBlocks|block": "深联积木%uartData",
-  "HelloMaker_积木类.BuildingBlocksInit|block": "深联积木初始化"
+  "HelloMaker_积木类.BuildingBlocksInit|block": "深联积木初始化",
   "HelloMaker_积木类.SendRGBColor|block": "发送物体颜色%objColor",
   "HelloMaker_积木类.SendBarrierDistance|block": "发送物体距离%distance"
 }
