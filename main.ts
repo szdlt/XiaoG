@@ -637,7 +637,7 @@ namespace HelloMaker_小车类 {
     let value5_past = -1
     let value6_past = -1
     let car_speed = 200
-
+    let arr = [0, 0, 0, 0, 0]
     export enum enPos {
         //% blockId="Sensor1" block="传感器1"
         Sensor1 = 0,
@@ -955,7 +955,7 @@ namespace HelloMaker_小车类 {
             car_speed -= 5;
     }
 
-    //% blockId=HelloMaker_ultrasonic_car block="ultrasonic return distance(cm)"
+    //% blockId=HelloMaker_ultrasonic_car block="超声波快速测距得到的结果为(cm)"
     //% color="#006400"
     //% weight=98
     //% blockGap=10
@@ -976,18 +976,26 @@ namespace HelloMaker_小车类 {
         let d = pins.pulseIn(echoPin, PulseValue.High, 11600);
         basic.pause(10);
         return Math.floor(d / 40);
-        // send pulse
-        //    pins.setPull(DigitalPin.P14, PinPullMode.PullNone);    
-        //    pins.digitalWritePin(DigitalPin.P14, 0);
-        //     control.waitMicros(2);
-        //   pins.digitalWritePin(DigitalPin.P14, 1);
-        //   control.waitMicros(10);
-        //   pins.digitalWritePin(DigitalPin.P14, 0);
-
-        // read pulse
-        //   let d = pins.pulseIn(DigitalPin.P15, PulseValue.High, 43200);
-        //  return d / 58;
+        
     }
+	    //% blockId=PreciseUltrasonic block="超声波精准测距得到结果为（cm）"
+        export function  PreciseUltrasonic(): number {
+			let distance = 0
+			for (let i = 0; i < 5; i++) {
+				arr[i] = HelloMaker_小车类.Ultrasonic_Car()
+			}
+			arr.sort(function (a, b) {
+				return a - b
+			})
+			
+			for (let i = 1; i < 4; i++) {
+				distance += arr[i]
+			}
+			distance /= 3
+			return Math.round(distance)
+		  
+		}
+
 
     //% blockId=HelloMaker_Servo_Car block="Servo_Car|num %num|value %value |速度 %speed"
     //% weight=96
