@@ -1535,189 +1535,238 @@ namespace HelloMaker_积木类 {
 
     export function BuildingBlocks(uartData: string): number {
         if (uartData.indexOf("*@") != -1) {
-            if (StrAt = uartData.indexOf("Serone"), StrAt != -1) {
-                let Angle = 0
-                Stm32_POS = parseInt(uartData.substr(StrAt + 7, 4))
-                Stm32_ID = parseInt(uartData.substr(StrAt + 12, 1))
-                SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
-                Angle = Math.map(Stm32_POS, 0, 1000, 0, 180)
-                HelloMaker_小车类.Servo_Car(Stm32_ID, Angle, 0)
-                cmdType = CMD_TYPE.SERVO_ONE
-            }
-            
-           else if (StrAt = uartData.indexOf("Sergroup"), StrAt != -1) {
-                        Stm32_GROUP = parseInt(uartData.substr(StrAt + 9, 3))
-                        SendServoGroupToMcu(Stm32_GROUP, 1)
-                        cmdType = CMD_TYPE.SERVO_GROUP
-                   }
-           
-            else if (uartData.indexOf("Sercontrol-Z") != -1) {
-
-                cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
-            }
-            else if (StrAt = uartData.indexOf("speed"), StrAt != -1) {
-                dl_CarSpeed = parseInt(uartData.substr(StrAt + 6, 3))
-                cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
-            }
-
-            else if (uartData.indexOf("Sercontrol-X") != -1) {
-                cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
-            }
-            else if (StrAt = uartData.indexOf("Sercontrol"), StrAt != -1) {
-                if (uartData.charAt(StrAt + 11) == 'S') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
-                    Move_T = 9
-                }
-                else if (uartData.charAt(StrAt + 11) == 'B') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, dl_CarSpeed * 2.5)
-                    Move_T = 10
-                }
-                else if (uartData.charAt(StrAt + 11) == 'L') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, dl_CarSpeed * 2.5)
-                    Move_T = 11
-                }
-                else if (uartData.charAt(StrAt + 11) == 'R') {
-                    HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, dl_CarSpeed * 2.5)
-                    Move_T = 12
-                }
-                else if (uartData.charAt(StrAt + 11) == '0') {
-                    HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
-                    Move_T = 17
-                }
-                else {
-                    Move_T = 17
-                }
-                    SendMoveTypeToMcu(Move_T)
-                    cmdType = CMD_TYPE.STM32_MOVE
-            }
+			
+			let sum3 = uartData.charAt(2)+uartData.charAt(3)+uartData.charAt(4);
+			switch(sum3)
+			{
+				 case  'S'+'e'+'r':
+				  
+				        if(uartData.charAt(5) == 'c')
+						{
+							if (uartData.charAt(13) == 'S') 
+							{
+								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
+								Move_T = 9
+							}
+							else if (uartData.charAt(13) == 'B') {
+								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, dl_CarSpeed * 2.5)
+								Move_T = 10
+							}
+							else if (uartData.charAt(13) == 'L') {
+								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, dl_CarSpeed * 2.5)
+								Move_T = 11
+							}
+							else if (uartData.charAt(13) == 'R') {
+								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, dl_CarSpeed * 2.5)
+								Move_T = 12
+							}
+							else if (uartData.charAt(13) == 'Z') {
+								cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
+								Move_T = 13
+							}
+							else if (uartData.charAt(13) == 'X') {
+								   cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
+								   Move_T = 14
+							}
+							
+							else if (uartData.charAt(13) == '0') {
+								HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
+								Move_T = 17
+							}
+							else {
+								Move_T = 17
+							}
+							 SendMoveTypeToMcu(Move_T)
+                             cmdType = CMD_TYPE.STM32_MOVE
+			            }		
+			  	        else if(uartData.charAt(5) == 'o'){
+								let Angle = 0
+								Stm32_POS = parseInt(uartData.substr(9, 4))
+								Stm32_ID = parseInt(uartData.substr(14, 1))
+								SendOneServoToMcu(100, Stm32_ID, Stm32_POS)
+								Angle = Math.map(Stm32_POS, 0, 1000, 0, 180)
+								HelloMaker_小车类.Servo_Car(Stm32_ID, Angle, 0)
+								cmdType = CMD_TYPE.SERVO_ONE
+                            }
+						else if(uartData.charAt(5) == 'g'){
+								Stm32_GROUP = parseInt(uartData.substr(11, 3))
+								SendServoGroupToMcu(Stm32_GROUP, 1)
+								cmdType = CMD_TYPE.SERVO_GROUP
+                            }
+				    
+				 break;
+				
+				
+				 case  'm'+'s'+'t':
+				       
+                        move = parseInt(uartData.substr(6, 1))
+                        speed = parseInt(uartData.substr(8, 3))
+                        time = parseInt(uartData.substr(12, 2))
+     
+						 if (move == 1) {
+							 HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, speed * 2.5)
+							 basic.pause(time * 1000)
+							 if (time != 0) {
+								 HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
+							 }
+						 }
+						 else if (move == 2) {
+							 HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, speed * 2.5)
+							 basic.pause(time * 1000)
+							 if (time != 0) {
+								 HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
+							 }
+						 }
+						 cmdType = CMD_TYPE.MST;
+                     break
+                 
+				     case   's'+'p'+'e':
+					         dl_CarSpeed = parseInt(uartData.substr(8, 3))
+                             cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
+					 break
+					 
+					 case   'd'+'s'+'t':
+							 direction = parseInt(uartData.substr(6, 1))
+							 speed = parseInt(uartData.substr(8, 3))
+							 time = parseInt(uartData.substr(12, 2))
+							 if (direction == 1) {  // right
+								 HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, speed * 2.5) // 
+								 basic.pause(time * 1000)
+								 if (time != 0) {
+									 HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
+								 }
+							 }
+							 else if (direction == 2) {  // left
+								 HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, speed * 2.5)
+								 basic.pause(time * 1000)
+								 if (time != 0) {
+									 HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
+								 }
+							 }
+							 cmdType = CMD_TYPE.DST;
+					 break
+					 
+					 case   's'+'t'+'o':
+					         HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
+                             cmdType = CMD_TYPE.STO;
+					 
+					 break
+					 
+					 case   'l'+'i'+'g':
+					         rgb_id = parseInt(uartData.substr(6, 1))
+							 rgb_color = parseInt(uartData.substr(8, 1))
+							 rgb_bright = parseInt(uartData.substr(10, 3))
+							 if (rgb_id != 0) {
+								 if (rgb_color == 5) {
+									 rgb_color = 6
+								 } else if (rgb_color == 6) {
+									 rgb_color = 5
+								 } else if (rgb_color == 8) {
+									 rgb_color = 9
+								 }
+								 if (rgb_id == 1) {
+									 HelloMaker_显示类.setPixelRGB(0, rgb_color)
+								 }
+								 else if (rgb_id == 2) {
+									 HelloMaker_显示类.setPixelRGB(1, rgb_color)
+								 }
+			 
+								 HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
+								 HelloMaker_显示类.showLight()
+			 
+							 }
+							 else {
+								 HelloMaker_显示类.clearLight()
+							 }
+							 cmdType = CMD_TYPE.LIG;
+					 
+					 break
+					 
+					 case   'c'+'o'+'l':
+							 {
+							 color_id = parseInt(uartData.substr(6, 1))
+							 if (color_id == 1) {
+								 if (HelloMaker_传感器类.checkCurrentColor(Colors.Red) == true) {
+			 
+									 bluetooth.uartWriteString("*@col-1#")
+								 }
+								 else {
+			 
+									 bluetooth.uartWriteString("*@col-0#")
+								 }
+							 }
+							 else if (color_id == 2) {
+								 if (HelloMaker_传感器类.checkCurrentColor(Colors.Green) == true) {
+			 
+									 bluetooth.uartWriteString("*@col-1#")
+								 }
+								 else {
+									 bluetooth.uartWriteString("*@col-0#")
+			 
+								 }
+							 }
+							 else if (color_id == 3) {
+								 if (HelloMaker_传感器类.checkCurrentColor(Colors.Blue) == true) {
+			 
+									 bluetooth.uartWriteString("*@col-1#")
+								 }
+								 else {
+									 bluetooth.uartWriteString("*@col-0#")
+								 }
+							 }
+							 cmdType = CMD_TYPE.COL;
+						 }
+					 
+					 break
+					 
+					  case   't'+'o'+'n':
+					      
+                            tone = parseInt(uartData.substr(6, 2))
+                            dlbot_beat = parseInt(uartData.substr(9, 1))
+                           //music.playTone(Tone[tone], Beat[dlbot_beat])
+                            cmdType = CMD_TYPE.TON
+                
+					  
+					  break
+					  
+					  case   'v'+'e'+'r':
+					         cmdType = CMD_TYPE.VER;
+                             bluetooth.uartWriteString("*@Microbit_V0#")
+					  
+					  break
+					  
+					  case   'p'+'o'+'s':
+					         show_number = parseInt(uartData.substr(9, uartData.length - 9))  /// mark 
+                             basic.showNumber(show_number)
+                             cmdType = CMD_TYPE.POS;
+					  
+					  break
+					  
+					  case   's'+'e'+'n':
+                             stringReceive = uartData.substr(6, uartData.length - 6)  /// mark
+							 basic.showString(stringReceive)
+							 cmdType = CMD_TYPE.SEN;
+                 
+					  break
+					  
+					  case   's'+'e'+'r':
+							 dlbot_pos = parseInt(uartData.substr(6, 3))
+							 dlbot_id = parseInt(uartData.substr(10, 1))
+							 dlbot_speed = parseInt(uartData.substr(12, 2))
+							
+							 HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
+							 cmdType = CMD_TYPE.SERVO_MOVE
+					  break
+					  
+					  case   't'+'e'+'m':
+							  let wendu = input.temperature()
+							  bluetooth.uartWriteString("*@tem-" + wendu + "#")
+							  cmdType = CMD_TYPE.TEM
+					  break
+			}
+			
+		
             /*
-                 else if (StrAt = uartData.indexOf("mst"), StrAt != -1) {
-                     move = parseInt(uartData.substr(StrAt + 4, 1))
-                     speed = parseInt(uartData.substr(StrAt + 6, 3))
-                     time = parseInt(uartData.substr(StrAt + 10, 2))
-     
-                     if (move == 1) {
-                         HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, speed * 2.5)
-                         basic.pause(time * 1000)
-                         if (time != 0) {
-                             HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
-                         }
-                     }
-                     else if (move == 2) {
-                         HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, speed * 2.5)
-                         basic.pause(time * 1000)
-                         if (time != 0) {
-                             HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
-                         }
-                     }
-                     cmdType = CMD_TYPE.MST;
-     
-                 }
-             	
-                 else if (StrAt = uartData.indexOf("dst"), StrAt != -1) {
-                     direction = parseInt(uartData.substr(StrAt + 4, 1))
-                     speed = parseInt(uartData.substr(StrAt + 6, 3))
-                     time = parseInt(uartData.substr(StrAt + 10, 2))
-                     if (direction == 1) {  // right
-                         HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, speed * 2.5) // 
-                         basic.pause(time * 1000)
-                         if (time != 0) {
-                             HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
-                         }
-                     }
-                     else if (direction == 2) {  // left
-                         HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, speed * 2.5)
-                         basic.pause(time * 1000)
-                         if (time != 0) {
-                             HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
-                         }
-                     }
-                     cmdType = CMD_TYPE.DST;
-                 }
-             	
-                 else if (uartData.indexOf("sto") != -1) {
-                     HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
-                     cmdType = CMD_TYPE.STO;
-                 }
-                 else if (StrAt = uartData.indexOf("lig"), StrAt != -1) {
-                     rgb_id = parseInt(uartData.substr(StrAt + 4, 1))
-                     rgb_color = parseInt(uartData.substr(StrAt + 6, 1))
-                     rgb_bright = parseInt(uartData.substr(StrAt + 8, 3))
-                     if (rgb_id != 0) {
-                         if (rgb_color == 5) {
-                             rgb_color = 6
-                         } else if (rgb_color == 6) {
-                             rgb_color = 5
-                         } else if (rgb_color == 8) {
-                             rgb_color = 9
-                         }
-                         if (rgb_id == 1) {
-                             HelloMaker_显示类.setPixelRGB(0, rgb_color)
-                         }
-                         else if (rgb_id == 2) {
-                             HelloMaker_显示类.setPixelRGB(1, rgb_color)
-                         }
-     
-                         HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
-                         HelloMaker_显示类.showLight()
-     
-                     }
-                     else {
-                         HelloMaker_显示类.clearLight()
-                     }
-                     cmdType = CMD_TYPE.LIG;
-     
-                 }
-                 else if (StrAt = uartData.indexOf("col"), StrAt != -1) {
-                     color_id = parseInt(uartData.substr(StrAt + 4, 1))
-                     if (color_id == 1) {
-                         if (HelloMaker_传感器类.checkCurrentColor(HelloMaker_传感器类.Colors.Red) == true) {
-     
-                             bluetooth.uartWriteString("*@col-1#")
-                         }
-                         else {
-     
-                             bluetooth.uartWriteString("*@col-0#")
-                         }
-                     }
-                     else if (color_id == 2) {
-                         if (HelloMaker_传感器类.checkCurrentColor(HelloMaker_传感器类.Colors.Green) == true) {
-     
-                             bluetooth.uartWriteString("*@col-1#")
-                         }
-                         else {
-                             bluetooth.uartWriteString("*@col-0#")
-     
-                         }
-                     }
-                     else if (color_id == 3) {
-                         if (HelloMaker_传感器类.checkCurrentColor(HelloMaker_传感器类.Colors.Blue) == true) {
-     
-                             bluetooth.uartWriteString("*@col-1#")
-                         }
-                         else {
-                             bluetooth.uartWriteString("*@col-0#")
-                         }
-                     }
-                     cmdType = CMD_TYPE.COL;
-                 }
-                 else if (StrAt = uartData.indexOf("ton"), StrAt != -1) {
-                     tone = parseInt(uartData.substr(StrAt + 4, 2))
-                     dlbot_beat = parseInt(uartData.substr(StrAt + 7, 1))
-                     //  music.playTone(Tone[tone], Beat[dlbot_beat])
-                     cmdType = CMD_TYPE.TON;
-                 }
-     
-                 else if (uartData.indexOf("ver") != -1) {
-                     cmdType = CMD_TYPE.VER;
-                     bluetooth.uartWriteString("*@Microbit_V0#")
-                 }
-                 else if (StrAt = uartData.indexOf("pos"), StrAt != -1) {
-                     show_number = parseInt(uartData.substr(StrAt + 7, uartData.length - StrAt - 7))  /// mark 
-                     basic.showNumber(show_number)
-                     cmdType = CMD_TYPE.POS;
-                 }
-             	
                  else if (uartData.indexOf("coo") != -1) {
                      StrAt = uartData.indexOf("coo")
                      coo_x = parseInt(uartData.substr(StrAt + 4, 2))
@@ -1751,18 +1800,7 @@ namespace HelloMaker_积木类 {
                      analog_pin = parseInt(uartData.substr(StrAt + 4, 1))
                      cmdType = CMD_TYPE.EXT;
                  }
-             	
-                 else if (StrAt = uartData.indexOf("sen"), StrAt != -1) {
-                     stringReceive = uartData.substr(StrAt + 4, uartData.length - StrAt - 4)  /// mark
-                     basic.showString(stringReceive)
-                     cmdType = CMD_TYPE.SEN;
-                 }
-                 else if (uartData.indexOf("tem") != -1) {
-                     let wendu = input.temperature()
-                     bluetooth.uartWriteString("*@tem-" + wendu + "#")
-                     cmdType = CMD_TYPE.TEM;
-                 }
-                 
+             
                  else if (uartData.indexOf("sta") != -1) {
      
                      if (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor1, HelloMaker_小车类.enLineState.White) && (HelloMaker_小车类.Line_Sensor(HelloMaker_小车类.enPos.Sensor3, HelloMaker_小车类.enLineState.White))) {
@@ -1779,21 +1817,12 @@ namespace HelloMaker_积木类 {
                      }
                      cmdType = CMD_TYPE.STA;
                  }
-             	
-                 else if (StrAt = uartData.indexOf("ser"), StrAt != -1) {
-                     dlbot_pos = parseInt(uartData.substr(StrAt + 4, 4))
-                     dlbot_id = parseInt(uartData.substr(StrAt + 9, 1))
-                     dlbot_speed = parseInt(uartData.substr(StrAt + 11, 2))
-                     dlbot_pos = Math.map(dlbot_pos, 0, 1000, 0, 180)
-                     HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
-                     cmdType = CMD_TYPE.SERVO_MOVE
-                 }
                 */
             return cmdType
         }
-        else {
+       
             return -1
-        }
+        
     }
-}
 
+}
