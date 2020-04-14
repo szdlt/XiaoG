@@ -1549,18 +1549,22 @@ namespace HelloMaker_积木类 {
 							{
 								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Run, dl_CarSpeed * 2.5)
 								Move_T = 9
+								cmdType = CMD_TYPE.STM32_MOVE
 							}
 							else if (uartData.charAt(start_num+13) == 'B') {
 								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_Back, dl_CarSpeed * 2.5)
 								Move_T = 10
+								cmdType = CMD_TYPE.STM32_MOVE
 							}
 							else if (uartData.charAt(start_num+13) == 'L') {
 								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinLeft, dl_CarSpeed * 2.5)
 								Move_T = 11
+								cmdType = CMD_TYPE.STM32_MOVE
 							}
 							else if (uartData.charAt(start_num+13) == 'R') {
 								HelloMaker_小车类.CarCtrlSpeed(HelloMaker_小车类.CarState.Car_SpinRight, dl_CarSpeed * 2.5)
 								Move_T = 12
+								cmdType = CMD_TYPE.STM32_MOVE
 							}
 							else if (uartData.charAt(start_num+13) == 'Z') {
 								cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
@@ -1574,12 +1578,13 @@ namespace HelloMaker_积木类 {
 							else if (uartData.charAt(start_num+13) == '0') {
 								HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
 								Move_T = 17
+								cmdType = CMD_TYPE.STM32_MOVE
 							}
 							else {
 								Move_T = 17
 							}
 							 SendMoveTypeToMcu(Move_T)
-                             cmdType = CMD_TYPE.STM32_MOVE
+                             
 			            }		
 			  	        else if(uartData.charAt(start_num+5) == 'o'){
 								let Angle = 0
