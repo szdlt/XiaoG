@@ -1,4 +1,4 @@
-/*  2020.0414.14:05
+/*  2020.0119.10:59
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -1726,7 +1726,15 @@ namespace HelloMaker_积木类 {
 						 }
 					 
 					 break
-					 
+					 case   's'+'e'+'r':
+							 dlbot_pos = parseInt(uartData.substr(start_num+6, 3))
+							 dlbot_id = parseInt(uartData.substr(start_num+10, 1))
+							 dlbot_speed = parseInt(uartData.substr(start_num+12, 2))
+							
+							 HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
+							 cmdType = CMD_TYPE.SERVO_MOVE
+					  break
+					  /*
 					  case   't'+'o'+'n':
 					      
                             tone = parseInt(uartData.substr(start_num+6, 2))
@@ -1757,14 +1765,7 @@ namespace HelloMaker_积木类 {
                  
 					  break
 					  
-					  case   's'+'e'+'r':
-							 dlbot_pos = parseInt(uartData.substr(start_num+6, 3))
-							 dlbot_id = parseInt(uartData.substr(start_num+10, 1))
-							 dlbot_speed = parseInt(uartData.substr(start_num+12, 2))
-							
-							 HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
-							 cmdType = CMD_TYPE.SERVO_MOVE
-					  break
+					  
 					  
 					  case   't'+'e'+'m':
 							  let wendu = input.temperature()
@@ -1774,7 +1775,7 @@ namespace HelloMaker_积木类 {
 			}
 			
 		
-            /*
+            
                  else if (uartData.indexOf("coo") != -1) {
                      StrAt = uartData.indexOf("coo")
                      coo_x = parseInt(uartData.substr(StrAt + 4, 2))
