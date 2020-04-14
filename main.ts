@@ -1541,7 +1541,7 @@ namespace HelloMaker_积木类 {
 			
 			let sum3 = uartData.charAt(start_num+2)+uartData.charAt(start_num+3)+uartData.charAt(start_num+4);
 			switch(sum3)
-			{
+			   {
 				 case  'S'+'e'+'r':
 				  
 				        if(uartData.charAt(start_num+5) == 'c')
@@ -1602,10 +1602,10 @@ namespace HelloMaker_积木类 {
 								cmdType = CMD_TYPE.SERVO_GROUP
                             }
 				    
-				 break;
+				      break;
 				
 				
-				 case  'm'+'s'+'t':
+				      case  'm'+'s'+'t':
 				       
                         move = parseInt(uartData.substr(start_num+6, 1))
                         speed = parseInt(uartData.substr(start_num+8, 3))
@@ -1626,14 +1626,14 @@ namespace HelloMaker_积木类 {
 							 }
 						 }
 						 cmdType = CMD_TYPE.MST;
-                     break
+                        break
                  
-				     case   's'+'p'+'e':
+				        case   's'+'p'+'e':
 					         dl_CarSpeed = parseInt(uartData.substr(start_num+8, 3))
                              cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
-					 break
+					     break
 					 
-					 case   'd'+'s'+'t':
+					     case   'd'+'s'+'t':
 							 direction = parseInt(uartData.substr(start_num+6, 1))
 							 speed = parseInt(uartData.substr(start_num+8, 3))
 							 time = parseInt(uartData.substr(start_num+12, 2))
@@ -1652,15 +1652,15 @@ namespace HelloMaker_积木类 {
 								 }
 							 }
 							 cmdType = CMD_TYPE.DST;
-					 break
+					     break
 					 
-					 case   's'+'t'+'o':
+					     case   's'+'t'+'o':
 					         HelloMaker_小车类.CarCtrl(HelloMaker_小车类.CarState.Car_Stop)
                              cmdType = CMD_TYPE.STO;
 					 
-					 break
+					      break
 					 
-					 case   'l'+'i'+'g':
+					     case   'l'+'i'+'g':
 					         rgb_id = parseInt(uartData.substr(start_num+6, 1))
 							 rgb_color = parseInt(uartData.substr(start_num+8, 1))
 							 rgb_bright = parseInt(uartData.substr(start_num+10, 3))
@@ -1688,9 +1688,9 @@ namespace HelloMaker_积木类 {
 							 }
 							 cmdType = CMD_TYPE.LIG;
 					 
-					 break
+					      break
 					 
-					 case   'c'+'o'+'l':
+					      case   'c'+'o'+'l':
 							 {
 							 color_id = parseInt(uartData.substr(start_num+6, 1))
 							 if (color_id == 1) {
@@ -1734,7 +1734,13 @@ namespace HelloMaker_积木类 {
 							 HelloMaker_小车类.Servo_Car(dlbot_id, dlbot_pos, dlbot_speed)
 							 cmdType = CMD_TYPE.SERVO_MOVE
 					  break
-					  /*
+					  
+					  default :
+					  
+					  break
+					  
+			    }	
+                         /*
 					  case   't'+'o'+'n':
 					      
                             tone = parseInt(uartData.substr(start_num+6, 2))
@@ -1772,10 +1778,6 @@ namespace HelloMaker_积木类 {
 							  bluetooth.uartWriteString("*@tem-" + wendu + "#")
 							  cmdType = CMD_TYPE.TEM
 					  break
-			}
-			
-		
-            
                  else if (uartData.indexOf("coo") != -1) {
                      StrAt = uartData.indexOf("coo")
                      coo_x = parseInt(uartData.substr(StrAt + 4, 2))
