@@ -1,4 +1,4 @@
-/*  2020.0119.10:59
+/*  2020.0414.14:05
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -1221,18 +1221,19 @@ namespace HelloMaker_小车类 {
     export function BalanceMode(index: BalanceCarState): void {
 		    switch (index) {
             case BalanceCarState.Balance_Run: 
-			
+			        HelloMaker_积木类.SendMoveTypeToMcu(9)
 			break;
             case BalanceCarState.Balance_Back: 
-			
+			        HelloMaker_积木类.SendMoveTypeToMcu(10)
 			break;
             case BalanceCarState.Balance_Left: 
-				
+				    HelloMaker_积木类.SendMoveTypeToMcu(11)
 			break;
             case BalanceCarState.Balance_Right: 
-			
+			        HelloMaker_积木类.SendMoveTypeToMcu(12)
 			break;
             case BalanceCarState.Balance_Stop: 
+			        HelloMaker_积木类.SendMoveTypeToMcu(17)
 			
 			break;
             
@@ -1463,7 +1464,7 @@ namespace HelloMaker_积木类 {
         UartSend3data(times)
     }
 	
-    function SendMoveTypeToMcu(type: number) {
+   export function SendMoveTypeToMcu(type: number) {
 
         serial.writeNumber(2)
         serial.writeNumber(2)
