@@ -1215,26 +1215,27 @@ namespace HelloMaker_小车类 {
         }
     }
 	
-	//% blockId=HelloMaker_BalanceMode block="BalanceMode|%index"
+	//% blockId=HelloMaker_BalanceMode block="BalanceMode|%direction"
     //% weight=93
     //% blockGap=10
     //% color="#006400"
     //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
-    export function BalanceMode(index: BalanceCarState): void {
-		    switch (index) {
-            case BalanceCarState.Balance_Run: 
+    //  export function BalanceMode(index: BalanceCarState): void {
+	  export function BalanceMode(direction:number): void {
+		    switch (direction) {
+            case    1:     //BalanceCarState.Balance_Run: 
 			        HelloMaker_积木类.SendMoveTypeToMcu(9)
 			break;
-            case BalanceCarState.Balance_Back: 
+            case    2: //BalanceCarState.Balance_Back: 
 			        HelloMaker_积木类.SendMoveTypeToMcu(10)
 			break;
-            case BalanceCarState.Balance_Left: 
+            case    3://BalanceCarState.Balance_Left: 
 				    HelloMaker_积木类.SendMoveTypeToMcu(11)
 			break;
-            case BalanceCarState.Balance_Right: 
+            case    4://BalanceCarState.Balance_Right: 
 			        HelloMaker_积木类.SendMoveTypeToMcu(12)
 			break;
-            case BalanceCarState.Balance_Stop: 
+            case    0://BalanceCarState.Balance_Stop: 
 			        HelloMaker_积木类.SendMoveTypeToMcu(17)
 			
 			break;
@@ -1262,13 +1263,13 @@ namespace HelloMaker_小车类 {
     }
    }
 	//% blockId=CarModeState block="当前为避障模式?"
-	export function CarModeState(uartData: string): number {
+	export function CarModeState(): number {
       
            return startAvoid
    }
 	
 	//% blockId=DirectionState block="机器人运动方向"
-	export function DirectionState(uartData: string): number {
+	export function DirectionState(): number {
       
            return CarDirState
    }
