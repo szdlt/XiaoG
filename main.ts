@@ -1245,6 +1245,7 @@ namespace HelloMaker_小车类 {
 	
 	//% blockId=HelloMaker_BluetoothCarControl block="机器人接收蓝牙命令|%uartData"
 	export function BluetoothCarControl(UartData: string): void {
+		let start_num = UartData.indexOf("*@")
       if (UartData.indexOf("l-Z") != -1) {  
           startAvoid = true
     } else {
@@ -1260,6 +1261,38 @@ namespace HelloMaker_小车类 {
         } else if (UartData.indexOf("l-0") != -1) {
             CarDirState = 0
         }
+		  else if (UartData.indexOf("lig") != -1){
+            let rgb_id = parseInt(UartData.substr(start_num+6, 1))
+            let rgb_color = parseInt(UartData.substr(start_num+8, 1))
+            let rgb_bright = parseInt(UartData.substr(start_num+10, 3))
+						 if (rgb_id != 0) {
+							 if (rgb_color == 5) {
+								 rgb_color = 6
+							 } else if (rgb_color == 6) {
+								 rgb_color = 5
+							 } else if (rgb_color == 8) {
+								 rgb_color = 9
+							 }
+							 if (rgb_id == 1) {
+								 HelloMaker_显示类.setPixelRGB(0, rgb_color)
+							 }
+							 else if (rgb_id == 2) {
+								 HelloMaker_显示类.setPixelRGB(1, rgb_color)
+							 }
+		 
+							 HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
+							 HelloMaker_显示类.showLight()
+		 
+						 }
+						 else {
+							 HelloMaker_显示类.clearLight()
+						 }
+		
+		
+		            }
+		
+		
+		
     }
    }
 	//% blockId=CarModeState block="当前为避障模式?"
@@ -1872,3 +1905,4 @@ namespace HelloMaker_积木类 {
     }
 
 }
+ 
