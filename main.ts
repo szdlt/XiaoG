@@ -639,7 +639,7 @@ namespace HelloMaker_小车类 {
     let value5_past = -1
     let value6_past = -1
     let car_speed = 200
-	let startAvoid = 0
+	let startAvoid = false
 	let CarDirState = -1
     let arr = [0, 0, 0, 0, 0]
     export enum enPos {
@@ -1246,9 +1246,9 @@ namespace HelloMaker_小车类 {
 	//% blockId=HelloMaker_BluetoothCarControl block="机器人接收蓝牙命令|%uartData"
 	export function BluetoothCarControl(UartData: string): void {
       if (UartData.indexOf("l-Z") != -1) {  
-          startAvoid = 1
+          startAvoid = true
     } else {
-          startAvoid = 0
+          startAvoid = false
         if (UartData.indexOf("-S") != -1) {
             CarDirState = 1
         } else if (UartData.indexOf("l-B") != -1) {
@@ -1263,7 +1263,7 @@ namespace HelloMaker_小车类 {
     }
    }
 	//% blockId=CarModeState block="当前为避障模式?"
-	export function CarModeState(): number {
+	export function CarModeState(): boolean {
       
            return startAvoid
    }
