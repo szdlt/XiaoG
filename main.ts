@@ -261,7 +261,8 @@ namespace HelloMaker_积木类 {
         return Math.floor(d / 40);
         
     }
-  //% blockId=PreciseUltrasonic block="超声波精准测距得到结果为（cm）"
+   //% blockId=PreciseUltrasonic block="超声波精准测距得到结果为（cm）"
+   //% color="#006400"
     export function  PreciseUltrasonic(): number {
 			let distance = 0
 			for (let i = 0; i < 5; i++) {
@@ -279,7 +280,8 @@ namespace HelloMaker_积木类 {
 		  
 		}
 
-//% blockId=CarModeState block="当前为避障模式?"
+  //% blockId=CarModeState block="当前为避障模式?"
+  //% color="#006400"
 	export function CarModeState(): boolean {
       
 	       if(cmdType == CMD_TYPE.ROBOT_MODE_BIZHANG)
