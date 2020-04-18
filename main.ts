@@ -525,7 +525,7 @@ namespace HelloMaker_积木类 {
 				 
 					  break
 					  
-					  
+				/*  
 					  case   't'+'o'+'n':
 					      
                             tone = parseInt(uartData.substr(start_num+6, 2))
@@ -535,7 +535,7 @@ namespace HelloMaker_积木类 {
                 
 					  
 					  break
-		  
+		            */
 					default :
 					  
 					break
