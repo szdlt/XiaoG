@@ -1,4 +1,4 @@
-/*  2020.0119.10:59
+/*  2020.0418.16:05
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -65,31 +65,6 @@ namespace HelloMaker_显示类 {
 
 }
 
-/*****************************************************************************************************************************************
- *    音乐类 *****************************************************************************************************************************
- ****************************************************************************************************************************************/
-
-//% color="#D2691E" weight=22 icon="\uf001"
-namespace HelloMaker_音乐类 {
-    export enum enBuzzer {
-        //% blockId="NoBeep" block="不响"
-        NoBeep = 0,
-        //% blockId="Beep" block="响"
-        Beep
-    }
-    //% blockId=HelloMaker_Buzzer block="Buzzer"
-    //% weight=100
-    //% blockGap=10 
-    //% color="#D2691E"
-    //% value.min=0 value.max=1
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=8
-    export function Buzzer(): void {
-        pins.setPull(DigitalPin.P0, PinPullMode.PullNone);
-        pins.digitalWritePin(DigitalPin.P0, 0);
-    }
-}
-
-
 //% color="#212121" weight=24 icon="\uf1b6"
 namespace HelloMaker_积木类 {
 
@@ -122,37 +97,34 @@ namespace HelloMaker_积木类 {
     let Beat = [16, 16, 8, 4, 2, 1, 32, 64]
 	let CarDirState = -1
     let arr = [0, 0, 0, 0, 0]
-    enum CMD_TYPE {
-        NO_COMMAND,
+  export  enum CMD_TYPE {
+        //% blockId="MST" block="手机编程--直行"
         MST,
+		//% blockId="DST" block="手机编程--转弯"
         DST,
-        STO,
+		//% blockId="DST" block="手机编程--彩灯"
         LIG,
-        COL,
+		//% blockId="TON" block="手机编程--音乐"
         TON,
-        VER,
-        POS,
-        COO,
-        TIM,
-        MOD,
-        SEN,
-        SNB,
-        CHE,
-        EXT,
-        TEM,
-        STA,
-        SERVO_MOVE,
-        SERVO_ONE,
-        SERVO_GROUP,
+        //% blockId="STM32_MOVE" block="运动方向"
         STM32_MOVE,
+		 //% blockId="ROBOT_MODE_BIZHANG" block="避障模式"
         ROBOT_MODE_BIZHANG,
-        ROBOT_MODE_XUNJI,
+		//% blockId="ROBOT_MODE_BIZHANG" block="设置速度"
         ROBOT_SPEED_ADJUST
-
     }
    
 	let CMD_SR04_DISTANCE = 33
     let cmdType = -1
+	
+	
+    //% blockId=HelloMaker_Buzzer block="停止播放声音"
+    //% color="#006400"
+    export function Buzzer(): void {
+        pins.setPull(DigitalPin.P0, PinPullMode.PullNone);
+        pins.digitalWritePin(DigitalPin.P0, 0);
+    }
+	
    export enum BalanceCarState {
 	   //% blockId="Balance_Stop" block="停止"
         Balance_Stop = 0,
@@ -296,12 +268,42 @@ namespace HelloMaker_积木类 {
 		  
    }
 	
-	//% blockId=DirectionState block="机器人运动方向"
+	//% blockId=APPMove block="手机编程-机器人直行方向"
+	//% color="#006400"
+	export function APPMove(): number {
+      
+           return move
+   }	
+
+    //% blockId=APPMoveTime block="手机编程-机器人直行时间"
+	//% color="#006400"
+	export function APPMoveTime(): number {
+      
+           return time*1000
+   }	
+    
+    //% blockId=APPDirection block="手机编程-机器人转动方向"
+	//% color="#006400"
+	export function APPDirection(): number {
+      
+           return direction
+   }	
+   
+    //% blockId=APPDirectionTime block="手机编程-机器人转动时间"
+	//% color="#006400"
+	export function APPDirectionTime(): number {
+      
+           return time*1000
+   }	
+   
+   
+    //% blockId=DirectionState block="机器人运动方向"
+	//% color="#006400"
 	export function DirectionState(): number {
       
            return CarDirState
    }	
-
+   
     //% blockId=HelloMaker_BuildingBlocksInit block="BuildingBlocksInit"
     //% weight=96
     //% blockGap=10
@@ -399,47 +401,43 @@ namespace HelloMaker_积木类 {
 						if (uartData.charAt(start_num+13) == 'S') 
 						{
 							
-							Move_T = 9
+							
 							CarDirState = 1
 							cmdType = CMD_TYPE.STM32_MOVE
 						}
 						else if (uartData.charAt(start_num+13) == 'B') {
 							
-							Move_T = 10
+							
 							CarDirState = 2
 							cmdType = CMD_TYPE.STM32_MOVE
 						}
 						else if (uartData.charAt(start_num+13) == 'L') {
 						
-							Move_T = 11
+							
 							CarDirState = 3
 							cmdType = CMD_TYPE.STM32_MOVE
 						}
 						else if (uartData.charAt(start_num+13) == 'R') {
 							
-							Move_T = 12
+							
 							CarDirState = 4
 							cmdType = CMD_TYPE.STM32_MOVE
 						}
 						else if (uartData.charAt(start_num+13) == 'Z') {
 							cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
-							Move_T = 13
-						}
-						else if (uartData.charAt(start_num+13) == 'X') {
-							   cmdType = CMD_TYPE.ROBOT_MODE_XUNJI
-							   Move_T = 14
+							
 						}
 						
 						else if (uartData.charAt(start_num+13) == '0') {
 							
-							Move_T = 17
+							
 							CarDirState = 0
 							cmdType = CMD_TYPE.STM32_MOVE
 						}
 						else {
-							Move_T = 17
+							   CarDirState = 0
 						}
-						 SendMoveTypeToMcu(Move_T)
+						
 						 
 					}		
 					
@@ -450,49 +448,22 @@ namespace HelloMaker_积木类 {
 					move = parseInt(uartData.substr(start_num+6, 1))
 					speed = parseInt(uartData.substr(start_num+8, 3))
 					time = parseInt(uartData.substr(start_num+12, 2))
- 
-					 if (move == 1) {
-						  SendMoveTypeToMcu(9)
-						 basic.pause(time * 1000)
-						 if (time != 0) {
-							 SendMoveTypeToMcu(17)
-						 }
-					 }
-					 else if (move == 2) {
-						 SendMoveTypeToMcu(10)
-						 basic.pause(time * 1000)
-						 if (time != 0) {
-							 SendMoveTypeToMcu(17)
-						 }
-					 }
-					 cmdType = CMD_TYPE.MST;
+					cmdType = CMD_TYPE.MST;
 					break
+					
+					case   'd'+'s'+'t':
+						 direction = parseInt(uartData.substr(start_num+6, 1))
+						 speed = parseInt(uartData.substr(start_num+8, 3))
+						 time = parseInt(uartData.substr(start_num+12, 2))
+						 cmdType = CMD_TYPE.DST;
+					 break
 			 
 					case   's'+'p'+'e':
 						    dl_CarSpeed = parseInt(uartData.substr(start_num+8, 3))
 						    cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
 					break
 				 
-					case   'd'+'s'+'t':
-						 direction = parseInt(uartData.substr(start_num+6, 1))
-						 speed = parseInt(uartData.substr(start_num+8, 3))
-						 time = parseInt(uartData.substr(start_num+12, 2))
-						 if (direction == 1) {  // right
-							 SendMoveTypeToMcu(12)
-							 basic.pause(time * 1000)
-							 if (time != 0) {
-								 SendMoveTypeToMcu(17)
-							 }
-						 }
-						 else if (direction == 2) {  // left
-							  SendMoveTypeToMcu(11)
-							  basic.pause(time * 1000)
-							 if (time != 0) {
-								 SendMoveTypeToMcu(17)
-							 }
-						 }
-						 cmdType = CMD_TYPE.DST;
-					 break
+					
 				 
 					
 					 case   'l'+'i'+'g':
@@ -525,7 +496,7 @@ namespace HelloMaker_积木类 {
 				 
 					  break
 					  
-				/*  
+					  
 					  case   't'+'o'+'n':
 					      
                             tone = parseInt(uartData.substr(start_num+6, 2))
@@ -535,7 +506,7 @@ namespace HelloMaker_积木类 {
                 
 					  
 					  break
-		            */
+		  
 					default :
 					  
 					break
