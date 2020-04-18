@@ -1,4 +1,4 @@
-/*  2020.0418.18:38
+/* 2020.0418.18:38
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -65,7 +65,7 @@ namespace HelloMaker_显示类 {
 
 }
 
-//% color="#212121" weight=24 icon="\uf1b6"
+//% color="#006400" weight=24 icon="\uf1b6"
 namespace HelloMaker_积木类 {
 
     let StrAt = -1
@@ -346,7 +346,7 @@ let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
         
     }
 
-    //% blockId=HelloMaker_BalanceMode block="BalanceMode|%direction"
+    //% blockId=HelloMaker_BalanceMode block="设置小G运动模式|%direction"
     //% weight=93
     //% blockGap=10
     //% color="#006400"
