@@ -284,11 +284,12 @@ let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
 	
         if(type == cmdType)
 		{
+			type = -1
 			return true
 			
 		}
 		else {
-			
+			type = -1
 			return false
 			
 		}	
