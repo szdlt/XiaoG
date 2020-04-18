@@ -1,4 +1,4 @@
-/*  2020.0119.10:59
+/*  2020.0418.18:38
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -284,11 +284,15 @@ let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
 	
         if(type == cmdType)
 		{
-			cmdType = -1
+			if(cmdType != CMD_TYPE.ROBOT_MODE_BIZHANG )
+			{
+			   cmdType = -1
+			}
 			return true
 			
 		}
 		else {
+			
 			return false
 			
 		}	
