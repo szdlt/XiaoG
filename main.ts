@@ -85,13 +85,15 @@ namespace HelloMaker_积木类 {
     export let Move_T = -1
     let stringReceive = ""
     let dl_CarSpeed = 80
-    let Tone = [65, 65, 73, 82, 87, 98, 110, 123,
+let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
+                /*
 				131, 147, 165, 175, 196, 220, 247,
 				262, 294, 330, 349, 392, 440, 494,
 				523, 587, 659, 698, 784, 880, 988,
 				1047, 1175, 1319, 1397, 1568, 1760, 
 				1976,2093, 2349, 2637, 2794, 3136, 
 				3520, 3951,4186, 4699]
+				*/
                
     let Beat = [16, 16, 8, 4, 2, 1, 32, 64]
 	let CarDirState = -1
@@ -294,7 +296,7 @@ namespace HelloMaker_积木类 {
 		
 	 }
 	
-    //% blockId=BlueToothRGB block="蓝牙控制彩灯显示"
+    //% blockId=BlueToothRGB block="手机编程--彩灯显示"
 	//% color="#006400"
 	export function BlueToothRGB(){
 	 if (rgb_id != 0) {
@@ -350,22 +352,33 @@ namespace HelloMaker_积木类 {
 		    switch (direction) {
             case    1: 
 			        SendMoveTypeToMcu(9)
+					HelloMaker_显示类.setPixelRGB(0, 6)
+					HelloMaker_显示类.setPixelRGB(1, 6)
 			break;
             case    2: 
 			        SendMoveTypeToMcu(10)
+					HelloMaker_显示类.setPixelRGB(0, 7)
+					HelloMaker_显示类.setPixelRGB(1, 7)
 			break;
             case    3: 
 				    SendMoveTypeToMcu(11)
+					HelloMaker_显示类.setPixelRGB(0, 4)
+					HelloMaker_显示类.setPixelRGB(1, 4)
 			break;
             case    4: 
 			        SendMoveTypeToMcu(12)
+					HelloMaker_显示类.setPixelRGB(0, 5)
+					HelloMaker_显示类.setPixelRGB(1, 5)
 			break;
             case    0: 
 			        SendMoveTypeToMcu(17)
+					HelloMaker_显示类.setPixelRGB(0, 1)
+					HelloMaker_显示类.setPixelRGB(1, 1)
 			
 			break;
             
         }	
+		 HelloMaker_显示类.showLight()
 	}
 
     //% blockId=HelloMaker_SetBalanceMode block="设置小G运动模式|%BalanceCarState"
@@ -378,21 +391,25 @@ namespace HelloMaker_积木类 {
 		    switch (index) {
             case    BalanceCarState.Balance_Run: 
 			        SendMoveTypeToMcu(9)
+					
 			break;
             case    BalanceCarState.Balance_Back: 
 			        SendMoveTypeToMcu(10)
+					
 			break;
             case    BalanceCarState.Balance_Left: 
 				    SendMoveTypeToMcu(11)
+					
 			break;
             case    BalanceCarState.Balance_Right: 
 			        SendMoveTypeToMcu(12)
+					
 			break;
             case    BalanceCarState.Balance_Stop: 
 			        SendMoveTypeToMcu(17)
-			
+					
 			break;
-            
+           
         }	
 	}
    
