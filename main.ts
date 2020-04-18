@@ -85,28 +85,25 @@ namespace HelloMaker_积木类 {
     export let Move_T = -1
     let stringReceive = ""
     let dl_CarSpeed = 80
-    let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
-	           /*
+    let Tone = [65, 65, 73, 82, 87, 98, 110, 123,
 				131, 147, 165, 175, 196, 220, 247,
 				262, 294, 330, 349, 392, 440, 494,
 				523, 587, 659, 698, 784, 880, 988,
 				1047, 1175, 1319, 1397, 1568, 1760, 
 				1976,2093, 2349, 2637, 2794, 3136, 
 				3520, 3951,4186, 4699]
-               */
+               
     let Beat = [16, 16, 8, 4, 2, 1, 32, 64]
 	let CarDirState = -1
     let arr = [0, 0, 0, 0, 0]
   export  enum CMD_TYPE {
-        //% blockId="MST" block="手机编程--直行"
+        //% blockId="MST" block="手机编程--运动"
         MST,
-		//% blockId="DST" block="手机编程--转弯"
-        DST,
-		//% blockId="DST" block="手机编程--彩灯"
+		//% blockId="LIG" block="手机编程--彩灯"
         LIG,
 		//% blockId="TON" block="手机编程--音乐"
         TON,
-        //% blockId="STM32_MOVE" block="运动方向"
+        //% blockId="STM32_MOVE" block="运动模式"
         STM32_MOVE,
 		 //% blockId="ROBOT_MODE_BIZHANG" block="避障模式"
         ROBOT_MODE_BIZHANG,
@@ -253,50 +250,16 @@ namespace HelloMaker_积木类 {
 		  
 		}
 
-  //% blockId=CarModeState block="当前为避障模式?"
-  //% color="#006400"
-	export function CarModeState(): boolean {
-      
-	       if(cmdType == CMD_TYPE.ROBOT_MODE_BIZHANG)
-		   {
-			    return true
-		   }
-          
-	       else {
-			     return false
-		   }
-		  
-   }
-	
-	//% blockId=APPMove block="手机编程-机器人直行方向"
+	//% blockId=PhoneCodeingMove block="手机编程机器人运动"
 	//% color="#006400"
-	export function APPMove(): number {
+	export function PhoneCodeingMove() {
       
-           return move
+	       BalanceMode(CarDirState)
+		   basic.pause(time * 1000)
+		   BalanceMode(0)
+           
    }	
 
-    //% blockId=APPMoveTime block="手机编程-机器人直行时间"
-	//% color="#006400"
-	export function APPMoveTime(): number {
-      
-           return time*1000
-   }	
-    
-    //% blockId=APPDirection block="手机编程-机器人转动方向"
-	//% color="#006400"
-	export function APPDirection(): number {
-      
-           return direction
-   }	
-   
-    //% blockId=APPDirectionTime block="手机编程-机器人转动时间"
-	//% color="#006400"
-	export function APPDirectionTime(): number {
-      
-           return time*1000
-   }	
-   
-   
     //% blockId=DirectionState block="机器人运动方向"
 	//% color="#006400"
 	export function DirectionState(): number {
@@ -502,6 +465,14 @@ namespace HelloMaker_积木类 {
 					move = parseInt(uartData.substr(start_num+6, 1))
 					speed = parseInt(uartData.substr(start_num+8, 3))
 					time = parseInt(uartData.substr(start_num+12, 2))
+					if(move == 1) 
+					{
+						CarDirState = 1
+					}
+				   else{
+					
+					   CarDirState = 2
+				    }
 					cmdType = CMD_TYPE.MST;
 					break
 					
@@ -509,18 +480,24 @@ namespace HelloMaker_积木类 {
 						 direction = parseInt(uartData.substr(start_num+6, 1))
 						 speed = parseInt(uartData.substr(start_num+8, 3))
 						 time = parseInt(uartData.substr(start_num+12, 2))
-						 cmdType = CMD_TYPE.DST;
+						 if(direction == 1) 
+						 {
+							CarDirState = 4
+						 }
+					   else{
+						
+						   CarDirState = 3
+						 }
+						 
+						 cmdType = CMD_TYPE.MST;
 					 break
 			 
 					case   's'+'p'+'e':
 						    dl_CarSpeed = parseInt(uartData.substr(start_num+8, 3))
 						    cmdType = CMD_TYPE.ROBOT_SPEED_ADJUST
 					break
-				 
-					
-				 
-					
-					 case   'l'+'i'+'g':
+				 			
+					case   'l'+'i'+'g':
 						 rgb_id = parseInt(uartData.substr(start_num+6, 1))
 						 rgb_color = parseInt(uartData.substr(start_num+8, 1))
 						 rgb_bright = parseInt(uartData.substr(start_num+10, 3))
