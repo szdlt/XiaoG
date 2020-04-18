@@ -1,4 +1,4 @@
-/*  2020.0418.16:05
+/*  2020.0119.10:59
 redunce some useless function  for APP moldule
 load dependency
 "HelloMaker": "file:../pxt-HelloMaker"
@@ -304,6 +304,60 @@ namespace HelloMaker_积木类 {
            return CarDirState
    }	
    
+   
+    //% blockId=DlbotMusic block="音乐播放"
+	//% color="#006400"
+	
+	export function DlbotMusic(){
+	
+        music.playTone(Tone[tone], Beat[dlbot_beat])
+	 }
+	 
+	//% blockId=APPCmd block="蓝牙命令类型为 %type"
+	//% color="#006400"
+	export function APPCmd(type : CMD_TYPE):boolean{
+	
+        if(type == cmdType)
+		{
+			return true
+			
+		}
+		else {
+			
+			return false
+			
+		}	
+		
+		
+	 }
+	
+    //% blockId=BlueToothRGB block="蓝牙控制彩灯显示"
+	//% color="#006400"
+	export function BlueToothRGB(){
+	 if (rgb_id != 0) {
+		 if (rgb_color == 5) {
+			 rgb_color = 6
+		 } else if (rgb_color == 6) {
+			 rgb_color = 5
+		 } else if (rgb_color == 8) {
+			 rgb_color = 9
+		 }
+		 if (rgb_id == 1) {
+			 HelloMaker_显示类.setPixelRGB(0, rgb_color)
+		 }
+		 else if (rgb_id == 2) {
+			 HelloMaker_显示类.setPixelRGB(1, rgb_color)
+		 }
+
+		 HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
+		 HelloMaker_显示类.showLight()
+
+	 }
+	 else {
+		 HelloMaker_显示类.clearLight()
+	 }
+	 
+	} 
     //% blockId=HelloMaker_BuildingBlocksInit block="BuildingBlocksInit"
     //% weight=96
     //% blockGap=10
@@ -470,38 +524,15 @@ namespace HelloMaker_积木类 {
 						 rgb_id = parseInt(uartData.substr(start_num+6, 1))
 						 rgb_color = parseInt(uartData.substr(start_num+8, 1))
 						 rgb_bright = parseInt(uartData.substr(start_num+10, 3))
-						 if (rgb_id != 0) {
-							 if (rgb_color == 5) {
-								 rgb_color = 6
-							 } else if (rgb_color == 6) {
-								 rgb_color = 5
-							 } else if (rgb_color == 8) {
-								 rgb_color = 9
-							 }
-							 if (rgb_id == 1) {
-								 HelloMaker_显示类.setPixelRGB(0, rgb_color)
-							 }
-							 else if (rgb_id == 2) {
-								 HelloMaker_显示类.setPixelRGB(1, rgb_color)
-							 }
-		 
-							 HelloMaker_显示类.setBrightness(rgb_bright * 2.5)
-							 HelloMaker_显示类.showLight()
-		 
-						 }
-						 else {
-							 HelloMaker_显示类.clearLight()
-						 }
+						 
 						 cmdType = CMD_TYPE.LIG;
 				 
 					  break
-					  
-					  
+					  				
 					  case   't'+'o'+'n':
 					      
                             tone = parseInt(uartData.substr(start_num+6, 2))
-                            dlbot_beat = parseInt(uartData.substr(start_num+9, 1))
-                            music.playTone(Tone[tone], Beat[dlbot_beat])
+                            dlbot_beat = parseInt(uartData.substr(start_num+9, 1))                        
                             cmdType = CMD_TYPE.TON
                 
 					  
