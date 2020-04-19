@@ -7,7 +7,7 @@
   "HelloMaker_显示类.setBrightness|block":"设置彩灯亮度 %brightness",
   "HelloMaker_音乐类.Buzzer|block": "关闭蜂鸣器",
   "HelloMaker_积木类.Ultrasonic_Car|block": "超声波快速测距(cm)",
-  "HelloMaker_积木类.BalanceMode|block": "平衡车控制|%index",
+  "HelloMaker_积木类.BalanceMode|block": "小G运动方向|%index",
   "HelloMaker_积木类.BuildingBlocks|block": "深联积木%uartData",
   "HelloMaker_积木类.BuildingBlocksInit|block": "深联积木初始化",
   "HelloMaker_积木类.SendBarrierDistance|block": "发送物体距离%distance"
