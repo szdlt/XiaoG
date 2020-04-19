@@ -85,7 +85,7 @@ namespace HelloMaker_积木类 {
     export let Move_T = -1
     let stringReceive = ""
     let dl_CarSpeed = 80
-let Tone = [1047, 1175, 1319, 1397, 1568, 1760，1976]
+let Tone = [1047, 1175, 1319, 1397, 1568, 1760,1976]
                
 			 /*
 			65,  73,  82,  87,  98,  110, 123,
