@@ -385,7 +385,7 @@ let Tone = [65, 65, 73, 82, 87, 98, 110, 123]
 		 HelloMaker_显示类.showLight()
 	}
 
-    //% blockId=HelloMaker_SetBalanceMode block="设置小G运动模式|%BalanceCarState"
+    //% blockId=HelloMaker_SetBalanceMode block="小G运动方向|%BalanceCarState"
     //% weight=93
     //% blockGap=10
     //% color="#006400"
