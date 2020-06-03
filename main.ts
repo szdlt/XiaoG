@@ -420,7 +420,18 @@ let Tone = [1047, 1175, 1319, 1397, 1568, 1760,1976]
         }	
 	}
    
-
+    //% blockId=SetObstacleMode block="小G开始避障"
+    //% weight=93
+    //% blockGap=10
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=10
+      export function SetObstacleMode(): void {
+	 
+		     cmdType = CMD_TYPE.ROBOT_MODE_BIZHANG
+           
+        }	
+	
+   
     //% blockId=HelloMaker_BuildingBlocks block="BuildingBlocks|%uartData"
     //% weight=96
     //% blockGap=10
