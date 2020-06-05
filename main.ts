@@ -195,9 +195,25 @@ let Tone = [1047, 1175, 1319, 1397, 1568, 1760,1976]
         serial.writeNumber(0)
         serial.writeNumber(4)
         UartSend2data(type)
+		
     }
 
-    
+    //% blockId=PlayVoice block="播放语音 %id"
+    //% weight=96
+    //% blockGap=10
+    //% color="#006400"
+    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=9
+	export function PlayVoice(id: number) {
+
+        serial.writeNumber(2)
+        serial.writeNumber(2)
+        serial.writeNumber(0)
+        serial.writeNumber(4)
+        UartSend2data(21)
+		UartSend2data(id)
+    }
+	
+	
 	//% blockId=HelloMaker_SendBarrierDistance block="SendBarrierDistance"
     //% weight=96
     //% blockGap=10
