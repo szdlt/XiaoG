@@ -208,7 +208,7 @@ let Tone = [1047, 1175, 1319, 1397, 1568, 1760,1976]
         serial.writeNumber(2)
         serial.writeNumber(2)
         serial.writeNumber(0)
-        serial.writeNumber(4)
+        serial.writeNumber(6)
         UartSend2data(21)
 		UartSend2data(id)
     }
